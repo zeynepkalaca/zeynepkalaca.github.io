@@ -1,69 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>OIZ Visualization</title>
+    <title>OIZ Visualization - Turkey</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        #map { height: 600px; width: 100%; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        #map { height: 650px; width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f8f9fa; }
-        h2 { color: #2c3e50; text-align: center; }
+        h2 { color: #2c3e50; text-align: center; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #7f8c8d; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <h2>Turkey Organized Industrial Zones Mapping</h2>
+    <div class="subtitle">Click on the red markers to view zone details.</div>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. Initialize map on Turkey
+        // 1. Initialize map centered on Turkey
         var map = L.map('map').setView([39.0, 35.2], 6);
 
-        // 2. Add professional Base Map
+        // 2. Add Base Map Layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // 3. FETCH YOUR DATA
-        // IMPORTANT: Change 'your_file.geojson' to the EXACT name of your uploaded file
-        fetch('https://raw.githubusercontent.com/zeynepkalaca/zeynepkalaca.github.io/refs/heads/main/turkey_oiz.geojson') 
+        // 3. Fetch Data from your GitHub Raw link
+        var geojsonUrl = 'https://raw.githubusercontent.com/zeynepkalaca/zeynepkalaca.github.io/refs/heads/main/turkey_oiz.geojson';
+
+        fetch(geojsonUrl)
             .then(response => {
-                if (!response.ok) throw new Error("GeoJSON file not found!");
+                if (!response.ok) throw new Error("Network response was not ok");
                 return response.json();
             })
             .then(data => {
                 L.geoJSON(data, {
+                    // Create popups using your GeoJSON properties
                     onEachFeature: function (feature, layer) {
-    let props = feature.properties;
-    
-    // Using the exact property names from your GeoJSON file
-    let oizName = props.Name || "Industrial Zone";
-    let province = props.City || "Turkey";
+                        let props = feature.properties;
+                        let oizName = props.Name || "Industrial Zone";
+                        let city = props.City || "N/A";
 
-    layer.bindPopup(
-        "<strong>" + oizName + "</strong><br>" +
-        "Province: " + province
-    );
-}
+                        layer.bindPopup(
+                            "<div style='text-align:center;'><strong>" + oizName + "</strong><br>" +
+                            "City: " + city + "</div>"
+                        );
                     },
+                    // Style the markers as clean red circles
                     pointToLayer: function (feature, latlng) {
-                        // Makes markers look like clean circles
                         return L.circleMarker(latlng, {
-                            radius: 6,
+                            radius: 7,
                             fillColor: "#e74c3c",
-                            color: "#fff",
-                            weight: 1,
+                            color: "#ffffff",
+                            weight: 1.5,
                             opacity: 1,
-                            fillOpacity: 0.8
+                            fillOpacity: 0.85
                         });
                     }
                 }).addTo(map);
             })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Could not load GeoJSON. Make sure the filename is correct in the code!");
-            });
-    </script>
-</body>
-</html>
