@@ -35,17 +35,17 @@
             .then(data => {
                 L.geoJSON(data, {
                     onEachFeature: function (feature, layer) {
-                        // This logic finds your Excel headers automatically
-                        let props = feature.properties;
-                        let oizName = props.NAME || props.OIZ_NAME || props.Name || "Industrial Zone";
-                        let province = props.PROVINCE || props.CITY || props.IL || props.Province || "Turkey";
-                        let type = props.TYPE || props.Type || props.SECTOR || "General";
+    let props = feature.properties;
+    
+    // Using the exact property names from your GeoJSON file
+    let oizName = props.Name || "Industrial Zone";
+    let province = props.City || "Turkey";
 
-                        layer.bindPopup(
-                            "<strong>" + oizName + "</strong><br>" +
-                            "Province: " + province + "<br>" +
-                            "Industry: " + type
-                        );
+    layer.bindPopup(
+        "<strong>" + oizName + "</strong><br>" +
+        "Province: " + province
+    );
+}
                     },
                     pointToLayer: function (feature, latlng) {
                         // Makes markers look like clean circles
