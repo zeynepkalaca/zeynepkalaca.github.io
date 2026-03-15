@@ -2,34 +2,67 @@
 <html>
 <head>
     <title>OIZ GeoJSON Visualization</title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        #map { height: 600px; width: 100%; }
-        body { font-family: sans-serif; }
+        #map { height: 600px; width: 100%; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f8f9fa; }
+        h2 { color: #2c3e50; text-align: center; }
     </style>
 </head>
 <body>
-    <h2>Turkey Industrial Zones: GeoJSON Mapping</h2>
+
+    <h2>Turkey Organized Industrial Zones Mapping</h2>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // 1. Initialize map on Turkey
         var map = L.map('map').setView([39.0, 35.2], 6);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        // 2. Add professional Base Map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-        // This function loads your converted file
-        // Note: You need to put your geojson data in a variable or fetch the file
-        fetch('your_file_name.geojson') 
-            .then(response => response.json())
+        // 3. FETCH YOUR DATA
+        // IMPORTANT: Change 'your_file.geojson' to the EXACT name of your uploaded file
+        fetch('turkey_oiz.geojson') 
+            .then(response => {
+                if (!response.ok) throw new Error("GeoJSON file not found!");
+                return response.json();
+            })
             .then(data => {
                 L.geoJSON(data, {
                     onEachFeature: function (feature, layer) {
-                        // This creates the popup using the 'properties' from your Excel
-                        layer.bindPopup("<h3>" + feature.properties.name + "</h3>" + 
-                                       "City: " + feature.properties.city);
+                        // This logic finds your Excel headers automatically
+                        let props = feature.properties;
+                        let oizName = props.NAME || props.OIZ_NAME || props.Name || "Industrial Zone";
+                        let province = props.PROVINCE || props.CITY || props.IL || props.Province || "Turkey";
+                        let type = props.TYPE || props.Type || props.SECTOR || "General";
+
+                        layer.bindPopup(
+                            "<strong>" + oizName + "</strong><br>" +
+                            "Province: " + province + "<br>" +
+                            "Industry: " + type
+                        );
+                    },
+                    pointToLayer: function (feature, latlng) {
+                        // Makes markers look like clean circles
+                        return L.circleMarker(latlng, {
+                            radius: 6,
+                            fillColor: "#e74c3c",
+                            color: "#fff",
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
                     }
                 }).addTo(map);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Could not load GeoJSON. Make sure the filename is correct in the code!");
             });
     </script>
 </body>
