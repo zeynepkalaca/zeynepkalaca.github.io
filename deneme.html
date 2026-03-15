@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OIZ GeoJSON Visualization</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map { height: 600px; width: 100%; }
+        body { font-family: sans-serif; }
+    </style>
+</head>
+<body>
+    <h2>Turkey Industrial Zones: GeoJSON Mapping</h2>
+    <div id="map"></div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([39.0, 35.2], 6);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // This function loads your converted file
+        // Note: You need to put your geojson data in a variable or fetch the file
+        fetch('your_file_name.geojson') 
+            .then(response => response.json())
+            .then(data => {
+                L.geoJSON(data, {
+                    onEachFeature: function (feature, layer) {
+                        // This creates the popup using the 'properties' from your Excel
+                        layer.bindPopup("<h3>" + feature.properties.name + "</h3>" + 
+                                       "City: " + feature.properties.city);
+                    }
+                }).addTo(map);
+            });
+    </script>
+</body>
+</html>
