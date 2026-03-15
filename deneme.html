@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>OIZ Visualization - Turkey</title>
+    <title>Turkey OIZ Visualization</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -15,7 +15,7 @@
 <body>
 
     <h2>Turkey Organized Industrial Zones Mapping</h2>
-    <div class="subtitle">Click on the red markers to view zone details.</div>
+    <div class="subtitle">Interactive data visualization of industrial clusters. Click markers for details.</div>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -29,27 +29,31 @@
         }).addTo(map);
 
         // 3. Fetch Data from your GitHub Raw link
+        // Use your RAW link here
         var geojsonUrl = 'https://raw.githubusercontent.com/zeynepkalaca/zeynepkalaca.github.io/refs/heads/main/turkey_oiz.geojson';
 
         fetch(geojsonUrl)
             .then(response => {
-                if (!response.ok) throw new Error("Network response was not ok");
+                if (!response.ok) throw new Error("File not found");
                 return response.json();
             })
             .then(data => {
                 L.geoJSON(data, {
-                    // Create popups using your GeoJSON properties
                     onEachFeature: function (feature, layer) {
                         let props = feature.properties;
-                        let oizName = props.Name || "Industrial Zone";
-                        let city = props.City || "N/A";
+                        
+                        // Updated to match your "Field1" and "Field2" structure
+                        // Skips the header row if it's clicked
+                        let oizName = props.Field2 || "Unknown Zone";
+                        let province = props.Field1 || "Unknown Province";
 
-                        layer.bindPopup(
-                            "<div style='text-align:center;'><strong>" + oizName + "</strong><br>" +
-                            "City: " + city + "</div>"
-                        );
+                        if (oizName !== "Name of the Organized Industrial Zone") {
+                            layer.bindPopup(
+                                "<div style='text-align:center;'><strong>" + oizName + "</strong><br>" +
+                                "Province: " + province + "</div>"
+                            );
+                        }
                     },
-                    // Style the markers as clean red circles
                     pointToLayer: function (feature, latlng) {
                         return L.circleMarker(latlng, {
                             radius: 7,
@@ -62,3 +66,9 @@
                     }
                 }).addTo(map);
             })
+            .catch(error => {
+                console.error("Error loading map:", error);
+            });
+    </script>
+</body>
+</html>
