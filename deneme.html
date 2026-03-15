@@ -27,7 +27,7 @@
 
         // 3. FETCH YOUR DATA
         // IMPORTANT: Change 'your_file.geojson' to the EXACT name of your uploaded file
-        fetch('turkey_oiz.geojson') 
+        fetch('https://raw.githubusercontent.com/zeynepkalaca/zeynepkalaca.github.io/refs/heads/main/turkey_oiz.geojson') 
             .then(response => {
                 if (!response.ok) throw new Error("GeoJSON file not found!");
                 return response.json();
