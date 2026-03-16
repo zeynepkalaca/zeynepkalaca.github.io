@@ -1,6 +1,6 @@
 {
 "type": "FeatureCollection",
-"name": "Untitled spreadsheet",
+"name": "marmara.geojson",
 "features": [
 { "type": "Feature", "properties": { "Province": "CSVFilter", "Name of the Organized Industrial Zone": "StringFilter", "Coordinates": "MapsTooltip - Hidden - StringFilter" }, "geometry": null },
 { "type": "Feature", "properties": { "Province": "YALOVA", "Name of the Organized Industrial Zone": "YALOVA İMES", "Coordinates": "40.63042942073867, 29.376418593254368", "Latitude": 40.6308009, "Longitude": 29.3760923 }, "geometry": { "type": "Point", "coordinates": [ 29.3760923, 40.6308009 ] } },
