@@ -1,73 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>marmara ioz in turkey</title>
+    <title>Marmara Region OIZ Mapping</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        #map { height: 650px; width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background-color: #f8f9fa; }
-        h2 { color: #2c3e50; text-align: center; margin-bottom: 10px; }
-        .subtitle { text-align: center; color: #7f8c8d; margin-bottom: 20px; }
+        #map { height: 700px; width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background-color: #f4f7f6; }
+        h2 { color: #1a3a5a; text-align: center; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-    <h2>marmara region: organized industrial zones</h2>
-    <div class="subtitle">Interactive visualization of industrial clusters. Click markers for details.</div>
+    <h2>Marmara Region: Organized Industrial Zones</h2>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // 1. Initialize map centered on the Marmara Region
-        var map = L.map('map').setView([40.7, 29.5], 7);
+        // Start map focused on Northwest Turkey
+        var map = L.map('map').setView([40.8, 28.5], 7.5);
 
-        // 2. Add Base Map Layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // 3. Corrected Raw Link
-var geojsonUrl = 'https://raw.githubusercontent.com/zeynepkalaca/zeynepkalaca.github.io/refs/heads/main/marmara.geojson';
-        
+        // This URL must match your GitHub file name exactly
+        var geojsonUrl = 'https://raw.githubusercontent.com/zeynepkalaca/zeynepkalaca.github.io/refs/heads/main/marmara.geojson';
+
         fetch(geojsonUrl)
-            .then(response => {
-                if (!response.ok) throw new Error("File not found");
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                L.geoJSON(data, {
+                var oizLayer = L.geoJSON(data, {
                     onEachFeature: function (feature, layer) {
                         let props = feature.properties;
-                        
-                        // Using the exact headers from your spreadsheet
-                        let oizName = props["Name of the Organized Industrial Zone"] || "Industrial Zone";
-                        let province = props.Province || "Marmara Region";
+                        // Matches the exact headers in your GeoJSON
+                        let name = props["Name of the Organized Industrial Zone"] || "N/A";
+                        let province = props["Province"] || "Marmara Region";
 
-                        // Skip the technical header row (CSVFilter)
                         if (province !== "CSVFilter") {
                             layer.bindPopup(
-                                "<div style='text-align:center;'><strong>" + oizName + "</strong><br>" +
-                                "Province: " + province + "</div>"
+                                "<strong>" + name + "</strong><br>" +
+                                "Province: " + province
                             );
                         }
                     },
                     pointToLayer: function (feature, latlng) {
                         return L.circleMarker(latlng, {
                             radius: 8,
-                            fillColor: "#2980b9", // Professional Blue for Marmara
-                            color: "#ffffff",
+                            fillColor: "#2980b9",
+                            color: "#fff",
                             weight: 1.5,
-                            opacity: 1,
                             fillOpacity: 0.85
                         });
                     }
                 }).addTo(map);
+                
+                // Auto-fit the view to show all industrial zones
+                map.fitBounds(oizLayer.getBounds());
             })
-            .catch(error => {
-                console.error("Error loading map:", error);
-            });
+            .catch(error => console.error('Error loading GeoJSON:', error));
     </script>
 </body>
 </html>
