@@ -34,7 +34,7 @@
     "let it rip, dude.",
     "your body is not a temple, it's an amusement park.",
     "the script is unfinished but the stage is set."
-  ];
+ ];
 
   function newThought() {
     const randomIdx = Math.floor(Math.random() * thoughts.length);
@@ -43,18 +43,7 @@
 
   // Run once on page load
   newThought();
-
-  
-<p id="auto-date" style="font-size: 15px; color: gray;"></p>
-
-  <script>
-    const now = new Date();
-    const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
-    const day = now.getDate();
-    const month = months[now.getMonth()];
-    const year = now.getFullYear();
-    
-    document.getElementById('auto-date').innerText = "updated " + day + " " + month + " " + year;
-  </script>
+</script>
+  <p style="font-size: 15px; color: gray;">updated 26 april 2026</p>
 </body>
 </html>
