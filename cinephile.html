@@ -17,6 +17,13 @@
   .decade-bar { background: #0000ff; } /* Blue for decades */
 </style>
 </head>
+  <script>
+  const startDate = new Date('2023-09-17');
+  const today = new Date();
+  const diffTime = Math.abs(today - startDate);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+  document.write('<p style="font-size: 11px; color: gray; margin-top: 50px;">this data has been accumulating for ' + diffDays + ' days.</p>');
+</script>
 <body>
 
   <h1>cinema analytics</h1>
@@ -89,8 +96,9 @@
     </div>
   </div>
 
-  <br>
+ <br>
   <h3>[top years by volume]</h3>
+  <p style="font-size: 14px; line-height: 1.6;">
   <p>1. 2026 (119 films)<br>2. 2025 (234 films)<br>3. 2024 (98 films)</p>
 
   <br><br>
