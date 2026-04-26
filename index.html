@@ -43,7 +43,16 @@
 
   // Run once on page load
   newThought();
-</script>
-  <p style="font-size: 15px; color: gray;">updated 15 march 2026</p>
+<p id="auto-date" style="font-size: 15px; color: gray;"></p>
+
+  <script>
+    const now = new Date();
+    const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
+    const day = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+    
+    document.getElementById('auto-date').innerText = "updated " + day + " " + month + " " + year;
+  </script>
 </body>
 </html>
