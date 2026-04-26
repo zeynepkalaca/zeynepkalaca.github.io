@@ -1,3 +1,12 @@
+<h1>the laboratory</h1>
+<p>select an experiment:</p>
+<ul>
+  <li><a href="#gdp">gdp_deflator</a></li>
+  <li><a href="#ppp">ppp_parity</a></li>
+  <li><a href="index.html">shutdown_system</a></li>
+</ul>
+<hr>
+
 <div style="padding: 15px; border: 1px solid #000; background-color: #f9f9f9; max-width: 300px;">
   <h4 style="margin-top: 0;">economic tool v.1</h4>
   <p style="font-size: 12px;">calculate the inflation rate between two periods:</p>
@@ -21,3 +30,49 @@ function calculate() {
   }
 }
 </script>
+
+<div style="padding: 15px; border: 2px double #000; margin: 20px 0; max-width: 400px; background: #fff;">
+  <h3 style="margin-top: 0; background: #000; color: #fff; padding: 5px;">GDP_DE-FLATOR_V2</h3>
+  <p>nominal gdp: <input type="number" id="nomGDP" style="width: 100px;"></p>
+  <p>gdp deflator: <input type="number" id="deflator" style="width: 100px;"></p>
+  <button onclick="calcReal()">calculate real value</button>
+  <p id="gdp-result" style="color: green; font-family: monospace; font-weight: bold;"></p>
+</div>
+
+<script>
+function calcReal() {
+  let nom = document.getElementById('nomGDP').value;
+  let def = document.getElementById('deflator').value;
+  if(nom && def) {
+    let real = (nom / def) * 100;
+    document.getElementById('gdp-result').innerText = ">> real_gdp: $" + real.toFixed(2);
+  }
+}
+</script>
+
+
+<div style="padding: 15px; border: 1px solid #000; margin: 20px 0; max-自width: 400px; background: #ffffcc;">
+  <h4 style="margin: 0; text-decoration: underline;">ppp / currency parity experiment</h4>
+  <p>price of good (local): <input type="number" id="localPrice" style="width: 70px;"></p>
+  <p>price of good (foreign): <input type="number" id="foreignPrice" style="width: 70px;"></p>
+  <button onclick="calcPPP()">check parity</button>
+  <p id="ppp-result" style="font-size: 14px; margin-top: 10px;"></p>
+</div>
+
+<script>
+function calcPPP() {
+  let p1 = document.getElementById('localPrice').value;
+  let p2 = document.getElementById('foreignPrice').value;
+  if(p1 && p2) {
+    let s = p1 / p2;
+    document.getElementById('ppp-result').innerText = "implied exchange rate: " + s.toFixed(4);
+  }
+}
+</script>
+
+function glitchEffect(id) {
+  let el = document.getElementById(id);
+  el.style.transform = "translateX(5px)";
+  setTimeout(() => { el.style.transform = "translateX(0px)"; }, 50);
+}
+// You can add glitchEffect('gdp-result') inside your calc functions!
