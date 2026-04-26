@@ -1,0 +1,23 @@
+<div style="padding: 15px; border: 1px solid #000; background-color: #f9f9f9; max-width: 300px;">
+  <h4 style="margin-top: 0;">economic tool v.1</h4>
+  <p style="font-size: 12px;">calculate the inflation rate between two periods:</p>
+  
+  <input type="number" id="p1" placeholder="old price" style="width: 80px; border: 1px solid #000;">
+  <input type="number" id="p2" placeholder="new price" style="width: 80px; border: 1px solid #000;">
+  <button onclick="calculate()" style="cursor: pointer; background: #eee; border: 1px solid #000;">go</button>
+  
+  <p id="calc-output" style="color: blue; font-weight: bold; margin-bottom: 0; min-height: 1.2em;"></p>
+</div>
+
+<script>
+function calculate() {
+  let v1 = document.getElementById('p1').value;
+  let v2 = document.getElementById('p2').value;
+  if(v1 && v2) {
+    let rate = ((v2 - v1) / v1) * 100;
+    document.getElementById('calc-output').innerText = "result: " + rate.toFixed(2) + "%";
+  } else {
+    document.getElementById('calc-output').innerText = "enter numbers";
+  }
+}
+</script>
