@@ -16,6 +16,32 @@
   <p><a href="marmara.html">marmara</a></p>
   <p><a href="reality.html">reality</a></p>
   <br>
+  <div style="margin: 40px 0;">
+  <p id="thought-box" style="color: #6a0dad; font-style: italic; font-size: 18px;"></p>
+  <button onclick="newThought()" style="font-size: 10px; color: gray; border: none; background: none; cursor: pointer; text-decoration: underline;">
+    generate new thought
+  </button>
+</div>
+
+<script>
+  const thoughts = [
+    "the gdp deflator is watching you.",
+    "is the marmara region a circle or a feeling?",
+    "sovereignty is just a long-running play.",
+    "inflation is a ghost in the machine.",
+    "mapping the industrial zones taught me about silence.",
+    "reality is currently under maintenance.",
+    "the script is unfinished but the stage is set."
+  ];
+
+  function newThought() {
+    const randomIdx = Math.floor(Math.random() * thoughts.length);
+    document.getElementById('thought-box').innerText = thoughts[randomIdx];
+  }
+
+  // Run once on page load
+  newThought();
+</script>
   <p style="font-size: 15px; color: gray;">updated 15 march 2026</p>
 </body>
 </html>
