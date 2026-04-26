@@ -1,4 +1,4 @@
-<h1>the laboratory</h1>
+<h1>econ laboratory</h1>
 <p>select an experiment:</p>
 <ul>
   <li><a href="#gdp">gdp deflator</a></li>
@@ -68,3 +68,9 @@ function calcPPP() {
   }
 }
 </script>
+
+function glitchEffect(id) {
+  let el = document.getElementById(id);
+  el.style.transform = "translateX(5px)";
+  setTimeout(() => { el.style.transform = "translateX(0px)"; }, 50);
+}
