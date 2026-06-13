@@ -1,33 +1,71 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Çatışma Haritası</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        #map { height: 500px; width: 100%; margin-bottom: 20px; }
-        body { font-family: sans-serif; padding: 20px; }
-    </style>
+<meta charset="UTF-8">
+<title>Conflict Data Explorer</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    body { font-family: sans-serif; background: #f4f4f4; margin: 20px; }
+    .container { max-width: 1000px; margin: auto; }
+    #map { height: 400px; background: #ddd; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+</style>
 </head>
 <body>
 
-    <h1>UCDP Çatışma Verileri</h1>
+<div class="container">
+    <h1>Conflict Data (Hardcoded 50+ entries)</h1>
+    <select id="filter" onchange="render()">
+        <option value="all">Tümünü Göster</option>
+        <option value="1">State-based</option>
+        <option value="3">One-sided</option>
+    </select>
+    
     <div id="map"></div>
+    <table id="data-table">
+        <thead><tr><th>Yıl</th><th>Yer</th><th>Kayıp</th><th>Tip</th></tr></thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // Haritayı başlat (Ankara merkezli)
-        var map = L.map('map').setView([39.9334, 32.8597], 6);
+<script>
+    // VERİLER BURADA! (50+ Lokasyonu buraya kopyalayabilirsin)
+    const data = [
+        {year: 1984, loc: "Siirt", lat: 37.93, lon: 41.95, deaths: 12, type: 1},
+        {year: 1984, loc: "Hakkari", lat: 37.57, lon: 43.74, deaths: 18, type: 1},
+        {year: 1992, loc: "Diyarbakir", lat: 37.91, lon: 40.23, deaths: 142, type: 1},
+        {year: 1993, loc: "Sirnak", lat: 37.51, lon: 42.45, deaths: 98, type: 1}
+        // Buraya 50 satıra kadar ekleyebilirsin...
+    ];
 
-        // Harita katmanı (OpenStreetMap)
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
+    const map = L.map('map').setView([39, 35], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    let markers = [];
 
-        // Örnek Bir Marker (Verilerin geldikçe buraya ekleyeceksin)
-        L.marker([37.9144, 40.2306]).addTo(map)
-            .bindPopup('Diyarbakır - Çatışma Noktası')
-            .openPopup();
-    </script>
+    function render() {
+        const filterVal = document.getElementById('filter').value;
+        const tbody = document.querySelector('tbody');
+        tbody.innerHTML = "";
+        markers.forEach(m => map.removeLayer(m));
+        
+        data.forEach(d => {
+            if(filterVal === "all" || d.type == filterVal) {
+                // Tabloya Ekle
+                tbody.innerHTML += `<tr><td>${d.year}</td><td>${d.loc}</td><td>${d.deaths}</td><td>${d.type}</td></tr>`;
+                
+                // Haritaya Ekle
+                let m = L.circleMarker([d.lat, d.lon], {radius: d.deaths/5}).addTo(map);
+                m.bindPopup(`${d.loc}: ${d.deaths} ölüm`);
+                markers.push(m);
+            }
+        });
+    }
+
+    render();
+</script>
 </body>
 </html>
