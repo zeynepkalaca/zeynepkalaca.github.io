@@ -1,4 +1,371 @@
-[
-  {"year": 1990, "side_a": "Government of Turkey", "side_b": "PKK", "adm_1": "Unknown", "best": 16900, "type_of_violence": 1},
-  {"year": 1991, "side_a": "Government of Turkey", "side_b": "PKK", "adm_1": "Unknown", "best": 16900, "type_of_violence": 1}
-]
+
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1990,Middle East,Government of Turkey,1,3,16900",
+  "Column2": 781,
+  "Column3": " 822,Government of Turkey - DHKP-C",
+  "Column4": " Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,502,42,0,544,544,532,1,3,16900",
+  "Column6": 781,
+  "Column7": " 822,Government of Turkey - DHKP-C",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TKP-ML,1,502,42,0,544,544,532,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,86,86,86,0,86,86,86,502,128,0,630,630,618,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1991,Middle East,Government of Turkey,1,3,16900",
+  "Column2": 781,
+  "Column3": " 822,Government of Turkey - DHKP-C",
+  "Column4": " Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,368,14,15,397,402,397,1,3,16900",
+  "Column6": 781,
+  "Column7": " 822,Government of Turkey - DHKP-C",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TKP-ML,1,368,14,15,397,402,397,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,2,948",
+  "Column10": " 988,Government of Iraq - Civilians",
+  "Column11": " PKK - Civilians,0,0,0,0,1,2,2,2,1,49,49,49,0,51,51,51,368,65,15,448,453,448,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1992,Middle East,Government of Turkey,1,3,16900",
+  "Column2": 781,
+  "Column3": " 822,Government of Turkey - DHKP-C",
+  "Column4": " Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,1571,137,2,1710,1723,1710,1,3,16900",
+  "Column6": 781,
+  "Column7": " 822,Government of Turkey - DHKP-C",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TKP-ML,1,1571,137,2,1710,1723,1710,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,216,216,205,0,216,216,205,1571,353,2,1926,1939,1915,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1993,Middle East,Government of Turkey,1,3,16900",
+  "Column2": 781,
+  "Column3": " 822,Government of Turkey - DHKP-C",
+  "Column4": " Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,2025,175,146,2346,3553,2346,1,3,16900",
+  "Column6": 781,
+  "Column7": " 822,Government of Turkey - DHKP-C",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TKP-ML,1,2025,175,146,2346,3553,2346,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,419,421,419,0,419,421,419,2025,594,146,2765,3974,2765,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1994,Middle East,Government of Turkey,1,4,16900",
+  "Column2": 406,
+  "Column3": 781,
+  "Column4": " 822,Government of Iran - KDPI",
+  "Column5": " Government of Turkey - DHKP-C",
+  "Column6": " Government of Turkey - PKK",
+  "Column7": " Government of Turkey - TKP-ML,3838,137,0,3975,4079,3975,1,4,16900",
+  "Column8": 406,
+  "Column9": 781,
+  "Column10": " 822,Government of Iran - KDPI",
+  "Column11": " Government of Turkey - DHKP-C",
+  "Column12": " Government of Turkey - PKK",
+  "Column13": " Government of Turkey - TKP-ML,1,3838,137,0,3975,4079,3975,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,207,211,207,0,207,211,207,3838,344,0,4182,4290,4182,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1995,Middle East,Government of Turkey,1,3,16900",
+  "Column2": 781,
+  "Column3": " 822,Government of Turkey - DHKP-C",
+  "Column4": " Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,3509,74,3,3586,4284,3579,1,3,16900",
+  "Column6": 781,
+  "Column7": " 822,Government of Turkey - DHKP-C",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TKP-ML,1,3509,74,3,3586,4284,3579,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,64,64,64,0,64,64,64,3509,138,3,3650,4348,3643,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1996,Middle East,Government of Turkey,1,4,16900",
+  "Column2": 753,
+  "Column3": 781,
+  "Column4": " 822,Government of Iran - MEK",
+  "Column5": " Government of Turkey - DHKP-C",
+  "Column6": " Government of Turkey - PKK",
+  "Column7": " Government of Turkey - TKP-ML,3708,27,41,3776,3868,3774,1,4,16900",
+  "Column8": 753,
+  "Column9": 781,
+  "Column10": " 822,Government of Iran - MEK",
+  "Column11": " Government of Turkey - DHKP-C",
+  "Column12": " Government of Turkey - PKK",
+  "Column13": " Government of Turkey - TKP-ML,1,3708,27,41,3776,3868,3774,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,35,35,25,4,35,35,25,3708,58,45,3811,3903,3799,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1997,Middle East,Government of Turkey,1,2,16900",
+  "Column2": " 781,Government of Turkey - PKK",
+  "Column3": " Government of Turkey - TKP-ML,2551,25,5,2581,2694,2578,1,2,16900",
+  "Column4": " 781,Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,1,2551,25,5,2581,2694,2578,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,19,19,19,0,19,19,19,2551,44,5,2600,2713,2597,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1998,Middle East,Government of Turkey,1,3,16900",
+  "Column2": 781,
+  "Column3": " 822,Government of Turkey - DHKP-C",
+  "Column4": " Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,2028,5,0,2033,2039,2032,1,3,16900",
+  "Column6": 781,
+  "Column7": " 822,Government of Turkey - DHKP-C",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TKP-ML,1,2028,5,0,2033,2039,2032,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,25,25,25,0,25,25,25,2028,30,0,2058,2064,2057,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,1999,Middle East,Government of Turkey,1,3,16900",
+  "Column2": 781,
+  "Column3": " 822,Government of Turkey - DHKP-C",
+  "Column4": " Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,1101,11,4,1116,1193,1116,1,3,16900",
+  "Column6": 781,
+  "Column7": " 822,Government of Turkey - DHKP-C",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TKP-ML,1,1101,11,4,1116,1193,1116,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,39,39,39,0,39,39,39,1101,50,4,1155,1232,1155,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2000,Middle East,Government of Turkey,1,2,16900",
+  "Column2": " 781,Government of Turkey - PKK",
+  "Column3": " Government of Turkey - TKP-ML,153,0,0,153,157,153,1,2,16900",
+  "Column4": " 781,Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,1,153,0,0,153,157,153,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,153,0,0,153,157,153,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2001,Middle East,Government of Turkey,1,3,16900",
+  "Column2": 781,
+  "Column3": " 822,Government of Turkey - DHKP-C",
+  "Column4": " Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,137,2,0,139,154,139,1,3,16900",
+  "Column6": 781,
+  "Column7": " 822,Government of Turkey - DHKP-C",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TKP-ML,1,137,2,0,139,154,139,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,137,2,0,139,154,139,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2002,Middle East,Government of Turkey,1,3,16900",
+  "Column2": 781,
+  "Column3": " 822,Government of Turkey - DHKP-C",
+  "Column4": " Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,51,1,3,55,59,55,1,3,16900",
+  "Column6": 781,
+  "Column7": " 822,Government of Turkey - DHKP-C",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TKP-ML,1,51,1,3,55,59,55,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,1,3,55,59,55,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2003,Middle East,Government of Turkey,1,4,16900",
+  "Column2": 781,
+  "Column3": 823,
+  "Column4": " 878,Government of Turkey - MKP",
+  "Column5": " Government of Turkey - PKK",
+  "Column6": " Government of Turkey - TKP-ML",
+  "Column7": " Government of United States of America - al-Qaida,148,14,0,162,164,162,1,4,16900",
+  "Column8": 781,
+  "Column9": 823,
+  "Column10": " 878,Government of Turkey - MKP",
+  "Column11": " Government of Turkey - PKK",
+  "Column12": " Government of Turkey - TKP-ML",
+  "Column13": " Government of United States of America - al-Qaida,1,148,14,0,162,164,162,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,2,1075",
+  "Column14": " 988,al-Qaida  - Civilians",
+  "Column15": " PKK - Civilians,0,0,0,0,0,0,0,0,1,45,45,45,0,45,45,45,148,59,0,207,209,207,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2004,Middle East,Government of Turkey,1,4,16900",
+  "Column2": 781,
+  "Column3": 822,
+  "Column4": " 823,Government of Turkey - DHKP-C",
+  "Column5": " Government of Turkey - MKP",
+  "Column6": " Government of Turkey - PKK",
+  "Column7": " Government of Turkey - TKP-ML,243,12,18,273,411,273,1,4,16900",
+  "Column8": 781,
+  "Column9": 822,
+  "Column10": " 823,Government of Turkey - DHKP-C",
+  "Column11": " Government of Turkey - MKP",
+  "Column12": " Government of Turkey - PKK",
+  "Column13": " Government of Turkey - TKP-ML,1,243,12,18,273,411,273,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,243,13,18,274,412,274,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2005,Middle East,Government of Turkey,1,4,10516",
+  "Column2": 781,
+  "Column3": 822,
+  "Column4": " 823,Government of Turkey - DHKP-C",
+  "Column5": " Government of Turkey - MKP",
+  "Column6": " Government of Turkey - PKK",
+  "Column7": " Government of Turkey - TAK,386,7,0,393,424,391,1,4,10516",
+  "Column8": 781,
+  "Column9": 822,
+  "Column10": " 823,Government of Turkey - DHKP-C",
+  "Column11": " Government of Turkey - MKP",
+  "Column12": " Government of Turkey - PKK",
+  "Column13": " Government of Turkey - TAK,1,386,7,0,393,424,391,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,386,7,0,393,424,391,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2006,Middle East,Government of Turkey,1,2,10516",
+  "Column2": " 781,Government of Turkey - PKK",
+  "Column3": " Government of Turkey - TAK,305,7,5,317,368,317,1,2,10516",
+  "Column4": " 781,Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TAK,1,305,7,5,317,368,317,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,305,7,5,317,368,317,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2007,Middle East,Government of Turkey,1,2,781",
+  "Column2": " 822,Government of Turkey - DHKP-C",
+  "Column3": " Government of Turkey - PKK,625,6,0,631,654,625,1,2,781",
+  "Column4": " 822,Government of Turkey - DHKP-C",
+  "Column5": " Government of Turkey - PKK,1,625,6,0,631,654,625,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,7,8,7,0,7,8,7,625,13,0,638,662,632,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2008,Middle East,Government of Turkey,1,2,10516",
+  "Column2": " 781,Government of Turkey - PKK",
+  "Column3": " Government of Turkey - TAK,529,10,2,541,556,527,1,2,10516",
+  "Column4": " 781,Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TAK,1,529,10,2,541,556,527,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,17,23,17,0,17,23,17,529,27,2,558,579,544,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2009,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,183,9,3,195,195,190,1,1,781,Government of Turkey - PKK,1,183,9,3,195,195,190,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,183,9,3,195,195,190,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2010,Middle East,Government of Turkey,1,3,10516",
+  "Column2": 16900,
+  "Column3": " 781,Government of Turkey - PKK",
+  "Column4": " Government of Turkey - TAK",
+  "Column5": " Government of Turkey - TKP-ML,227,7,0,234,292,225,1,3,10516",
+  "Column6": 16900,
+  "Column7": " 781,Government of Turkey - PKK",
+  "Column8": " Government of Turkey - TAK",
+  "Column9": " Government of Turkey - TKP-ML,1,227,7,0,234,292,225,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,227,7,0,234,292,225,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2011,Middle East,Government of Turkey,1,5,10516",
+  "Column2": 16900,
+  "Column3": 781,
+  "Column4": 823,
+  "Column5": " 899,Government of Russia (Soviet Union) - Forces of the Caucasus Emirate",
+  "Column6": " Government of Turkey - MKP",
+  "Column7": " Government of Turkey - PKK",
+  "Column8": " Government of Turkey - TAK",
+  "Column9": " Government of Turkey - TKP-ML,357,53,0,410,437,409,1,5,10516",
+  "Column10": 16900,
+  "Column11": 781,
+  "Column12": 823,
+  "Column13": " 899,Government of Russia (Soviet Union) - Forces of the Caucasus Emirate",
+  "Column14": " Government of Turkey - MKP",
+  "Column15": " Government of Turkey - PKK",
+  "Column16": " Government of Turkey - TAK",
+  "Column17": " Government of Turkey - TKP-ML,1,357,53,0,410,437,409,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,1177,Government of Turkey - Civilians,1,1,2,1,1,1,2,1,0,0,0,0,0,1,2,1,357,54,0,411,439,410,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2012,Middle East,Government of Turkey,1,3,11973",
+  "Column2": 781,
+  "Column3": " 822,Government of Syria - Syrian insurgents",
+  "Column4": " Government of Turkey - DHKP-C",
+  "Column5": " Government of Turkey - PKK,759,20,9,788,801,788,1,3,11973",
+  "Column6": 781,
+  "Column7": " 822,Government of Syria - Syrian insurgents",
+  "Column8": " Government of Turkey - DHKP-C",
+  "Column9": " Government of Turkey - PKK,1,759,20,9,788,801,788,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,759,21,9,789,802,789,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2013,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,20,0,0,20,24,20,1,1,781,Government of Turkey - PKK,1,20,0,0,20,24,20,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,1,1,13767,\"IS, Jabhat Fateh al-Sham - PYD\",0,3,0,3,3,3,1,1,15695,THKP-C Acilciler - Civilians,0,0,0,0,0,0,0,0,1,52,53,0,0,52,53,0,20,55,0,75,80,23,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2014,Middle East,Government of Turkey,1,2,781",
+  "Column2": " 823,Government of Turkey - MKP",
+  "Column3": " Government of Turkey - PKK,10,0,1,11,12,10,1,2,781",
+  "Column4": " 823,Government of Turkey - MKP",
+  "Column5": " Government of Turkey - PKK,1,10,0,1,11,12,10,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,1,11,12,10,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2015,Middle East,Government of Turkey,1,4,14701",
+  "Column2": 16900,
+  "Column3": 781,
+  "Column4": " 822,Government of Turkey - DHKP-C",
+  "Column5": " Government of Turkey - IS",
+  "Column6": " Government of Turkey - PKK",
+  "Column7": " Government of Turkey - TKP-ML,845,40,30,915,1104,910,1,4,14701",
+  "Column8": 16900,
+  "Column9": 781,
+  "Column10": " 822,Government of Turkey - DHKP-C",
+  "Column11": " Government of Turkey - IS",
+  "Column12": " Government of Turkey - PKK",
+  "Column13": " Government of Turkey - TKP-ML,1,845,40,30,915,1104,910,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,2,973",
+  "Column14": " 988,IS - Civilians",
+  "Column15": " PKK - Civilians,0,0,0,0,0,0,0,0,1,146,146,146,4,146,146,146,845,182,34,1061,1250,1056,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2016,Middle East,Government of Turkey,1,6,10516",
+  "Column2": 14701,
+  "Column3": 15065,
+  "Column4": 16900,
+  "Column5": 781,
+  "Column6": " 822,Government of Turkey - DHKP-C",
+  "Column7": " Government of Turkey - IS",
+  "Column8": " Government of Turkey - PKK",
+  "Column9": " Government of Turkey - TAK",
+  "Column10": " Government of Turkey - TKP-ML",
+  "Column11": " Government of Turkey - Yurtta Sulh Konseyi,1099,323,23,1445,1541,1445,1,6,10516",
+  "Column12": 14701,
+  "Column13": 15065,
+  "Column14": 16900,
+  "Column15": 781,
+  "Column16": " 822,Government of Turkey - DHKP-C",
+  "Column17": " Government of Turkey - IS",
+  "Column18": " Government of Turkey - PKK",
+  "Column19": " Government of Turkey - TAK",
+  "Column20": " Government of Turkey - TKP-ML",
+  "Column21": " Government of Turkey - Yurtta Sulh Konseyi,1,1099,323,23,1445,1541,1445,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,3,1177",
+  "Column22": 973,
+  "Column23": " 988,Government of Turkey - Civilians",
+  "Column24": " IS - Civilians",
+  "Column25": " PKK - Civilians,1,4,4,4,1,4,4,4,1,116,116,116,47,120,120,120,1099,396,70,1565,1661,1565,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2017,Middle East,Government of Turkey,1,4,10516",
+  "Column2": 14701,
+  "Column3": 781,
+  "Column4": " 823,Government of Turkey - IS",
+  "Column5": " Government of Turkey - MKP",
+  "Column6": " Government of Turkey - PKK",
+  "Column7": " Government of Turkey - TAK,414,6,0,420,434,420,1,4,10516",
+  "Column8": 14701,
+  "Column9": 781,
+  "Column10": " 823,Government of Turkey - IS",
+  "Column11": " Government of Turkey - MKP",
+  "Column12": " Government of Turkey - PKK",
+  "Column13": " Government of Turkey - TAK,1,414,6,0,420,434,420,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,2,973",
+  "Column14": " 988,IS - Civilians",
+  "Column15": " PKK - Civilians,0,0,0,0,0,0,0,0,1,47,47,47,0,47,47,47,414,53,0,467,481,467,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2018,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,447,6,0,453,454,453,1,1,781,Government of Turkey - PKK,1,447,6,0,453,454,453,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,1,2,16135",
+  "Column2": " 16140,\"23rd Division, Ahrar al-Sham, Jaysh al Nasr, Jaysh al-Nukhba, Nour al-Din Zenki, Sham Legion, SNA - SDF",
+  "Column3": " SNA - SDF\",0,3,4,7,18,5,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,447,9,4,460,472,458,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2019,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,280,4,0,284,299,284,1,1,781,Government of Turkey - PKK,1,280,4,0,284,299,284,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,1,1,16135,SNA - SDF,2,19,0,21,21,21,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,9,9,9,0,9,9,9,282,32,0,314,329,314,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2020,Middle East,Government of Turkey,1,2,16900",
+  "Column2": " 781,Government of Turkey - PKK",
+  "Column3": " Government of Turkey - TKP-ML,213,3,1,217,227,217,1,2,16900",
+  "Column4": " 781,Government of Turkey - PKK",
+  "Column5": " Government of Turkey - TKP-ML,1,213,3,1,217,227,217,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,2,1177",
+  "Column6": " 988,Government of Turkey - Civilians",
+  "Column7": " PKK - Civilians,1,1,1,1,1,1,1,1,1,12,12,12,0,13,13,13,213,16,1,230,240,230,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2021,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,133,1,1,135,153,135,1,1,781,Government of Turkey - PKK,1,133,1,1,135,153,135,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,1,1,16135,SNA - SDF,1,0,1,2,2,2,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,134,1,2,137,155,137,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2022,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,96,0,0,96,109,96,1,1,781,Government of Turkey - PKK,1,96,0,0,96,109,96,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,1,1,16135,SNA - SDF,0,3,1,4,4,4,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,7,7,7,6,7,7,7,96,4,7,107,120,107,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2023,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,105,0,1,106,112,106,1,1,781,Government of Turkey - PKK,1,105,0,1,106,112,106,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,2,2,2,0,2,2,2,105,2,1,108,114,108,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2024,Middle East,Government of Turkey,1,2,781",
+  "Column2": " 822,Government of Turkey - DHKP-C",
+  "Column3": " Government of Turkey - PKK,35,2,0,37,46,37,1,2,781",
+  "Column4": " 822,Government of Turkey - DHKP-C",
+  "Column5": " Government of Turkey - PKK,1,35,2,0,37,46,37,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,2,973",
+  "Column6": " 988,IS - Civilians",
+  "Column7": " PKK - Civilians,0,0,0,0,0,0,0,0,1,6,6,6,1,6,6,6,35,7,1,43,52,43,26.1"
+ },
+ {
+  "Turkey,640,1989,Middle East,Government of Turkey,1,1,781,Government of Turkey - PKK,403,29,10,442,442,442,1,1,781,Government of Turkey - PKK,1,403,29,10,442,442,442,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,988,PKK - Civilians,0,0,0,0,0,0,0,0,1,96,96,96,0,96,96,96,403,125,10,538,538,538,26.1": "Turkey,640,2025,Middle East,Government of Turkey,1,2,14701",
+  "Column2": " 781,Government of Turkey - IS",
+  "Column3": " Government of Turkey - PKK,10,0,0,10,10,9,1,2,14701",
+  "Column4": " 781,Government of Turkey - IS",
+  "Column5": " Government of Turkey - PKK,1,10,0,0,10,10,9,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,0,0,0,NO_DYAD,NO_DYAD,0,0,0,0,0,0,1,1,1176,Government of Iran - Civilians,0,0,0,0,1,1,1,1,0,0,0,0,0,1,1,1,10,1,0,11,11,10,26.1"
+ }
