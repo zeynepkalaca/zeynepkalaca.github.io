@@ -392,35 +392,7 @@
   window.onload = initSystem;
 </script>
 
-      // Yeni grafiği çiz
-      chartInstance = new Chart(ctx, {
-        type: 'bar', // 'line' yazarak çizgi grafiğine de çevirebilirsin
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Fatalities',
-            data: dataPoints,
-            backgroundColor: 'rgba(255, 0, 0, 0.8)', // Kırmızı sütunlar
-            borderColor: '#000',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display: false } // Lejantı gizliyoruz çünkü başlık yeterli
-          },
-          scales: {
-            x: { ticks: { font: { family: 'monospace' } } },
-            y: { ticks: { font: { family: 'monospace' } }, beginAtZero: true }
-          }
-        }
-      });
-    }
-
-    window.onload = initDashboard;
-  </script>
-
+   
 </body>
 </html>
 
