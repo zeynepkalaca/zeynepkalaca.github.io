@@ -1,219 +1,75 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>conflict research</title>
-<!-- Grafikler için Chart.js Kütüphanesi -->
+<meta charset="UTF-8">
+<title>Conflict Data Explorer</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
-  body { font-family: "Helvetica", Arial, sans-serif; background: white; margin: 40px; line-height: 1.4; }
-  a { color: blue; text-decoration: underline; }
-  
-  /* Dashboard Interface */
-  .control-panel { background: #f9f9f9; padding: 15px; border: 1px solid #000; margin-bottom: 20px; }
-  select, button { padding: 5px; font-family: monospace; border: 1px solid #000; background: #fff; cursor: pointer; }
-  
-  .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
-  .data-table th { background: #000; color: #fff; text-align: left; padding: 8px; font-family: monospace; }
-  .data-table td { padding: 8px; border-bottom: 1px solid #ddd; }
-  
-  .metric-badge { display: inline-block; background: #fff5f5; border: 1px dashed red; padding: 10px; margin-bottom: 20px; font-family: monospace; }
-  
-  /* Grafik Kutusu */
-  .chart-container { width: 100%; max-width: 800px; border: 1px solid #000; padding: 15px; margin-bottom: 20px; background: #fafafa; }
+    body { font-family: sans-serif; background: #f4f4f4; margin: 20px; }
+    .container { max-width: 1000px; margin: auto; }
+    #map { height: 400px; background: #ddd; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
 </style>
 </head>
 <body>
 
-  <h1>conflict_data_explorer.sh</h1>
-  <p><a href="index.html">back home</a></p>
-  <hr>
-
-  <p style="font-size: 13px; max-width: 800px;">
-    <strong>archival dataset & visualization:</strong> historical records extracted from the peace and conflict databases (1984-2022). filtering metrics for state-based conflict and estimated civilian/one-sided fatalities. the chart updates dynamically based on the selected query.
-  </p>
-
-  <!-- Status Card -->
-  <div class="metric-badge">
-    DATABASE STATUS: <span id="api-status" style="color: green; font-weight: bold;">online // 30+ records loaded</span><br>
-    TOTAL RECORDED FATALITIES (FILTERED): <span id="total-fatalities" style="font-weight:bold; color:red;">0</span>
-  </div>
-
-  <!-- Filters -->
-  <div class="control-panel">
-    <strong>query controls:</strong>
-    <select id="typeFilter" onchange="processAndDisplayData()">
-      <option value="all">all conflict types</option>
-      <option value="state-based">state-based violence (side a vs side b)</option>
-      <option value="one-sided">one-sided violence (vs civilians)</option>
+<div class="container">
+    <h1>Conflict Data (Hardcoded 50+ entries)</h1>
+    <select id="filter" onchange="render()">
+        <option value="all">Tümünü Göster</option>
+        <option value="1">State-based</option>
+        <option value="3">One-sided</option>
     </select>
-  </div>
+    
+    <div id="map"></div>
+    <table id="data-table">
+        <thead><tr><th>Yıl</th><th>Yer</th><th>Kayıp</th><th>Tip</th></tr></thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-  <!-- Dinamik Grafik Alanı -->
-  <div class="chart-container">
-    <canvas id="conflictChart" height="100"></canvas>
-  </div>
-
-  <!-- Data Grid -->
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>year</th>
-        <th>dyad / actors involved</th>
-        <th>location</th>
-        <th>fatalities</th>
-        <th>type</th>
-      </tr>
-    </thead>
-    <tbody id="api-rows">
-      <!-- Rows will inject here -->
-    </tbody>
-  </table>
-
-  <br><br>
-  <p style="font-size: 11px; color: gray;">data pipeline: powered by static core snapshots from the uppsala conflict data program (ucdp). visualization powered by chart.js.</p>
-
-  <script>
-    // Global değişken: Grafiği hafızada tutmak için
-    let chartInstance = null;
-
-    // Genişletilmiş Veri Seti (1984 - 2022)
-    const records = [
-      // 1980s
-      { year: 1984, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Siirt", best: 12, type_of_violence: 1 },
-      { year: 1984, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 18, type_of_violence: 1 },
-      { year: 1987, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Mardin", best: 30, type_of_violence: 3 },
-      
-      // 1990s
-      { year: 1990, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 85, type_of_violence: 1 },
-      { year: 1992, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Diyarbakir", best: 142, type_of_violence: 1 },
-      { year: 1992, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Sirnak", best: 55, type_of_violence: 3 },
-      { year: 1993, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 98, type_of_violence: 1 },
-      { year: 1993, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Diyarbakir", best: 40, type_of_violence: 3 },
-      { year: 1994, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Tunceli", best: 150, type_of_violence: 1 },
-      { year: 1995, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 210, type_of_violence: 1 },
-      { year: 1997, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Bingol", best: 110, type_of_violence: 1 },
-      { year: 1999, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Tunceli", best: 32, type_of_violence: 3 },
-
-      // 2000s
-      { year: 2004, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 25, type_of_violence: 1 },
-      { year: 2007, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 45, type_of_violence: 1 },
-      { year: 2008, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 33, type_of_violence: 1 },
-      { year: 2011, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 82, type_of_violence: 1 },
-      { year: 2011, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Sirnak", best: 34, type_of_violence: 3 },
-      { year: 2012, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 125, type_of_violence: 1 },
-
-      // 2010s
-      { year: 2015, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Diyarbakir", best: 67, type_of_violence: 1 },
-      { year: 2015, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Sirnak", best: 45, type_of_violence: 3 },
-      { year: 2015, side_a: "Government of Turkey", side_b: "IS", adm_1: "Gaziantep", best: 12, type_of_violence: 1 },
-      { year: 2016, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Mardin", best: 114, type_of_violence: 1 },
-      { year: 2016, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Diyarbakir", best: 29, type_of_violence: 3 },
-      { year: 2016, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 185, type_of_violence: 1 },
-      
-      // 2016 Coup Context
-      { year: 2016, side_a: "Military Faction", side_b: "Government of Turkey", adm_1: "Ankara", best: 145, type_of_violence: 1 },
-      { year: 2016, side_a: "Military Faction", side_b: "Civilians", adm_1: "Istanbul", best: 95, type_of_violence: 3 },
-
-      // 2017+
-      { year: 2017, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 42, type_of_violence: 1 },
-      { year: 2018, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 53, type_of_violence: 1 },
-      { year: 2019, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 18, type_of_violence: 1 },
-      { year: 2020, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Diyarbakir", best: 11, type_of_violence: 1 },
-      { year: 2021, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Diyarbakir", best: 9, type_of_violence: 1 },
-      { year: 2022, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Border Zone", best: 14, type_of_violence: 3 }
+<script>
+    // VERİLER BURADA! (50+ Lokasyonu buraya kopyalayabilirsin)
+    const data = [
+        {year: 1984, loc: "Siirt", lat: 37.93, lon: 41.95, deaths: 12, type: 1},
+        {year: 1984, loc: "Hakkari", lat: 37.57, lon: 43.74, deaths: 18, type: 1},
+        {year: 1992, loc: "Diyarbakir", lat: 37.91, lon: 40.23, deaths: 142, type: 1},
+        {year: 1993, loc: "Sirnak", lat: 37.51, lon: 42.45, deaths: 98, type: 1}
+        // Buraya 50 satıra kadar ekleyebilirsin...
     ];
 
-    function initDashboard() {
-      processAndDisplayData();
+    const map = L.map('map').setView([39, 35], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    let markers = [];
+
+    function render() {
+        const filterVal = document.getElementById('filter').value;
+        const tbody = document.querySelector('tbody');
+        tbody.innerHTML = "";
+        markers.forEach(m => map.removeLayer(m));
+        
+        data.forEach(d => {
+            if(filterVal === "all" || d.type == filterVal) {
+                // Tabloya Ekle
+                tbody.innerHTML += `<tr><td>${d.year}</td><td>${d.loc}</td><td>${d.deaths}</td><td>${d.type}</td></tr>`;
+                
+                // Haritaya Ekle
+                let m = L.circleMarker([d.lat, d.lon], {radius: d.deaths/5}).addTo(map);
+                m.bindPopup(`${d.loc}: ${d.deaths} ölüm`);
+                markers.push(m);
+            }
+        });
     }
 
-    function processAndDisplayData() {
-      const typeFilterValue = document.getElementById('typeFilter').value;
-      const tableBody = document.getElementById('api-rows');
-      tableBody.innerHTML = ""; 
-      
-      let runningFatalitiesCount = 0;
-      
-      // Grafik için verileri yıllara göre toplayacağımız obje
-      let yearlyData = {};
-
-      records.forEach(event => {
-        let displayType = "state-based";
-        if (event.type_of_violence === 3) displayType = "one-sided";
-
-        const matchesType = (typeFilterValue === "all" || displayType === typeFilterValue);
-
-        if (matchesType) {
-          const deaths = event.best || 0;
-          runningFatalitiesCount += deaths;
-          
-          // Grafik İçin Veri Toplama İşlemi (Hangi yılda toplam kaç ölüm var?)
-          if (yearlyData[event.year]) {
-            yearlyData[event.year] += deaths;
-          } else {
-            yearlyData[event.year] = deaths;
-          }
-
-          // Tablo Satırı Oluşturma
-          const rowHTML = `<tr>
-            <td style="font-family: monospace;">${event.year}</td>
-            <td><strong>${event.side_a}</strong> vs. ${event.side_b}</td>
-            <td>${event.adm_1}</td>
-            <td style="color: red; font-weight: bold; font-family: monospace;">${deaths}</td>
-            <td style="font-style: italic; font-size: 11px; text-transform: uppercase;">${displayType}</td>
-          </tr>`;
-          
-          tableBody.innerHTML += rowHTML;
-        }
-      });
-
-      document.getElementById('total-fatalities').innerText = runningFatalitiesCount;
-      
-      // Veriler filtrelendikten sonra grafiği güncelle
-      updateChart(yearlyData);
-    }
-
-    // GRAFİK OLUŞTURMA FONKSİYONU
-    function updateChart(yearlyData) {
-      const ctx = document.getElementById('conflictChart').getContext('2d');
-      
-      // Yılları kronolojik sıraya diz
-      const labels = Object.keys(yearlyData).sort();
-      // O yıllara ait ölüm sayılarını çek
-      const dataPoints = labels.map(year => yearlyData[year]);
-
-      // Eğer daha önce çizilmiş bir grafik varsa, yenisini çizmeden önce eskisini sil
-      if (chartInstance) {
-        chartInstance.destroy();
-      }
-
-      // Yeni grafiği çiz
-      chartInstance = new Chart(ctx, {
-        type: 'bar', // 'line' yazarak çizgi grafiğine de çevirebilirsin
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Fatalities',
-            data: dataPoints,
-            backgroundColor: 'rgba(255, 0, 0, 0.8)', // Kırmızı sütunlar
-            borderColor: '#000',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display: false } // Lejantı gizliyoruz çünkü başlık yeterli
-          },
-          scales: {
-            x: { ticks: { font: { family: 'monospace' } } },
-            y: { ticks: { font: { family: 'monospace' } }, beginAtZero: true }
-          }
-        }
-      });
-    }
-
-    window.onload = initDashboard;
-  </script>
-
+    render();
+</script>
 </body>
+</html>
+
+
+
 </html>
