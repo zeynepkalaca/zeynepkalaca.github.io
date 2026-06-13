@@ -233,40 +233,31 @@
   let chartInstance = null;
 
   // The complete archival dataset
-  const records = [
-    { year: 1984, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Siirt", best: 12, type_of_violence: 1 },
-    { year: 1984, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 18, type_of_violence: 1 },
-    { year: 1987, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Mardin", best: 30, type_of_violence: 3 },
-    { year: 1990, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 85, type_of_violence: 1 },
-    { year: 1992, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Diyarbakir", best: 142, type_of_violence: 1 },
-    { year: 1992, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Sirnak", best: 55, type_of_violence: 3 },
-    { year: 1993, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 98, type_of_violence: 1 },
-    { year: 1993, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Diyarbakir", best: 40, type_of_violence: 3 },
-    { year: 1994, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Tunceli", best: 150, type_of_violence: 1 },
-    { year: 1995, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 210, type_of_violence: 1 },
-    { year: 1997, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Bingol", best: 110, type_of_violence: 1 },
-    { year: 1999, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Tunceli", best: 32, type_of_violence: 3 },
-    { year: 2004, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 25, type_of_violence: 1 },
-    { year: 2007, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 45, type_of_violence: 1 },
-    { year: 2008, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 33, type_of_violence: 1 },
-    { year: 2011, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 82, type_of_violence: 1 },
-    { year: 2011, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Sirnak", best: 34, type_of_violence: 3 },
-    { year: 2012, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 125, type_of_violence: 1 },
-    { year: 2015, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Diyarbakir", best: 67, type_of_violence: 1 },
-    { year: 2015, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Sirnak", best: 45, type_of_violence: 3 },
-    { year: 2015, side_a: "Government of Turkey", side_b: "IS", adm_1: "Gaziantep", best: 12, type_of_violence: 1 },
-    { year: 2016, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Mardin", best: 114, type_of_violence: 1 },
-    { year: 2016, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Diyarbakir", best: 29, type_of_violence: 3 },
-    { year: 2016, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 185, type_of_violence: 1 },
-    { year: 2016, side_a: "Military Faction", side_b: "Government of Turkey", adm_1: "Ankara", best: 145, type_of_violence: 1 },
-    { year: 2016, side_a: "Military Faction", side_b: "Civilians", adm_1: "Istanbul", best: 95, type_of_violence: 3 },
-    { year: 2017, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 42, type_of_violence: 1 },
-    { year: 2018, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Hakkari", best: 53, type_of_violence: 1 },
-    { year: 2019, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Sirnak", best: 18, type_of_violence: 1 },
-    { year: 2020, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Diyarbakir", best: 11, type_of_violence: 1 },
-    { year: 2021, side_a: "Government of Turkey", side_b: "PKK", adm_1: "Diyarbakir", best: 9, type_of_violence: 1 },
-    { year: 2022, side_a: "Government of Turkey", side_b: "Civilians", adm_1: "Border Zone", best: 14, type_of_violence: 3 }
-  ];
+let records = []; // Global variable to store data
+
+// This function "fetches" the file from your GitHub repository
+async function loadData() {
+    try {
+        const response = await fetch('data.json'); 
+        records = await response.json();
+        processAndDisplayData(); // Runs the map and table update
+    } catch (error) {
+        console.error("Error loading the data file:", error);
+    }
+}
+
+function initSystem() {
+    mapInstance = L.map('map').setView([39.0, 35.0], 5);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(mapInstance);
+    
+    // Start by loading the data
+    loadData();
+}
+
+// Ensure the code runs when the page loads
+window.onload = initSystem;
 
   function initDashboard() {
     processAndDisplayData();
