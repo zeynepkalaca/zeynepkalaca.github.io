@@ -1,0 +1,7 @@
+[
+  {"year": 1984, "side_a": "Government", "side_b": "PKK", "location": "Siirt", "lat": 37.9333, "lon": 41.9500, "deaths": 12, "type": 1},
+  {"year": 1984, "side_a": "Government", "side_b": "PKK", "location": "Hakkari", "lat": 37.5744, "lon": 43.7408, "deaths": 18, "type": 1},
+  {"year": 1990, "side_a": "Government", "side_b": "PKK", "location": "Sirnak", "lat": 37.5189, "lon": 42.4537, "deaths": 85, "type": 1},
+  {"year": 1992, "side_a": "Government", "side_b": "PKK", "location": "Diyarbakir", "lat": 37.9144, "lon": 40.2306, "deaths": 142, "type": 1}
+  /* ... add your 50+ entries here in the same format ... */
+]
