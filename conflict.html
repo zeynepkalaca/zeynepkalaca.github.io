@@ -1,4 +1,63 @@
-<script>
+<html>
+<head>
+<title>conflict research</title>
+<style>
+  body { font-family: "Helvetica", Arial, sans-serif; background: white; margin: 40px; line-height: 1.4; }
+  a { color: blue; text-decoration: underline; }
+  
+  /* Dashboard Interface */
+  .control-panel { background: #f9f9f9; padding: 15px; border: 1px solid #000; margin-bottom: 20px; }
+  select, button { padding: 5px; font-family: monospace; border: 1px solid #000; background: #fff; cursor: pointer; }
+  
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
+  .data-table th { background: #000; color: #fff; text-align: left; padding: 8px; font-family: monospace; }
+  .data-table td { padding: 8px; border-bottom: 1px solid #ddd; }
+  
+  .metric-badge { display: inline-block; background: #fff5f5; border: 1px dashed red; padding: 10px; margin-bottom: 20px; font-family: monospace; }
+</style>
+</head>
+<body>
+
+  <h1>conflict_data_explorer.sh</h1>
+  <p><a href="index.html">back home</a></p>
+  <hr>
+
+  <p style="font-size: 13px; max-width: 650px;">
+    <strong>archival dataset:</strong> historical records extracted from the peace and conflict databases. filtering metrics for state-based conflict, dyad intersections, and estimated civilian/one-sided fatalities within specified geographic boundaries.
+  </p>
+
+  <div class="metric-badge">
+    DATABASE STATUS: <span id="api-status" style="color: green; font-weight: bold;">online // archival dataset loaded successfully</span><br>
+    TOTAL RECORDED FATALITIES (FILTERED): <span id="total-fatalities" style="font-weight:bold; color:red;">0</span>
+  </div>
+
+  <div class="control-panel">
+    <strong>query controls:</strong>
+    <select id="typeFilter" onchange="processAndDisplayData()">
+      <option value="all">all conflict types</option>
+      <option value="state-based">state-based violence (side a vs side b)</option>
+      <option value="one-sided">one-sided violence (vs civilians)</option>
+    </select>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>year</th>
+        <th>dyad / actors involved</th>
+        <th>location</th>
+        <th>best estimate fatalities</th>
+        <th>type</th>
+      </tr>
+    </thead>
+    <tbody id="api-rows">
+      </tbody>
+  </table>
+
+  <br><br>
+  <p style="font-size: 11px; color: gray;">data pipeline: powered by static core snapshots from the uppsala conflict data program (ucdp). completely secure from cross-origin browser restrictions.</p>
+
+  <script>
     // Expanded UCDP format dataset for Turkey
     const records = [
       // 1990s
@@ -47,7 +106,6 @@
 
       records.forEach(event => {
         let displayType = "state-based";
-        // UCDP coding: 1 is state-based, 3 is one-sided violence
         if (event.type_of_violence === 3) displayType = "one-sided";
 
         const matchesType = (typeFilterValue === "all" || displayType === typeFilterValue);
@@ -73,3 +131,6 @@
 
     window.onload = initDashboard;
   </script>
+
+</body>
+</html>
