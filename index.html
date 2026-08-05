@@ -21,7 +21,7 @@
     }
 
     p { 
-      margin: 40px 0; 
+      margin: 20px 0; 
       font-size: 20px; 
     }
 
@@ -31,9 +31,27 @@
       font-size: 20px;
     }
 
+    /* Layout structure to place quote section on the right */
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 60px;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+
+    .quote-section {
+      flex: 1;
+      border-left: 2px solid #f0f0f0;
+      padding-left: 40px;
+    }
+
     /* Custom styles for social links */
     .contact-link {
-      font-family: "Consolas", "Courier New", monospace; /* Clean tech-focused monospace font */
+      font-family: "Consolas", "Courier New", monospace; 
       text-decoration: none;
       color: #333;
       font-weight: 500;
@@ -47,6 +65,7 @@
     #quote-box {
       font-size: 22px; 
       font-weight: bold;
+      margin-top: 0;
     }
 
     button {
@@ -63,24 +82,33 @@
   <p>Student, Middle East Technical University (2023-2028)</p>
   <p>Research Assistant, Koç University (2026)</p>
   <br>
-  <p>
-    <a href="https://github.com/zeynepkalaca" class="contact-link" target="_blank">💻 github</a>
-  </p>
-  <p>
-    <a href="mailto:kalaca.zeynep@metu.edu.tr" class="contact-link">✉️ e-mail</a>
-  </p>
-  <p>
-    <a href="https://unsplash.com/@zeynepkalaca" class="contact-link" target="_blank">📷 unsplash</a>
-  </p>
-  <p>
-    <a href="https://soundcloud.com/zklca" class="contact-link" target="_blank">🎧 soundcloud</a>
-  </p>
-  <br>
-  <p><a href="projects.html">projects</a></p>
-  <p><a href="questions.html">questions</a></p>
-  <br>
-  <p id="quote-box"></p>
-  <button onclick="newQuote()">new quote</button>
+
+  <!-- Two-column container -->
+  <div class="container">
+    <div class="main-content">
+      <p>
+        <a href="https://github.com/zeynepkalaca" class="contact-link" target="_blank">💻 github</a>
+      </p>
+      <p>
+        <a href="mailto:kalaca.zeynep@metu.edu.tr" class="contact-link">✉️ e-mail</a>
+      </p>
+      <p>
+        <a href="https://unsplash.com/@zeynepkalaca" class="contact-link" target="_blank">📷 unsplash</a>
+      </p>
+      <p>
+        <a href="https://soundcloud.com/zklca" class="contact-link" target="_blank">🎧 soundcloud</a>
+      </p>
+      <br>
+      <p><a href="projects.html">projects</a></p>
+      <p><a href="questions.html">questions</a></p>
+    </div>
+
+    <!-- Quote aligned to the right -->
+    <div class="quote-section">
+      <p id="quote-box"></p>
+      <button onclick="newQuote()">new quote</button>
+    </div>
+  </div>
 
   <script>
     const quotes = [
