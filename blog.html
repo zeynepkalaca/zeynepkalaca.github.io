@@ -15,7 +15,7 @@
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
-      margin: 100px; 
+      margin: 60px 100px; 
       font-size: 20px; 
     }
     
@@ -35,13 +35,32 @@
       font-size: 20px;
     }
 
-    /* Picture of the Day Styles */
+    /* 2-Column Main Layout Container */
+    .layout-container {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      margin-top: 30px;
+    }
+
+    /* Left Column for Writings */
+    .left-column {
+      flex: 1;
+      max-width: 650px;
+    }
+
+    /* Right Column for POTD */
+    .right-column {
+      width: 380px;
+      position: sticky;
+      top: 40px;
+    }
+
+    /* Picture of the Day Card */
     .potd-card {
       border: 1px solid #e0e0e0;
       border-radius: 8px;
       padding: 20px;
-      margin-top: 30px;
-      max-width: 650px;
       background-color: rgba(250, 250, 250, 0.95);
     }
 
@@ -64,8 +83,7 @@
       border: 1px solid #e0e0e0;
       border-radius: 8px;
       padding: 24px;
-      margin-top: 30px;
-      max-width: 650px;
+      margin-bottom: 30px;
       background-color: rgba(250, 250, 250, 0.95);
     }
 
@@ -107,6 +125,18 @@
       text-decoration: underline;
       font-weight: bold;
     }
+
+    /* Responsive adjustments for mobile screens */
+    @media (max-width: 900px) {
+      .layout-container {
+        flex-direction: column;
+      }
+      .right-column {
+        width: 100%;
+        max-width: 650px;
+        position: static;
+      }
+    }
   </style>
 </head>
 <body>
@@ -115,47 +145,59 @@
   <h1>blog</h1>
   <p><a href="index.html">back home</a></p>
 
-  <!-- Picture of the Day Container -->
-  <div class="potd-card">
-    <strong style="font-size: 18px; color: #cc0000;">Picture of the Day</strong>
-    <img id="potd-img" src="" alt="Wikimedia Commons Picture of the Day" style="display: none;">
-    <p id="potd-caption" class="potd-caption">Loading picture of the day...</p>
-  </div>
+  <!-- Two Column Layout Container -->
+  <div class="layout-container">
+    
+    <!-- Left Column: Writings -->
+    <div class="left-column">
+      
+      <!-- Terrabayt Article Card -->
+      <div class="article-card">
+        <h2 class="article-title">
+          <a href="https://terrabayt.com/dusunce/icsel-cagridan-ortalama-imgeye-yapay-zekanin-toplumsalligi/" target="_blank">
+            İçsel Çağrıdan Ortalama İmgeye: Yapay Zekânın Toplumsallığı
+          </a>
+        </h2>
+        <div class="article-meta">
+          Published in Terrabayt
+        </div>
+        <p class="article-preview">
+          Yeni bir çağın erken dönem çocukları olarak hepimiz kaskatı bir A4 kağıdının bir tarafından tutup çekiştiriyor ve elimizde kalan parçalardan bir şeyler “üretiyoruz”.
+        </p>
+        <a href="https://terrabayt.com/dusunce/icsel-cagridan-ortalama-imgeye-yapay-zekanin-toplumsalligi/" class="read-more" target="_blank">
+          Read full article on Terrabayt →
+        </a>
+      </div>
 
-  <!-- Terrabayt Article Card -->
-  <div class="article-card">
-    <h2 class="article-title">
-      <a href="https://terrabayt.com/dusunce/icsel-cagridan-ortalama-imgeye-yapay-zekanin-toplumsalligi/" target="_blank">
-        İçsel Çağrıdan Ortalama İmgeye: Yapay Zekânın Toplumsallığı
-      </a>
-    </h2>
-    <div class="article-meta">
-      Published in Terrabayt
-    </div>
-    <p class="article-preview">
-      Yeni bir çağın erken dönem çocukları olarak hepimiz kaskatı bir A4 kağıdının bir tarafından tutup çekiştiriyor ve elimizde kalan parçalardan bir şeyler “üretiyoruz”.
-    </p>
-    <a href="https://terrabayt.com/dusunce/icsel-cagridan-ortalama-imgeye-yapay-zekanin-toplumsalligi/" class="read-more" target="_blank">
-      Read full article on Terrabayt →
-    </a>
-  </div>
+      <!-- Hodos Dergi Article Card -->
+      <div class="article-card">
+        <h2 class="article-title">
+          <a href="https://www.hodosdergi.com/post/anal%C4%B1k-ve-devrim" target="_blank">
+            Analık ve Devrim
+          </a>
+        </h2>
+        <div class="article-meta">
+          Published in Hodos Dergi
+        </div>
+        <p class="article-preview">
+          Oyun yazarı Edward Bond, "Lear" adlı oyununun önsözünde, içerisine doğduğumuz dünyadaki "biyolojik beklentilerimizden" dem vurur.
+        </p>
+        <a href="https://www.hodosdergi.com/post/anal%C4%B1k-ve-devrim" class="read-more" target="_blank">
+          Read full article on Hodos Dergi →
+        </a>
+      </div>
 
-  <!-- Hodos Dergi Article Card -->
-  <div class="article-card">
-    <h2 class="article-title">
-      <a href="https://www.hodosdergi.com/post/anal%C4%B1k-ve-devrim" target="_blank">
-        Analık ve Devrim
-      </a>
-    </h2>
-    <div class="article-meta">
-      Published in Hodos Dergi
     </div>
-    <p class="article-preview">
-      Oyun yazarı Edward Bond, "Lear" adlı oyununun önsözünde, içerisine doğduğumuz dünyadaki "biyolojik beklentimentimizden" dem vurur.
-    </p>
-    <a href="https://www.hodosdergi.com/post/anal%C4%B1k-ve-devrim" class="read-more" target="_blank">
-      Read full article on Hodos Dergi →
-    </a>
+
+    <!-- Right Column: Picture of the Day -->
+    <div class="right-column">
+      <div class="potd-card">
+        <strong style="font-size: 18px; color: #cc0000;">Picture of the Day</strong>
+        <img id="potd-img" src="" alt="Wikimedia Commons Picture of the Day" style="display: none;">
+        <p id="potd-caption" class="potd-caption">Loading picture of the day...</p>
+      </div>
+    </div>
+
   </div>
 
   <script>
