@@ -10,7 +10,11 @@
   <style>
     body { 
       font-family: "Helvetica", "Arial", sans-serif; 
-      background: white; 
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       margin: 100px; 
       font-size: 20px; 
     }
@@ -31,6 +35,30 @@
       font-size: 20px;
     }
 
+    /* Picture of the Day Styles */
+    .potd-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 30px;
+      max-width: 650px;
+      background-color: rgba(250, 250, 250, 0.95);
+    }
+
+    .potd-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    .potd-caption {
+      font-size: 15px;
+      color: #444;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+
     /* Article Card Styles */
     .article-card {
       border: 1px solid #e0e0e0;
@@ -38,7 +66,7 @@
       padding: 24px;
       margin-top: 30px;
       max-width: 650px;
-      background-color: #fafafa;
+      background-color: rgba(250, 250, 250, 0.95);
     }
 
     .article-title {
@@ -87,6 +115,13 @@
   <h1>blog</h1>
   <p><a href="index.html">back home</a></p>
 
+  <!-- Picture of the Day Container -->
+  <div class="potd-card">
+    <strong style="font-size: 18px; color: #cc0000;">Picture of the Day</strong>
+    <img id="potd-img" src="" alt="Wikimedia Commons Picture of the Day" style="display: none;">
+    <p id="potd-caption" class="potd-caption">Loading picture of the day...</p>
+  </div>
+
   <!-- Terrabayt Article Card -->
   <div class="article-card">
     <h2 class="article-title">
@@ -116,12 +151,43 @@
       Published in Hodos Dergi
     </div>
     <p class="article-preview">
-      Oyun yazarı Edward Bond, "Lear" adlı oyununun önsözünde, içerisine doğduğumuz dünyadaki "biyolojik beklentilerimizden" dem vurur.
+      Oyun yazarı Edward Bond, "Lear" adlı oyununun önsözünde, içerisine doğduğumuz dünyadaki "biyolojik beklentimentimizden" dem vurur.
     </p>
     <a href="https://www.hodosdergi.com/post/anal%C4%B1k-ve-devrim" class="read-more" target="_blank">
       Read full article on Hodos Dergi →
     </a>
   </div>
 
+  <script>
+    async function fetchPOTD() {
+      const today = new Date().toISOString().split('T')[0];
+      const apiUrl = `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url|extmetadata&generator=images&titles=Template:Potd/${today}`;
+
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        const pages = data.query?.pages;
+        if (pages) {
+          const pageKey = Object.keys(pages)[0];
+          const imageInfo = pages[pageKey].imageinfo[0];
+          
+          const imgUrl = imageInfo.url;
+          const caption = imageInfo.extmetadata?.ObjectName?.value || "Wikimedia Commons Picture of the Day";
+
+          const imgEl = document.getElementById('potd-img');
+          const captionEl = document.getElementById('potd-caption');
+          
+          imgEl.src = imgUrl;
+          imgEl.style.display = 'block';
+          captionEl.innerHTML = caption;
+        }
+      } catch (error) {
+        document.getElementById('potd-caption').textContent = "Unable to load today's picture.";
+      }
+    }
+
+    fetchPOTD();
+  </script>
 </body>
 </html>
