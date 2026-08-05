@@ -11,7 +11,7 @@
     body { 
       font-family: "Helvetica", "Arial", sans-serif; 
       background: white; 
-      margin: 100px; 
+      margin: 60px 100px; 
       font-size: 20px; /* Base font size */
     }
 
@@ -48,6 +48,42 @@
       border-top: 1px solid #ccc;
       margin: 30px 0;
     }
+
+    /* 2-Column Layout */
+    .layout-container {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .left-column {
+      flex: 1;
+      max-width: 650px;
+    }
+
+    .right-column {
+      width: 350px;
+      position: sticky;
+      top: 40px;
+    }
+
+    .gif-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    /* Responsive adjustment for small screens */
+    @media (max-width: 900px) {
+      .layout-container {
+        flex-direction: column;
+      }
+      .right-column {
+        width: 100%;
+        max-width: 650px;
+        position: static;
+      }
+    }
   </style>
 </head>
 <body>
@@ -55,20 +91,31 @@
   <p><a href="index.html">back home</a></p>
   <hr>
 
-  <p><strong>my interest areas:</strong> computational social science, digital behavioral data and data visualization.</p>
+  <div class="layout-container">
+    <!-- Left Column: Content -->
+    <div class="left-column">
+      <p><strong>my interest areas:</strong> computational social science, digital behavioral data and data visualization.</p>
 
-  <p>a visual mapping example and current projects i'm contributing:</p>
-  <p>
-    <a href="https://zeynepkalaca.github.io/marmara.html" style="color: #cc0000;"><span style="color: #cc0000;">ex:</span> marmara region: organized industrial zones</a>
-  </p>
-  
-  <p style="color: #cc0000; text-decoration: underline;">
-    1) Collective Grief Stages in Pro-AKP Economic Discourse on Twitter 2018–2023, Koç University - KUSRP
-  </p>
+      <p>a visual mapping example and current projects i'm contributing:</p>
+      <p>
+        <a href="https://zeynepkalaca.github.io/marmara.html" style="color: #cc0000;"><span style="color: #cc0000;">ex:</span> marmara region: organized industrial zones</a>
+      </p>
+      
+      <p style="color: #cc0000; text-decoration: underline;">
+        1) Collective Grief Stages in Pro-AKP Economic Discourse on Twitter 2018–2023, Koç University - KUSRP
+      </p>
 
-  <p>
-    <a href="https://ma-cssl.com/home" style="color: #cc0000;">2) IMF Decides, Machine Learns: An AI Approach to International Organizations, Koç University - MA-CSSL </a>
-  </p>
-  <br>
+      <p>
+        <a href="https://ma-cssl.com/home" style="color: #cc0000;">2) IMF Decides, Machine Learns: An AI Approach to International Organizations, Koç University - MA-CSSL </a>
+      </p>
+    </div>
+
+    <!-- Right Column: GIF -->
+    <div class="right-column">
+      <div class="gif-card">
+        <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Computer Cat GIF">
+      </div>
+    </div>
+  </div>
 </body>
 </html>
