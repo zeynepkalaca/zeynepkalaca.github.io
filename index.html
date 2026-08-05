@@ -7,56 +7,76 @@
   <meta name="description" content="Zeynep Kalaça's personal website - Student at METU and Research Assistant at Koç University.">
   <meta name="author" content="Zeynep Kalaça">
   <title>Zeynep Kalaça / home</title>
-<meta charset="UTF-8">
-<title>zeynep kalaça / home</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
-<style>
-  body { 
-    font-family: "Helvetica", "Arial", sans-serif; 
-    background: white; 
-    margin: 100px; 
-    font-size: 20px; /* Base font size for the whole page */
-  }
-  
-  h1 {
-    font-size: 40px; /* Main heading size */
-  }
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
+  <style>
+    body { 
+      font-family: "Helvetica", "Arial", sans-serif; 
+      background: white; 
+      margin: 100px; 
+      font-size: 20px; 
+    }
+    
+    h1 {
+      font-size: 40px; 
+    }
 
-  p { 
-    margin: 40px 0; /* Reduced margin so page content isn't spread too far apart */
-    font-size: 20px; 
-  }
+    p { 
+      margin: 40px 0; 
+      font-size: 20px; 
+    }
 
-  a { 
-    color: blue; 
-    text-decoration: underline; 
-    font-size: 20px;
-  }
+    a { 
+      color: blue; 
+      text-decoration: underline; 
+      font-size: 20px;
+    }
 
-  #quote-box {
-    font-size: 22px; /* Font size for the generated text */
-    font-weight: bold;
-  }
+    /* Custom styles for social links */
+    .contact-link {
+      font-family: "Consolas", "Courier New", monospace; /* Clean tech-focused monospace font */
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
 
-  button {
-    font-size: 16px; /* Button text size */
-    padding: 8px 16px;
-    cursor: pointer;
-  }
-</style>
+    .contact-link:hover {
+      text-decoration: underline;
+      color: blue;
+    }
+
+    #quote-box {
+      font-size: 22px; 
+      font-weight: bold;
+    }
+
+    button {
+      font-size: 16px; 
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <h1>welcome</h1>
   <p>I am Zeynep Kalaça, this is my website.</p>
+  
   <p>Student, Middle East Technical University (2023-2028)</p>
-  <p>Research Assistant, Koç University (2026-now)</p>
+  <p>Research Assistant, Koç University (2026)</p>
   <br>
+
+  <!-- GitHub and Email links added here -->
+  <p>
+    <a href="https://github.com/your-username" class="contact-link" target="_blank">💻 github</a>
+  </p>
+  <p>
+    <a href="mailto:your.email@example.com" class="contact-link">✉️ email</a>
+  </p>
+
   <p><a href="projects.html">projects</a></p>
   <p><a href="questions.html">questions</a></p>
 
   <br>
- <p id="quote-box"></p>
-  <!-- Added button element below -->
+  <p id="quote-box"></p>
   <button onclick="newQuote()">new quote</button>
 
   <script>
@@ -85,3 +105,4 @@
     newQuote();
   </script>
 </body>
+</html>
