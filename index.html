@@ -18,7 +18,9 @@
   <p><a href="reality.html">reality</a></p>
     <p><a href="cinephile.html">cinephile</a></p>
 
-  <p id="thought-box"></p>
+ <p id="thought-box"></p>
+  <!-- Added button element below -->
+  <button onclick="newThought()">new thought</button>
 
   <script>
     const thoughts = [
@@ -34,8 +36,7 @@
       } while (next === box.textContent && thoughts.length > 1);
       box.textContent = next;
     }
-    
-    // This will now successfully find the #thought-box and insert the text
+
     newThought();
   </script>
 </body>
