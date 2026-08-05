@@ -27,7 +27,7 @@
     font-size: 20px;
   }
 
-  #thought-box {
+  #quote-box {
     font-size: 22px; /* Font size for the generated text */
     font-weight: bold;
   }
@@ -54,12 +54,12 @@
     <p><a href="cinephile.html">cinephile</a></p>
 
   <br>
- <p id="thought-box"></p>
+ <p id="quote-box"></p>
   <!-- Added button element below -->
-  <button onclick="newThought()">new thought</button>
+  <button onclick="newQuote()">new quote</button>
 
   <script>
-    const thoughts = [
+    const quotes = [
       "Nobody's perfect. - Some Like It Hot, 1959",
       "The greatest trick the devil ever pulled was convincing the world he didn't exist. - The Usual Suspects, 1995",
       "You can't handle the truth! - A Few Good Men, 1992",
@@ -72,15 +72,15 @@
       "Pay no attention to that man behind the curtain! - The Wizard of Oz, 1939",
     ];
 
-    function newThought() {
-      const box = document.getElementById('thought-box');
+    function newQuote() {
+      const box = document.getElementById('quote-box');
       let next;
       do {
-        next = thoughts[Math.floor(Math.random() * thoughts.length)];
-      } while (next === box.textContent && thoughts.length > 1);
+        next = quotes[Math.floor(Math.random() * quotes.length)];
+      } while (next === box.textContent && quotes.length > 1);
       box.textContent = next;
     }
 
-    newThought();
+    newQuote();
   </script>
 </body>
