@@ -19,11 +19,21 @@
     <p><a href="cinephile.html">cinephile</a></p>
 
   <br>
-  <div style="margin: 40px 0;">
-  <p id="thought-box" style="color: #6a0dad; font-style: italic; font-size: 18px;"></p>
-  <button onclick="newThought()" style="font-size: 10px; color: gray; border: none; background: none; cursor: pointer; text-decoration: underline;">
-    generate new thought
-  </button>
-</div>
+  <script>
+const thoughts = [
+  "let it rip, dude.",
+  "you have meddled with the primal forces of nature, mr. hamlin!",
+];
 
-<script>
+function newThought() {
+  const box = document.getElementById('thought-box');
+  let next;
+  do {
+    next = thoughts[Math.floor(Math.random() * thoughts.length)];
+  } while (next === box.textContent && thoughts.length > 1);
+  box.textContent = next;
+}
+
+// show one on page load
+newThought();
+</script>
