@@ -18,20 +18,24 @@
   <p><a href="reality.html">reality</a></p>
     <p><a href="cinephile.html">cinephile</a></p>
 
-  <br>
-  <script>
-const thoughts = [
-  "let it rip, dude.",
-  "you have meddled with the primal forces of nature, mr. hamlin!",
-];
+  <p id="thought-box"></p>
 
-function newThought() {
-  const box = document.getElementById('thought-box');
-  let next;
-  do {
-    next = thoughts[Math.floor(Math.random() * thoughts.length)];
-  } while (next === box.textContent && thoughts.length > 1);
-  box.textContent = next;
-}
-newThought();
+  <script>
+    const thoughts = [
+      "let it rip, dude.",
+      "you have meddled with the primal forces of nature, mr. hamlin!",
+    ];
+
+    function newThought() {
+      const box = document.getElementById('thought-box');
+      let next;
+      do {
+        next = thoughts[Math.floor(Math.random() * thoughts.length)];
+      } while (next === box.textContent && thoughts.length > 1);
+      box.textContent = next;
+    }
+    
+    // This will now successfully find the #thought-box and insert the text
+    newThought();
   </script>
+</body>
