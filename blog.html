@@ -210,7 +210,7 @@
 
   <!-- Theme Toggle -->
   <div class="theme-toggle-container">
-    <button id="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
   </div>
 
   <!-- Main Navigation -->
@@ -280,7 +280,7 @@
     if (currentTheme) {
       document.documentElement.setAttribute('data-theme', currentTheme);
       if (currentTheme === 'dark') {
-        toggleBtn.textContent = '☀️ Light';
+        toggleBtn.textContent = '☀️ light';
       }
     }
 
@@ -289,11 +289,11 @@
       if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'light');
         localStorage.setItem('theme', 'light');
-        toggleBtn.textContent = '🌙 Dark';
+        toggleBtn.textContent = '🌙 dark';
       } else {
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
-        toggleBtn.textContent = '☀️ Light';
+        toggleBtn.textContent = '☀️ light';
       }
     }
 
