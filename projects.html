@@ -8,11 +8,36 @@
   <title>Zeynep Kalaça / projects</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
   <style>
+    /* CSS Variables for Light and Dark Modes */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --link-color: blue;
+      --contact-link-color: #333333;
+      --border-color: #ccc;
+      --button-bg: #efefef;
+      --button-border: #767676;
+      --accent-color: #cc0000;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --link-color: #64b5f6;
+      --contact-link-color: #cccccc;
+      --border-color: #333333;
+      --button-bg: #2b2b2b;
+      --button-border: #555555;
+      --accent-color: #ff6666;
+    }
+
     body { 
       font-family: "Helvetica", "Arial", sans-serif; 
-      background: white; 
+      background-color: var(--bg-color); 
+      color: var(--text-color);
       margin: 60px 100px; 
       font-size: 20px; /* Base font size */
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     h2 {
@@ -26,26 +51,50 @@
 
     .q { 
       font-weight: bold; 
-      color: #cc0000; 
+      color: var(--accent-color); 
       margin-top: 20px; 
       font-size: 20px; 
     }
 
     .a { 
-      color: #cc0000; 
+      color: var(--accent-color); 
       margin-bottom: 5px; 
       font-size: 20px; 
     }
 
     a { 
-      color: blue; 
+      color: var(--link-color); 
       text-decoration: underline; 
       font-size: 20px; 
     }
 
+    /* Theme Toggle Positioned Top-Right */
+    .theme-toggle-container {
+      position: absolute;
+      top: 40px;
+      right: 100px;
+    }
+
+    .back-link {
+      font-family: "Consolas", "Courier New", monospace; 
+      text-decoration: none;
+      color: var(--contact-link-color);
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+      color: var(--link-color);
+    }
+
+    .accent-link {
+      color: var(--accent-color) !important;
+    }
+
     hr {
       border: 0;
-      border-top: 1px solid #ccc;
+      border-top: 1px solid var(--border-color);
       margin: 30px 0;
     }
 
@@ -73,6 +122,16 @@
       border-radius: 8px;
     }
 
+    button {
+      font-size: 16px; 
+      padding: 8px 16px;
+      cursor: pointer;
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      border: 1px solid var(--button-border);
+      border-radius: 4px;
+    }
+
     /* Responsive adjustment for small screens */
     @media (max-width: 900px) {
       .layout-container {
@@ -87,8 +146,13 @@
   </style>
 </head>
 <body>
+  <!-- Theme Toggle -->
+  <div class="theme-toggle-container">
+    <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
+  </div>
+
   <h2>projects</h2>
-  <p><a href="index.html">back home</a></p>
+  <p><a href="index.html" class="back-link">← home</a></p>
   <hr>
 
   <div class="layout-container">
@@ -98,15 +162,15 @@
 
       <p>a visual mapping example and current projects i'm contributing:</p>
       <p>
-        <a href="https://zeynepkalaca.github.io/marmara.html" style="color: #cc0000;"><span style="color: #cc0000;">ex:</span> marmara region: organized industrial zones</a>
+        <a href="https://zeynepkalaca.github.io/marmara.html" class="accent-link"><span class="accent-link">ex:</span> marmara region: organized industrial zones</a>
       </p>
       
-      <p style="color: #cc0000; text-decoration: underline;">
+      <p class="accent-link" style="text-decoration: underline;">
         1) Collective Grief Stages in Pro-AKP Economic Discourse on Twitter 2018–2023, Koç University - KUSRP
       </p>
 
       <p>
-        <a href="https://ma-cssl.com/home" style="color: #cc0000;">2) IMF Decides, Machine Learns: An AI Approach to International Organizations, Koç University - MA-CSSL </a>
+        <a href="https://ma-cssl.com/home" class="accent-link">2) IMF Decides, Machine Learns: An AI Approach to International Organizations, Koç University - MA-CSSL </a>
       </p>
     </div>
 
@@ -117,5 +181,31 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // Theme Switcher Logic
+    const toggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      if (currentTheme === 'dark') {
+        toggleBtn.textContent = '☀️ light';
+      }
+    }
+
+    function toggleTheme() {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.textContent = '🌙 dark';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.textContent = '☀️ light';
+      }
+    }
+  </script>
 </body>
 </html>
