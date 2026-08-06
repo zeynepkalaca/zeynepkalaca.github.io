@@ -8,15 +8,49 @@
   <title>Zeynep Kalaça / blog</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
   <style>
+    /* CSS Variables for Light and Dark Modes */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --text-muted: #666666;
+      --text-preview: #333333;
+      --link-color: blue;
+      --contact-link-color: #333333;
+      --card-bg: rgba(250, 250, 250, 0.95);
+      --card-border: #e0e0e0;
+      --button-bg: #efefef;
+      --button-border: #767676;
+      --title-color: #111111;
+      --potd-header: #cc0000;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --text-muted: #aaaaaa;
+      --text-preview: #cccccc;
+      --link-color: #64b5f6;
+      --contact-link-color: #cccccc;
+      --card-bg: rgba(26, 26, 26, 0.95);
+      --card-border: #333333;
+      --button-bg: #2b2b2b;
+      --button-border: #555555;
+      --title-color: #ffffff;
+      --potd-header: #ff6666;
+    }
+
     body { 
       font-family: "Helvetica", "Arial", sans-serif; 
+      background-color: var(--bg-color);
       background-image: url('background.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      color: var(--text-color);
       margin: 60px 100px; 
       font-size: 20px; 
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     h1 {
@@ -30,9 +64,30 @@
     }
 
     a { 
-      color: blue; 
+      color: var(--link-color); 
       text-decoration: underline; 
       font-size: 20px;
+    }
+
+    /* Theme Toggle Positioned Top-Right */
+    .theme-toggle-container {
+      position: absolute;
+      top: 40px;
+      right: 100px;
+    }
+
+    .back-link {
+      font-family: "Consolas", "Courier New", monospace; 
+      text-decoration: none;
+      color: var(--contact-link-color);
+      font-weight: 500;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+      color: var(--link-color);
     }
 
     /* 2-Column Main Layout Container */
@@ -58,10 +113,11 @@
 
     /* Picture of the Day Card */
     .potd-card {
-      border: 1px solid #e0e0e0;
+      border: 1px solid var(--card-border);
       border-radius: 8px;
       padding: 20px;
-      background-color: rgba(250, 250, 250, 0.95);
+      background-color: var(--card-bg);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     .potd-card img {
@@ -73,18 +129,19 @@
 
     .potd-caption {
       font-size: 15px;
-      color: #444;
+      color: var(--text-preview);
       margin-top: 10px;
       margin-bottom: 0;
     }
 
     /* Article Card Styles */
     .article-card {
-      border: 1px solid #e0e0e0;
+      border: 1px solid var(--card-border);
       border-radius: 8px;
       padding: 24px;
       margin-bottom: 30px;
-      background-color: rgba(250, 250, 250, 0.95);
+      background-color: var(--card-bg);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     .article-title {
@@ -95,35 +152,45 @@
     }
 
     .article-title a {
-      color: #111;
+      color: var(--title-color);
       text-decoration: none;
       font-size: 24px;
     }
 
     .article-title a:hover {
-      color: blue;
+      color: var(--link-color);
       text-decoration: underline;
     }
 
     .article-meta {
       font-size: 15px;
-      color: #666;
+      color: var(--text-muted);
       font-family: "Consolas", "Courier New", monospace;
       margin-bottom: 15px;
     }
 
     .article-preview {
       font-size: 18px;
-      color: #333;
+      color: var(--text-preview);
       margin-bottom: 20px;
     }
 
     .read-more {
       font-family: "Consolas", "Courier New", monospace;
       font-size: 16px;
-      color: blue;
+      color: var(--link-color);
       text-decoration: underline;
       font-weight: bold;
+    }
+
+    button {
+      font-size: 16px; 
+      padding: 8px 16px;
+      cursor: pointer;
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      border: 1px solid var(--button-border);
+      border-radius: 4px;
     }
 
     /* Responsive adjustments for mobile screens */
@@ -141,9 +208,14 @@
 </head>
 <body>
 
-  <!-- Standard main navigation link -->
+  <!-- Theme Toggle -->
+  <div class="theme-toggle-container">
+    <button id="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+  </div>
+
+  <!-- Main Navigation -->
+  <a href="index.html" class="back-link">← home</a>
   <h1>blog</h1>
-  <p><a href="index.html">back home</a></p>
 
   <!-- Two Column Layout Container -->
   <div class="layout-container">
@@ -192,7 +264,7 @@
     <!-- Right Column: Picture of the Day -->
     <div class="right-column">
       <div class="potd-card">
-        <strong style="font-size: 18px; color: #cc0000;">Picture of the Day</strong>
+        <strong style="font-size: 18px; color: var(--potd-header);">Picture of the Day</strong>
         <img id="potd-img" src="" alt="Wikimedia Commons Picture of the Day" style="display: none;">
         <p id="potd-caption" class="potd-caption">Loading picture of the day...</p>
       </div>
@@ -201,6 +273,31 @@
   </div>
 
   <script>
+    // Theme Switcher Logic
+    const toggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      if (currentTheme === 'dark') {
+        toggleBtn.textContent = '☀️ Light';
+      }
+    }
+
+    function toggleTheme() {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.textContent = '🌙 Dark';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.textContent = '☀️ Light';
+      }
+    }
+
+    // Picture of the Day Logic
     async function fetchPOTD() {
       const today = new Date().toISOString().split('T')[0];
       const apiUrl = `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url|extmetadata&generator=images&titles=Template:Potd/${today}`;
