@@ -9,11 +9,34 @@
   <title>Zeynep Kalaça / home</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
   <style>
+    /* CSS Variables for Light and Dark Modes */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --link-color: blue;
+      --contact-link-color: #333333;
+      --border-color: #f0f0f0;
+      --button-bg: #efefef;
+      --button-border: #767676;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --link-color: #64b5f6;
+      --contact-link-color: #cccccc;
+      --border-color: #333333;
+      --button-bg: #2b2b2b;
+      --button-border: #555555;
+    }
+
     body { 
       font-family: "Helvetica", "Arial", sans-serif; 
-      background: white; 
+      background-color: var(--bg-color); 
+      color: var(--text-color);
       margin: 100px; 
       font-size: 20px; 
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     h1 {
@@ -26,9 +49,16 @@
     }
 
     a { 
-      color: blue; 
+      color: var(--link-color); 
       text-decoration: underline; 
       font-size: 20px;
+    }
+
+    /* Theme Toggle Positioned Top-Right */
+    .theme-toggle-container {
+      position: absolute;
+      top: 40px;
+      right: 100px;
     }
 
     /* Layout structure to place quote section on the right */
@@ -45,7 +75,7 @@
 
     .quote-section {
       flex: 1;
-      border-left: 2px solid #f0f0f0;
+      border-left: 2px solid var(--border-color);
       padding-left: 40px;
     }
 
@@ -53,13 +83,13 @@
     .contact-link {
       font-family: "Consolas", "Courier New", monospace; 
       text-decoration: none;
-      color: #333;
+      color: var(--contact-link-color);
       font-weight: 500;
     }
 
     .contact-link:hover {
       text-decoration: underline;
-      color: blue;
+      color: var(--link-color);
     }
 
     #quote-box {
@@ -72,10 +102,18 @@
       font-size: 16px; 
       padding: 8px 16px;
       cursor: pointer;
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      border: 1px solid var(--button-border);
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
+  <div class="theme-toggle-container">
+    <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
+  </div>
+
   <h1>welcome</h1>
   <p>I am Zeynep Kalaça, this is my website.</p>
   
@@ -112,6 +150,31 @@
   </div>
 
   <script>
+    // Theme Switcher Logic
+    const toggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      if (currentTheme === 'dark') {
+        toggleBtn.textContent = '☀️ light';
+      }
+    }
+
+    function toggleTheme() {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.textContent = '🌙 dark';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.textContent = '☀️ light';
+      }
+    }
+
+    // Quote Logic
     const quotes = [
       "Nobody's perfect. - Some Like It Hot, 1959",
       "The greatest trick the devil ever pulled was convincing the world he didn't exist. - The Usual Suspects, 1995",
