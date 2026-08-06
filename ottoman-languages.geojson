@@ -1,1 +1,137 @@
-
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [22.9444, 40.6401] },
+      "properties": {
+        "location_name": "Salonica / Selanik",
+        "primary_language": "Ladino (Judeo-Spanish)",
+        "secondary_languages": "Ottoman Turkish, Greek, Bulgarian",
+        "language_family": "Romance",
+        "source_citation": "Cuinet (1892), Vol 3, p. 12"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [28.9784, 41.0082] },
+      "properties": {
+        "location_name": "Istanbul / Dersaadet",
+        "primary_language": "Ottoman Turkish",
+        "secondary_languages": "Greek, Armenian, Ladino, French",
+        "language_family": "Turkic",
+        "source_citation": "Karpat (1985), p. 102"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [27.1428, 38.4237] },
+      "properties": {
+        "location_name": "Smyrna / Izmir",
+        "primary_language": "Greek",
+        "secondary_languages": "Ottoman Turkish, Ladino, French, Armenian",
+        "language_family": "Hellenic",
+        "source_citation": "Cuinet (1892), Vol 3, p. 340"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [44.3661, 33.3152] },
+      "properties": {
+        "location_name": "Baghdad",
+        "primary_language": "Arabic",
+        "secondary_languages": "Ottoman Turkish, Persian, Judeo-Arabic, Syriac",
+        "language_family": "Semitic",
+        "source_citation": "Cuinet (1892), Vol 3, p. 18"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [37.1343, 36.2021] },
+      "properties": {
+        "location_name": "Aleppo / Halab",
+        "primary_language": "Arabic",
+        "secondary_languages": "Ottoman Turkish, Armenian, Judeo-Arabic",
+        "language_family": "Semitic",
+        "source_citation": "Cuinet (1891), Vol 2, p. 112"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [43.1300, 36.3400] },
+      "properties": {
+        "location_name": "Mosul",
+        "primary_language": "Arabic",
+        "secondary_languages": "Kurdish, Syriac (Neo-Aramaic), Ottoman Turkish",
+        "language_family": "Semitic",
+        "source_citation": "Cuinet (1892), Vol 3, p. 760"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [36.2765, 33.5138] },
+      "properties": {
+        "location_name": "Damascus / Şam",
+        "primary_language": "Arabic",
+        "secondary_languages": "Ottoman Turkish, Judeo-Arabic",
+        "language_family": "Semitic",
+        "source_citation": "Cuinet (1891), Vol 2, p. 250"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [35.5018, 33.8938] },
+      "properties": {
+        "location_name": "Beirut",
+        "primary_language": "Arabic",
+        "secondary_languages": "French, Ottoman Turkish, Greek",
+        "language_family": "Semitic",
+        "source_citation": "Cuinet (1896), Vol 4, p. 55"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [26.5557, 41.6771] },
+      "properties": {
+        "location_name": "Edirne / Adrianople",
+        "primary_language": "Ottoman Turkish",
+        "secondary_languages": "Ladino, Greek, Bulgarian",
+        "language_family": "Turkic",
+        "source_citation": "Cuinet (1892), Vol 1, p. 620"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [21.3347, 41.0311] },
+      "properties": {
+        "location_name": "Monastir / Bitola",
+        "primary_language": "Bulgarian",
+        "secondary_languages": "Ottoman Turkish, Aromanian, Greek, Albanian",
+        "language_family": "Slavic",
+        "source_citation": "Brailsford (1906), p. 85"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [19.5121, 42.0693] },
+      "properties": {
+        "location_name": "Scutari / Shkodër",
+        "primary_language": "Albanian",
+        "secondary_languages": "Ottoman Turkish, Serbo-Croatian",
+        "language_family": "Indo-European",
+        "source_citation": "Gopčević (1889), p. 42"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [31.2357, 30.0444] },
+      "properties": {
+        "location_name": "Cairo / Kahire",
+        "primary_language": "Arabic",
+        "secondary_languages": "Ottoman Turkish, French, Judeo-Arabic",
+        "language_family": "Semitic",
+        "source_citation": "Lane (1836), p. 14"
+      }
+    }
+  ]
+}
