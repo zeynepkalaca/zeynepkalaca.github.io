@@ -6,55 +6,115 @@
   <meta name="description" content="Zeynep Kalaça - questions">
   <meta name="author" content="Zeynep Kalaça">
   <title>Zeynep Kalaça / questions</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
-<style>
-  body { 
-    font-family: "Helvetica", "Arial", sans-serif; 
-    background: white; 
-    margin: 100px; 
-    font-size: 20px; /* Base font size */
-  }
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
+  <style>
+    /* CSS Variables for Light and Dark Modes */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --link-color: blue;
+      --contact-link-color: #333333;
+      --border-color: #ccc;
+      --button-bg: #efefef;
+      --button-border: #767676;
+      --accent-color: #cc0000;
+    }
 
-  h1 {
-    font-size: 40px; /* Main heading size */
-  }
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --link-color: #64b5f6;
+      --contact-link-color: #cccccc;
+      --border-color: #333333;
+      --button-bg: #2b2b2b;
+      --button-border: #555555;
+      --accent-color: #ff6666;
+    }
 
-  p { 
-    margin: 30px 0; 
-    font-size: 20px; 
-  }
+    body { 
+      font-family: "Helvetica", "Arial", sans-serif; 
+      background-color: var(--bg-color); 
+      color: var(--text-color);
+      margin: 100px; 
+      font-size: 20px; /* Base font size */
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-  .q { 
-    font-weight: bold; 
-    color: #cc0000; 
-    margin-top: 30px; 
-    font-size: 22px; /* Red questions slightly larger */
-  }
+    h1 {
+      font-size: 40px; /* Main heading size */
+    }
 
-  .a { 
-    color: #000000; 
-    margin-bottom: 10px; 
-    margin-top: 5px;
-    font-size: 20px; /* Black answers size */
-  }
+    p { 
+      margin: 30px 0; 
+      font-size: 20px; 
+    }
 
-  a { 
-    color: blue; 
-    text-decoration: underline; 
-    font-size: 20px; 
-  }
+    .q { 
+      font-weight: bold; 
+      color: var(--accent-color); 
+      margin-top: 30px; 
+      font-size: 22px; /* Red questions slightly larger */
+    }
 
-  hr {
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 30px 0;
-  }
-</style>
+    .a { 
+      color: var(--text-color); 
+      margin-bottom: 10px; 
+      margin-top: 5px;
+      font-size: 20px; /* Black/light-grey answers size */
+    }
+
+    a { 
+      color: var(--link-color); 
+      text-decoration: underline; 
+      font-size: 20px; 
+    }
+
+    /* Theme Toggle Positioned Top-Right */
+    .theme-toggle-container {
+      position: absolute;
+      top: 40px;
+      right: 100px;
+    }
+
+    .back-link {
+      font-family: "Consolas", "Courier New", monospace; 
+      text-decoration: none;
+      color: var(--contact-link-color);
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+      color: var(--link-color);
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border-color);
+      margin: 30px 0;
+    }
+
+    button {
+      font-size: 16px; 
+      padding: 8px 16px;
+      cursor: pointer;
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      border: 1px solid var(--button-border);
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Theme Toggle -->
+  <div class="theme-toggle-container">
+    <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
+  </div>
+
   <h1>questions</h1>
-  <p><a href="index.html">back home</a></p>
+  <p><a href="index.html" class="back-link">← home</a></p>
   <hr>
 
   <div class="q">Q: why is the website so plain?</div>
@@ -64,7 +124,32 @@
   <div class="a">A: international relations.</div>
 
   <div class="q">Q: how can I reach you?</div>
-  <div class="a">A: send an email to <a href="mailto:kalaca.zeynep@metu.edu.tr">kalaca.zeynep@metu.edu.tr</div>
+  <div class="a">A: send an email to <a href="mailto:kalaca.zeynep@metu.edu.tr">kalaca.zeynep@metu.edu.tr</a></div>
 
+  <script>
+    // Theme Switcher Logic
+    const toggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      if (currentTheme === 'dark') {
+        toggleBtn.textContent = '☀️ light';
+      }
+    }
+
+    function toggleTheme() {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.textContent = '🌙 dark';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.textContent = '☀️ light';
+      }
+    }
+  </script>
 </body>
 </html>
