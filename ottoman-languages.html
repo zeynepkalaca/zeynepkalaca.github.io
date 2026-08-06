@@ -1,27 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeynep Kalaça / ottoman empire: spoken languages</title>
+    <title>ottoman empire: spoken languages</title>
     
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
+
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <style>
         :root {
             --primary-color: #1b4332;
-            --accent-color: #2d6a4f;
-            --bg-color: #f8f9fa;
+            --bg-color: #ffffff;
             --text-color: #212529;
+            --subtitle-color: #6c757d;
+            --card-shadow: rgba(0, 0, 0, 0.08);
+            --toggle-bg: #e9ecef;
+            --toggle-text: #212529;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #52b788;
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --subtitle-color: #a0a0a0;
+            --card-shadow: rgba(0, 0, 0, 0.5);
+            --toggle-bg: #2d2d2d;
+            --toggle-text: #ffffff;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 40px;
             background-color: var(--bg-color);
             color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -30,60 +47,75 @@
         }
 
         header {
-            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .header-title {
+            flex-grow: 1;
         }
 
         h1 {
             color: var(--primary-color);
-            margin-bottom: 5px;
+            font-size: 2rem;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            transition: color 0.3s ease;
         }
 
         p.subtitle {
-            color: #6c757d;
-            margin-top: 0;
+            color: var(--subtitle-color);
+            margin: 0;
+            font-size: 1rem;
+            transition: color 0.3s ease;
         }
 
-        /* FIX: Leaflet maps require an explicit height to display */
+        .theme-toggle {
+            background-color: var(--toggle-bg);
+            color: var(--toggle-text);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.9;
+        }
+
         #map {
             width: 100%;
-            height: 500px;
+            height: 520px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
+            box-shadow: 0 4px 12px var(--card-shadow);
+            transition: box-shadow 0.3s ease;
         }
 
-        .table-container {
-            overflow-x: auto;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        /* Leaflet Dark Theme Overrides */
+        [data-theme="dark"] .leaflet-popup-content-wrapper,
+        [data-theme="dark"] .leaflet-popup-tip {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th, td {
-            padding: 12px 16px;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-        }
-
-        tr:hover {
-            background-color: #f1f3f5;
-        }
-
-        /* Leaflet popup customization */
         .leaflet-popup-content strong {
-            color: var(--primary-color);
-            font-size: 1.1em;
+            font-size: 1.05em;
+        }
+
+        [data-theme="dark"] .leaflet-popup-content strong {
+            color: #52b788;
+        }
+
+        [data-theme="light"] .leaflet-popup-content strong {
+            color: #1b4332;
         }
     </style>
 </head>
@@ -91,38 +123,24 @@
 
 <div class="container">
     <header>
-        <h1>ottoman empire: spoken languages</h1>
-        <p class="subtitle">linguistic distribution and language families across major ottoman urban centers.</p>
+        <div class="header-title">
+            <h1>ottoman empire: spoken languages</h1>
+            <p class="subtitle">linguistic distribution and language families across major ottoman urban centers.</p>
+        </div>
+        <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span> <span id="theme-text">Dark Mode</span>
+        </button>
     </header>
 
     <!-- Map Container -->
     <div id="map"></div>
-
-    <!-- Data Table -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Location</th>
-                    <th>Coordinates</th>
-                    <th>Primary Language</th>
-                    <th>Secondary Languages</th>
-                    <th>Language Family</th>
-                    <th>Source Citation</th>
-                </tr>
-            </thead>
-            <tbody id="table-body">
-                <!-- Dynamically populated via JavaScript -->
-            </tbody>
-        </table>
-    </div>
 </div>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-    // 1. Embedded GeoJSON Data (Coordinates: [Longitude, Latitude])
+    // 1. Embedded GeoJSON Data
     const geojsonData = {
         "type": "FeatureCollection",
         "features": [
@@ -261,15 +279,22 @@
         ]
     };
 
-    // 2. Initialize Leaflet Map centered over the Mediterranean/Ottoman region
+    // 2. Initialize Map
     const map = L.map('map').setView([37.0, 32.0], 5);
 
-    // Add OpenStreetMap base tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // Tile Layers for Light and Dark modes
+    const lightTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    });
 
-    // 3. Render GeoJSON Data onto Map
+    const darkTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    });
+
+    // Default to light tiles
+    lightTiles.addTo(map);
+
+    // 3. Add GeoJSON Markers
     L.geoJSON(geojsonData, {
         onEachFeature: function (feature, layer) {
             const props = feature.properties;
@@ -284,23 +309,35 @@
         }
     }).addTo(map);
 
-    // 4. Populate HTML Table from GeoJSON
-    const tableBody = document.getElementById('table-body');
-    geojsonData.features.forEach(feature => {
-        const props = feature.properties;
-        const coords = feature.geometry.coordinates; // [lng, lat]
-        
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><strong>${props.location_name}</strong></td>
-            <td>${coords[1].toFixed(4)}, ${coords[0].toFixed(4)}</td>
-            <td>${props.primary_language}</td>
-            <td>${props.secondary_languages}</td>
-            <td>${props.language_family}</td>
-            <td>${props.source_citation}</td>
-        `;
-        tableBody.appendChild(row);
-    });
+    // 4. Dark/Light Theme Switching Logic
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+
+        if (theme === 'dark') {
+            map.removeLayer(lightTiles);
+            darkTiles.addTo(map);
+            themeIcon.textContent = '☀️';
+            themeText.textContent = 'Light Mode';
+        } else {
+            map.removeLayer(darkTiles);
+            lightTiles.addTo(map);
+            themeIcon.textContent = '🌙';
+            themeText.textContent = 'Dark Mode';
+        }
+        localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+    }
+
+    // Load saved user preference if present
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
 </script>
 
 </body>
