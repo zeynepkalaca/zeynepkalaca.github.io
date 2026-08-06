@@ -128,7 +128,7 @@
             <p class="subtitle">linguistic distribution and language families across major ottoman urban centers.</p>
         </div>
         <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()">
-            <span id="theme-icon">🌙</span> <span id="theme-text">Dark Mode</span>
+            <span id="theme-icon">🌙</span> <span id="theme-text">dark Mode</span>
         </button>
     </header>
 
@@ -319,12 +319,12 @@
             map.removeLayer(lightTiles);
             darkTiles.addTo(map);
             themeIcon.textContent = '☀️';
-            themeText.textContent = 'Light Mode';
+            themeText.textContent = 'light';
         } else {
             map.removeLayer(darkTiles);
             lightTiles.addTo(map);
             themeIcon.textContent = '🌙';
-            themeText.textContent = 'Dark Mode';
+            themeText.textContent = 'dark';
         }
         localStorage.setItem('theme', theme);
     }
