@@ -1,65 +1,203 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>marmara region OIZ mapping</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        #map { height: 700px; width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background-color: #f4f7f6; }
-        h2 { color: #1a3a5a; text-align: center; margin-bottom: 20px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>marmara region OIZ mapping</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    /* CSS Variables for Light and Dark Modes */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --link-color: blue;
+      --contact-link-color: #333333;
+      --border-color: #ccc;
+      --button-bg: #efefef;
+      --button-border: #767676;
+      --accent-color: #cc0000;
+      --header-color: #1a3a5a;
+      --card-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --link-color: #64b5f6;
+      --contact-link-color: #cccccc;
+      --border-color: #333333;
+      --button-bg: #2b2b2b;
+      --button-border: #555555;
+      --accent-color: #ff6666;
+      --header-color: #64b5f6;
+      --card-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    body { 
+      font-family: "Helvetica", "Arial", sans-serif; 
+      background-color: var(--bg-color); 
+      color: var(--text-color);
+      margin: 60px 100px; 
+      font-size: 20px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h2 { 
+      color: var(--header-color); 
+      font-size: 32px;
+      margin-bottom: 20px; 
+    }
+
+    p {
+      margin: 30px 0;
+      font-size: 20px;
+    }
+
+    #map { 
+      height: 700px; 
+      width: 100%; 
+      border-radius: 12px; 
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    /* Dark mode styling for Leaflet map tiles and popups */
+    [data-theme="dark"] .leaflet-tile-pane {
+      filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3);
+    }
+
+    [data-theme="dark"] .leaflet-popup-content-wrapper,
+    [data-theme="dark"] .leaflet-popup-tip {
+      background-color: #2b2b2b;
+      color: #e0e0e0;
+    }
+
+    /* Theme Toggle Positioned Top-Right */
+    .theme-toggle-container {
+      position: absolute;
+      top: 40px;
+      right: 100px;
+    }
+
+    .back-link {
+      font-family: "Consolas", "Courier New", monospace; 
+      text-decoration: none;
+      color: var(--contact-link-color);
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+      color: var(--link-color);
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border-color);
+      margin: 30px 0;
+    }
+
+    button {
+      font-size: 16px; 
+      padding: 8px 16px;
+      cursor: pointer;
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      border: 1px solid var(--button-border);
+      border-radius: 4px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        margin: 30px 20px;
+      }
+      .theme-toggle-container {
+        top: 20px;
+        right: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <h2>marmara region: organized industrial zones</h2>
-    <div id="map"></div>
+  <!-- Theme Toggle -->
+  <div class="theme-toggle-container">
+    <button id="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+  </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // Start map focused on Northwest Turkey
-        var map = L.map('map').setView([40.8, 28.5], 7.5);
+  <h2>marmara region: organized industrial zones</h2>
+  <p><a href="index.html" class="back-link">← home</a></p>
+  <hr>
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+  <div id="map"></div>
 
-        // This URL must match your GitHub file name exactly
-        var geojsonUrl = 'https://raw.githubusercontent.com/zeynepkalaca/zeynepkalaca.github.io/refs/heads/main/marmara.geojson';
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Theme Switcher Logic
+    const toggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
 
-        fetch(geojsonUrl)
-            .then(response => response.json())
-            .then(data => {
-                var oizLayer = L.geoJSON(data, {
-                    onEachFeature: function (feature, layer) {
-                        let props = feature.properties;
-                        // Matches the exact headers in your GeoJSON
-                        let name = props["Name of the Organized Industrial Zone"] || "N/A";
-                        let province = props["Province"] || "Marmara Region";
+    if (currentTheme) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      if (currentTheme === 'dark') {
+        toggleBtn.textContent = '☀️ Light';
+      }
+    }
 
-                        if (province !== "CSVFilter") {
-                            layer.bindPopup(
-                                "<strong>" + name + "</strong><br>" +
-                                "Province: " + province
-                            );
-                        }
-                    },
-                    pointToLayer: function (feature, latlng) {
-                        return L.circleMarker(latlng, {
-                            radius: 8,
-                            fillColor: "#2980b9",
-                            color: "#fff",
-                            weight: 1.5,
-                            fillOpacity: 0.85
-                        });
+    function toggleTheme() {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.textContent = '🌙 Dark';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.textContent = '☀️ Light';
+      }
+    }
+
+    // Leaflet Map Initialization
+    var map = L.map('map').setView([40.8, 28.5], 7.5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var geojsonUrl = 'https://raw.githubusercontent.com/zeynepkalaca/zeynepkalaca.github.io/refs/heads/main/marmara.geojson';
+
+    fetch(geojsonUrl)
+        .then(response => response.json())
+        .then(data => {
+            var oizLayer = L.geoJSON(data, {
+                onEachFeature: function (feature, layer) {
+                    let props = feature.properties;
+                    let name = props["Name of the Organized Industrial Zone"] || "N/A";
+                    let province = props["Province"] || "Marmara Region";
+
+                    if (province !== "CSVFilter") {
+                        layer.bindPopup(
+                            "<strong>" + name + "</strong><br>" +
+                            "Province: " + province
+                        );
                     }
-                }).addTo(map);
-                
-                // Auto-fit the view to show all industrial zones
-                map.fitBounds(oizLayer.getBounds());
-            })
-            .catch(error => console.error('Error loading GeoJSON:', error));
-    </script>
+                },
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 8,
+                        fillColor: "#2980b9",
+                        color: "#fff",
+                        weight: 1.5,
+                        fillOpacity: 0.85
+                    });
+                }
+            }).addTo(map);
+            
+            map.fitBounds(oizLayer.getBounds());
+        })
+        .catch(error => console.error('Error loading GeoJSON:', error));
+  </script>
 </body>
 </html>
