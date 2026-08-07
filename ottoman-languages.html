@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zeynep Kalaça / ottoman empire: spoken languages</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
+  
+  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Google Fonts for Vintage Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  
   <style>
     /* CSS Variables for Light and Dark Modes */
     :root {
@@ -19,6 +24,7 @@
       --accent-color: #cc0000;
       --header-color: #1a3a5a;
       --card-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      --popup-bg: #F4F1EA; /* Parchment look for popups */
     }
 
     [data-theme="dark"] {
@@ -32,6 +38,7 @@
       --accent-color: #ff6666;
       --header-color: #64b5f6;
       --card-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      --popup-bg: #2b2b2b;
     }
 
     body { 
@@ -69,15 +76,40 @@
       border: 1px solid var(--border-color);
     }
 
-    /* Dark mode styling for Leaflet map tiles and popups */
+    /* Dark mode styling for Leaflet map tiles */
     [data-theme="dark"] .leaflet-tile-pane {
       filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3);
     }
 
-    [data-theme="dark"] .leaflet-popup-content-wrapper,
-    [data-theme="dark"] .leaflet-popup-tip {
-      background-color: #2b2b2b;
-      color: #e0e0e0;
+    /* Beautiful Typography for Popups */
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+      background-color: var(--popup-bg);
+      color: var(--text-color);
+      border-radius: 4px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .leaflet-popup-content {
+      font-family: 'Lora', serif;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .leaflet-popup-content h3 {
+      font-family: 'Playfair Display', serif;
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      color: var(--header-color);
+    }
+
+    .leaflet-popup-content b {
+      font-family: "Helvetica", "Arial", sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--contact-link-color);
     }
 
     /* Theme Toggle Positioned Top-Right */
@@ -117,13 +149,8 @@
     }
 
     @media (max-width: 768px) {
-      body {
-        margin: 30px 20px;
-      }
-      .theme-toggle-container {
-        top: 20px;
-        right: 20px;
-      }
+      body { margin: 30px 20px; }
+      .theme-toggle-container { top: 20px; right: 20px; }
     }
   </style>
 </head>
@@ -141,9 +168,10 @@
 
   <div id="map"></div>
 
+  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // Theme Switcher Logic (Identical to marmara.html)
+    // Theme Switcher Logic
     const toggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme');
 
@@ -168,159 +196,88 @@
     }
 
     // Leaflet Map Initialization
-    var map = L.map('map').setView([37.0, 32.0], 5);
+    var map = L.map('map').setView([39.0, 32.0], 5); // Shifted center slightly north
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
+    // Clean, muted CartoDB Basemap
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO'
     }).addTo(map);
 
-    // GeoJSON Data
+    // Color mapping based on language family
+    function getColor(family) {
+        switch (family) {
+            case 'Turkic': return '#9B2226';         // Madder Red
+            case 'Semitic': return '#3A5335';        // Ottoman Green
+            case 'Romance': return '#5A189A';        // Deep Purple
+            case 'Hellenic': return '#005F73';       // Aegean Blue
+            case 'Slavic': return '#CA6702';         // Rust/Gold
+            case 'Indo-European': return '#94D2BD';  // Muted Teal
+            default: return '#CAA74E';               // Burnished Gold
+        }
+    }
+
+    // GeoJSON Data (same as yours)
     const geojsonData = {
         "type": "FeatureCollection",
         "features": [
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [22.9444, 40.6401] },
-                "properties": {
-                    "location_name": "Salonica / Selanik",
-                    "primary_language": "Ladino (Judeo-Spanish)",
-                    "secondary_languages": "Ottoman Turkish, Greek, Bulgarian",
-                    "language_family": "Romance",
-                    "source_citation": "Cuinet (1892), Vol 3, p. 12"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [28.9784, 41.0082] },
-                "properties": {
-                    "location_name": "Istanbul / Dersaadet",
-                    "primary_language": "Ottoman Turkish",
-                    "secondary_languages": "Greek, Armenian, Ladino, French",
-                    "language_family": "Turkic",
-                    "source_citation": "Karpat (1985), p. 102"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [27.1428, 38.4237] },
-                "properties": {
-                    "location_name": "Smyrna / Izmir",
-                    "primary_language": "Greek",
-                    "secondary_languages": "Ottoman Turkish, Ladino, French, Armenian",
-                    "language_family": "Hellenic",
-                    "source_citation": "Cuinet (1892), Vol 3, p. 340"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [44.3661, 33.3152] },
-                "properties": {
-                    "location_name": "Baghdad",
-                    "primary_language": "Arabic",
-                    "secondary_languages": "Ottoman Turkish, Persian, Judeo-Arabic, Syriac",
-                    "language_family": "Semitic",
-                    "source_citation": "Cuinet (1892), Vol 3, p. 18"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [37.1343, 36.2021] },
-                "properties": {
-                    "location_name": "Aleppo / Halab",
-                    "primary_language": "Arabic",
-                    "secondary_languages": "Ottoman Turkish, Armenian, Judeo-Arabic",
-                    "language_family": "Semitic",
-                    "source_citation": "Cuinet (1891), Vol 2, p. 112"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [43.1300, 36.3400] },
-                "properties": {
-                    "location_name": "Mosul",
-                    "primary_language": "Arabic",
-                    "secondary_languages": "Kurdish, Syriac (Neo-Aramaic), Ottoman Turkish",
-                    "language_family": "Semitic",
-                    "source_citation": "Cuinet (1892), Vol 3, p. 760"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [36.2765, 33.5138] },
-                "properties": {
-                    "location_name": "Damascus / Şam",
-                    "primary_language": "Arabic",
-                    "secondary_languages": "Ottoman Turkish, Judeo-Arabic",
-                    "language_family": "Semitic",
-                    "source_citation": "Cuinet (1891), Vol 2, p. 250"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [35.5018, 33.8938] },
-                "properties": {
-                    "location_name": "Beirut",
-                    "primary_language": "Arabic",
-                    "secondary_languages": "French, Ottoman Turkish, Greek",
-                    "language_family": "Semitic",
-                    "source_citation": "Cuinet (1896), Vol 4, p. 55"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [26.5557, 41.6771] },
-                "properties": {
-                    "location_name": "Edirne / Adrianople",
-                    "primary_language": "Ottoman Turkish",
-                    "secondary_languages": "Ladino, Greek, Bulgarian",
-                    "language_family": "Turkic",
-                    "source_citation": "Cuinet (1892), Vol 1, p. 620"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [21.3347, 41.0311] },
-                "properties": {
-                    "location_name": "Monastir / Bitola",
-                    "primary_language": "Bulgarian",
-                    "secondary_languages": "Ottoman Turkish, Aromanian, Greek, Albanian",
-                    "language_family": "Slavic",
-                    "source_citation": "Brailsford (1906), p. 85"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [19.5121, 42.0693] },
-                "properties": {
-                    "location_name": "Scutari / Shkodër",
-                    "primary_language": "Albanian",
-                    "secondary_languages": "Ottoman Turkish, Serbo-Croatian",
-                    "language_family": "Indo-European",
-                    "source_citation": "Gopčević (1889), p. 42"
-                }
-            },
-            {
-                "type": "Feature",
-                "geometry": { "type": "Point", "coordinates": [31.2357, 30.0444] },
-                "properties": {
-                    "location_name": "Cairo / Kahire",
-                    "primary_language": "Arabic",
-                    "secondary_languages": "Ottoman Turkish, French, Judeo-Arabic",
-                    "language_family": "Semitic",
-                    "source_citation": "Lane (1836), p. 14"
-                }
-            }
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [22.9444, 40.6401] }, "properties": { "location_name": "Salonica / Selanik", "primary_language": "Ladino (Judeo-Spanish)", "secondary_languages": "Ottoman Turkish, Greek, Bulgarian", "language_family": "Romance", "source_citation": "Cuinet (1892), Vol 3, p. 12" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [28.9784, 41.0082] }, "properties": { "location_name": "Istanbul / Dersaadet", "primary_language": "Ottoman Turkish", "secondary_languages": "Greek, Armenian, Ladino, French", "language_family": "Turkic", "source_citation": "Karpat (1985), p. 102" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [27.1428, 38.4237] }, "properties": { "location_name": "Smyrna / Izmir", "primary_language": "Greek", "secondary_languages": "Ottoman Turkish, Ladino, French, Armenian", "language_family": "Hellenic", "source_citation": "Cuinet (1892), Vol 3, p. 340" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [44.3661, 33.3152] }, "properties": { "location_name": "Baghdad", "primary_language": "Arabic", "secondary_languages": "Ottoman Turkish, Persian, Judeo-Arabic, Syriac", "language_family": "Semitic", "source_citation": "Cuinet (1892), Vol 3, p. 18" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [37.1343, 36.2021] }, "properties": { "location_name": "Aleppo / Halab", "primary_language": "Arabic", "secondary_languages": "Ottoman Turkish, Armenian, Judeo-Arabic", "language_family": "Semitic", "source_citation": "Cuinet (1891), Vol 2, p. 112" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [43.1300, 36.3400] }, "properties": { "location_name": "Mosul", "primary_language": "Arabic", "secondary_languages": "Kurdish, Syriac (Neo-Aramaic), Ottoman Turkish", "language_family": "Semitic", "source_citation": "Cuinet (1892), Vol 3, p. 760" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [36.2765, 33.5138] }, "properties": { "location_name": "Damascus / Şam", "primary_language": "Arabic", "secondary_languages": "Ottoman Turkish, Judeo-Arabic", "language_family": "Semitic", "source_citation": "Cuinet (1891), Vol 2, p. 250" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [35.5018, 33.8938] }, "properties": { "location_name": "Beirut", "primary_language": "Arabic", "secondary_languages": "French, Ottoman Turkish, Greek", "language_family": "Semitic", "source_citation": "Cuinet (1896), Vol 4, p. 55" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [26.5557, 41.6771] }, "properties": { "location_name": "Edirne / Adrianople", "primary_language": "Ottoman Turkish", "secondary_languages": "Ladino, Greek, Bulgarian", "language_family": "Turkic", "source_citation": "Cuinet (1892), Vol 1, p. 620" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [21.3347, 41.0311] }, "properties": { "location_name": "Monastir / Bitola", "primary_language": "Bulgarian", "secondary_languages": "Ottoman Turkish, Aromanian, Greek, Albanian", "language_family": "Slavic", "source_citation": "Brailsford (1906), p. 85" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [19.5121, 42.0693] }, "properties": { "location_name": "Scutari / Shkodër", "primary_language": "Albanian", "secondary_languages": "Ottoman Turkish, Serbo-Croatian", "language_family": "Indo-European", "source_citation": "Gopčević (1889), p. 42" } },
+            { "type": "Feature", "geometry": { "type": "Point", "coordinates": [31.2357, 30.0444] }, "properties": { "location_name": "Cairo / Kahire", "primary_language": "Arabic", "secondary_languages": "Ottoman Turkish, French, Judeo-Arabic", "language_family": "Semitic", "source_citation": "Lane (1836), p. 14" } }
         ]
     };
 
     L.geoJSON(geojsonData, {
+        // Render circles instead of default blue pins
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, {
+                radius: 9,
+                fillColor: getColor(feature.properties.language_family),
+                color: "#1a1a1a", // Dark border
+                weight: 1.5,
+                opacity: 1,
+                fillOpacity: 0.85
+            });
+        },
+        // Add popups and hover effects
         onEachFeature: function (feature, layer) {
+            
+            // Hover Animation
+            layer.on({
+                mouseover: function (e) {
+                    var target = e.target;
+                    target.setStyle({
+                        radius: 13,        // Circle gets bigger
+                        weight: 2,         // Border gets thicker
+                        fillOpacity: 1     // Color becomes solid
+                    });
+                    target.bringToFront(); // Pulls the circle to the top
+                },
+                mouseout: function (e) {
+                    var target = e.target;
+                    target.setStyle({
+                        radius: 9,         // Reset to original size
+                        weight: 1.5,
+                        fillOpacity: 0.85
+                    });
+                }
+            });
+
+            // Styled Popup
             const props = feature.properties;
             const popupContent = `
-                <strong>${props.location_name}</strong><br>
-                <b>Primary Language:</b> ${props.primary_language}<br>
+                <h3>${props.location_name}</h3>
+                <b>Primary:</b> ${props.primary_language}<br>
                 <b>Secondary:</b> ${props.secondary_languages}<br>
-                <b>Family:</b> ${props.language_family}<br>
+                <b>Family:</b> ${props.language_family}<br><br>
                 <small><i>Source: ${props.source_citation}</i></small>
             `;
             layer.bindPopup(popupContent);
