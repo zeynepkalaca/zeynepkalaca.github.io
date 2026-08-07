@@ -18,6 +18,7 @@
       --border-color: #f0f0f0;
       --button-bg: #efefef;
       --button-border: #767676;
+      --img-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
     [data-theme="dark"] {
@@ -28,6 +29,7 @@
       --border-color: #333333;
       --button-bg: #2b2b2b;
       --button-border: #555555;
+      --img-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
     body { 
@@ -77,6 +79,16 @@
       flex: 1;
       border-left: 2px solid var(--border-color);
       padding-left: 40px;
+    }
+
+    /* --- NEW CSS FOR YOUR PROFILE PICTURE --- */
+    .profile-pic {
+      width: 100%;
+      max-width: 280px; /* Prevents the image from getting too massive */
+      border-radius: 12px; /* Smooth rounded corners */
+      box-shadow: var(--img-shadow); /* Soft shadow that adapts to dark mode */
+      margin-bottom: 25px; /* Pushes the quote text down slightly */
+      object-fit: cover; /* Ensures the image doesn't stretch weirdly */
     }
 
     /* Custom styles for social links */
@@ -144,6 +156,10 @@
 
     <!-- Quote aligned to the right -->
     <div class="quote-section">
+      
+      <!-- YOUR PROFILE PICTURE -->
+      <img src="zeynep.jpeg" alt="Zeynep Kalaça" class="profile-pic">
+
       <p id="quote-box"></p>
       <button onclick="newQuote()">new quote</button>
     </div>
