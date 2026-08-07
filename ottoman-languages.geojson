@@ -9,6 +9,7 @@
         "primary_language": "Ladino (Judeo-Spanish)",
         "secondary_languages": "Ottoman Turkish, Greek, Bulgarian",
         "language_family": "Romance",
+        "mebusan_members": "Emanuel Karasu, Cavid Bey, Vitalis Mallah, Dimitrios Digkas",
         "source_citation": "Cuinet (1892), Vol 3, p. 12"
       }
     },
@@ -20,6 +21,7 @@
         "primary_language": "Ottoman Turkish",
         "secondary_languages": "Greek, Armenian, Ladino, French",
         "language_family": "Turkic",
+        "mebusan_members": "Kirkor Zohrab, Hüseyin Cahit Yalçın, Kozmidi Efendi, Bedros Halacıyan",
         "source_citation": "Karpat (1985), p. 102"
       }
     },
@@ -31,6 +33,7 @@
         "primary_language": "Greek",
         "secondary_languages": "Ottoman Turkish, Ladino, French, Armenian",
         "language_family": "Hellenic",
+        "mebusan_members": "Seyyid Bey, Aristidi Pasha, Emmanuel Emmanuelidi, Nesim Masliyah",
         "source_citation": "Cuinet (1892), Vol 3, p. 340"
       }
     },
@@ -42,6 +45,7 @@
         "primary_language": "Arabic",
         "secondary_languages": "Ottoman Turkish, Persian, Judeo-Arabic, Syriac",
         "language_family": "Semitic",
+        "mebusan_members": "Sassoon Eskell (Sason Efendi), Isma'il Haqqi, Fuad al-Daftari",
         "source_citation": "Cuinet (1892), Vol 3, p. 18"
       }
     },
@@ -53,6 +57,7 @@
         "primary_language": "Arabic",
         "secondary_languages": "Ottoman Turkish, Armenian, Judeo-Arabic",
         "language_family": "Semitic",
+        "mebusan_members": "Artin Boshgezenian, Mustafa Taki Efendi, Ali Cenani Bey",
         "source_citation": "Cuinet (1891), Vol 2, p. 112"
       }
     },
@@ -64,6 +69,7 @@
         "primary_language": "Arabic",
         "secondary_languages": "Kurdish, Syriac (Neo-Aramaic), Ottoman Turkish",
         "language_family": "Semitic",
+        "mebusan_members": "Muhammad 'Ali Fadhil, Dawud Yusufani",
         "source_citation": "Cuinet (1892), Vol 3, p. 760"
       }
     },
@@ -75,17 +81,18 @@
         "primary_language": "Arabic",
         "secondary_languages": "Ottoman Turkish, Judeo-Arabic",
         "language_family": "Semitic",
+        "mebusan_members": "Shukri al-Asali, Shafiq al-Mu'ayyad, Rushdi al-Sham'a",
         "source_citation": "Cuinet (1891), Vol 2, p. 250"
       }
     },
     {
-      "type": "Feature",
-      "geometry": { "type": "Point", "coordinates": [35.5018, 33.8938] },
+      "type": "Feature", "geometry": { "type": "Point", "coordinates": [35.5018, 33.8938] },
       "properties": {
         "location_name": "Beirut",
         "primary_language": "Arabic",
         "secondary_languages": "French, Ottoman Turkish, Greek",
         "language_family": "Semitic",
+        "mebusan_members": "Rida al-Solh, Sulayman al-Bustani, Salim Ali Salam",
         "source_citation": "Cuinet (1896), Vol 4, p. 55"
       }
     },
@@ -97,6 +104,7 @@
         "primary_language": "Ottoman Turkish",
         "secondary_languages": "Ladino, Greek, Bulgarian",
         "language_family": "Turkic",
+        "mebusan_members": "Mehmed Talaat Pasha, Faik Kaltakkıran, Gregorios Efendi",
         "source_citation": "Cuinet (1892), Vol 1, p. 620"
       }
     },
@@ -108,6 +116,7 @@
         "primary_language": "Bulgarian",
         "secondary_languages": "Ottoman Turkish, Aromanian, Greek, Albanian",
         "language_family": "Slavic",
+        "mebusan_members": "Ali Fethi Okyar, Panche Dorev, Trajan Nali",
         "source_citation": "Brailsford (1906), p. 85"
       }
     },
@@ -119,6 +128,7 @@
         "primary_language": "Albanian",
         "secondary_languages": "Ottoman Turkish, Serbo-Croatian",
         "language_family": "Indo-European",
+        "mebusan_members": "Hasan Prishtina, Riza Bey Kryeziu",
         "source_citation": "Gopčević (1889), p. 42"
       }
     },
@@ -130,6 +140,7 @@
         "primary_language": "Arabic",
         "secondary_languages": "Ottoman Turkish, French, Judeo-Arabic",
         "language_family": "Semitic",
+        "mebusan_members": "N/A (Autonomous Khedivate; 1877 delegate: Abdallah Pasha)",
         "source_citation": "Lane (1836), p. 14"
       }
     }
