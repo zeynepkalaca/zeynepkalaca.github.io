@@ -43,6 +43,7 @@
     
     h1 {
       font-size: 40px; 
+      margin-top: 0;
     }
 
     p { 
@@ -63,7 +64,7 @@
       right: 100px;
     }
 
-    /* Layout structure to place content side-by-side */
+    /* Main two-column layout */
     .container {
       display: flex;
       justify-content: space-between;
@@ -75,20 +76,20 @@
       flex: 1;
     }
 
-    /* --- NEW STRUCTURE FOR THE RIGHT SIDE --- */
+    /* Right column holding both picture and quotes stacked vertically */
     .right-column {
       flex: 1;
       border-left: 2px solid var(--border-color);
       padding-left: 40px;
       display: flex;
-      flex-direction: column; /* Stacks the picture and quote vertically */
-      gap: 50px; /* Creates a clear separation between the two sections */
+      flex-direction: column;
+      gap: 50px;
     }
 
-    /* Updated CSS to make your picture smaller */
+    /* Profile picture styling */
     .profile-pic {
       width: 100%;
-      max-width: 180px; /* Shrunk down from 280px */
+      max-width: 180px; 
       border-radius: 12px; 
       box-shadow: var(--img-shadow); 
       object-fit: cover; 
@@ -129,18 +130,18 @@
     <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
   </div>
 
-  <h1>welcome</h1>
-  <p>I am Zeynep Kalaça, this is my website.</p>
-  
-  <p>Student, Middle East Technical University (2023-2028)</p>
-  <p>Research Assistant, Koç University (2026)</p>
-  <br>
-
   <!-- Two-column container -->
   <div class="container">
     
-    <!-- LEFT SIDE -->
+    <!-- LEFT COLUMN: Welcome, Bio, and Links -->
     <div class="main-content">
+      <h1>welcome</h1>
+      <p>I am Zeynep Kalaça, this is my website.</p>
+      <p>Student, Middle East Technical University (2023-2028)</p>
+      <p>Research Assistant, Koç University (2026)</p>
+      
+      <br><br>
+
       <p>
         <a href="https://github.com/zeynepkalaca" class="contact-link" target="_blank">💻 github</a>
       </p>
@@ -153,21 +154,23 @@
       <p>
         <a href="https://soundcloud.com/zklca" class="contact-link" target="_blank">🎧 soundcloud</a>
       </p>
+      
       <br>
+      
       <p><a href="projects.html">projects</a></p>
       <p><a href="questions.html">questions</a></p>
       <p><a href="blog.html">blog</a></p>
     </div>
 
-    <!-- RIGHT SIDE -->
+    <!-- RIGHT COLUMN: Picture at top, Quotes below -->
     <div class="right-column">
       
-      <!-- Part 1: Picture Section -->
+      <!-- Picture Section -->
       <div class="picture-section">
         <img src="zeynep.jpeg" alt="Zeynep Kalaça" class="profile-pic">
       </div>
 
-      <!-- Part 2: Quote Section -->
+      <!-- Quote Section -->
       <div class="quote-section">
         <p id="quote-box"></p>
         <button onclick="newQuote()">new quote</button>
