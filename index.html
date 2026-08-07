@@ -63,7 +63,7 @@
       right: 100px;
     }
 
-    /* Layout structure to place quote section on the right */
+    /* Layout structure to place content side-by-side */
     .container {
       display: flex;
       justify-content: space-between;
@@ -75,20 +75,23 @@
       flex: 1;
     }
 
-    .quote-section {
+    /* --- NEW STRUCTURE FOR THE RIGHT SIDE --- */
+    .right-column {
       flex: 1;
       border-left: 2px solid var(--border-color);
       padding-left: 40px;
+      display: flex;
+      flex-direction: column; /* Stacks the picture and quote vertically */
+      gap: 50px; /* Creates a clear separation between the two sections */
     }
 
-    /* --- NEW CSS FOR YOUR PROFILE PICTURE --- */
+    /* Updated CSS to make your picture smaller */
     .profile-pic {
       width: 100%;
-      max-width: 280px; /* Prevents the image from getting too massive */
-      border-radius: 12px; /* Smooth rounded corners */
-      box-shadow: var(--img-shadow); /* Soft shadow that adapts to dark mode */
-      margin-bottom: 25px; /* Pushes the quote text down slightly */
-      object-fit: cover; /* Ensures the image doesn't stretch weirdly */
+      max-width: 180px; /* Shrunk down from 280px */
+      border-radius: 12px; 
+      box-shadow: var(--img-shadow); 
+      object-fit: cover; 
     }
 
     /* Custom styles for social links */
@@ -135,6 +138,8 @@
 
   <!-- Two-column container -->
   <div class="container">
+    
+    <!-- LEFT SIDE -->
     <div class="main-content">
       <p>
         <a href="https://github.com/zeynepkalaca" class="contact-link" target="_blank">💻 github</a>
@@ -154,14 +159,20 @@
       <p><a href="blog.html">blog</a></p>
     </div>
 
-    <!-- Quote aligned to the right -->
-    <div class="quote-section">
+    <!-- RIGHT SIDE -->
+    <div class="right-column">
       
-      <!-- YOUR PROFILE PICTURE -->
-      <img src="zeynep.jpeg" alt="Zeynep Kalaça" class="profile-pic">
+      <!-- Part 1: Picture Section -->
+      <div class="picture-section">
+        <img src="zeynep.jpeg" alt="Zeynep Kalaça" class="profile-pic">
+      </div>
 
-      <p id="quote-box"></p>
-      <button onclick="newQuote()">new quote</button>
+      <!-- Part 2: Quote Section -->
+      <div class="quote-section">
+        <p id="quote-box"></p>
+        <button onclick="newQuote()">new quote</button>
+      </div>
+
     </div>
   </div>
 
