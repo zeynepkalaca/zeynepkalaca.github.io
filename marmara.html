@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zeynep Kalaça / marmara region: oiz</title>
+  <title>Zeynep Kalaça / Marmara Region: OIZ & Work Accidents</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
-    /* CSS Variables for Light and Dark Modes */
     :root {
       --bg-color: #ffffff;
       --text-color: #000000;
@@ -62,7 +61,6 @@
       border: 1px solid var(--border-color);
     }
 
-    /* Dark mode styling for Leaflet map tiles and popups */
     [data-theme="dark"] .leaflet-tile-pane {
       filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3);
     }
@@ -73,7 +71,6 @@
       color: #e0e0e0;
     }
 
-    /* Theme Toggle Positioned Top-Right */
     .theme-toggle-container {
       position: absolute;
       top: 40px;
@@ -122,12 +119,11 @@
 </head>
 <body>
 
-  <!-- Theme Toggle -->
   <div class="theme-toggle-container">
     <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
   </div>
 
-  <h2>marmara region: organized industrial zones</h2>
+  <h2>marmara region: oiz & work accidents</h2>
   <p><a href="index.html" class="back-link">← home</a></p>
   <hr>
 
@@ -135,7 +131,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // Theme Switcher Logic
+    // Theme Switcher
     const toggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme');
 
@@ -159,13 +155,123 @@
       }
     }
 
-    // Leaflet Map Initialization
+    // Map Initialization
     var map = L.map('map').setView([40.8, 28.5], 7.5);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
+    // 1. City Centers & Work Incident Statistics
+    var cityAccidentData = [
+      {
+        city: "İstanbul",
+        coords: [41.0082, 28.9784],
+        constructionAccidents2023: 22541,
+        constructionDeaths2023: 112,
+        avgAccidents01_05: 9145.6,
+        avgDeaths01_05: 154.8
+      },
+      {
+        city: "Bursa",
+        coords: [40.1885, 29.0610],
+        constructionAccidents2023: 2417,
+        constructionDeaths2023: 10,
+        avgAccidents01_05: 6762.0,
+        avgDeaths01_05: 43.2
+      },
+      {
+        city: "Kocaeli",
+        coords: [40.8533, 29.8815],
+        constructionAccidents2023: 2509,
+        constructionDeaths2023: 12,
+        avgAccidents01_05: 6562.6,
+        avgDeaths01_05: 32.8
+      },
+      {
+        city: "Tekirdağ",
+        coords: [40.9833, 27.5167],
+        constructionAccidents2023: 787,
+        constructionDeaths2023: "N/A",
+        avgAccidents01_05: 2180.4,
+        avgDeaths01_05: 17.6
+      },
+      {
+        city: "Bilecik",
+        coords: [40.1500, 29.9833],
+        constructionAccidents2023: 348,
+        constructionDeaths2023: "N/A",
+        avgAccidents01_05: 1585.4,
+        avgDeaths01_05: 5.4
+      },
+      {
+        city: "Balıkesir",
+        coords: [39.6484, 27.8826],
+        constructionAccidents2023: 733,
+        constructionDeaths2023: 13,
+        avgAccidents01_05: 1289.4,
+        avgDeaths01_05: 14.6
+      },
+      {
+        city: "Kırklareli",
+        coords: [41.7333, 27.2167],
+        constructionAccidents2023: 454,
+        constructionDeaths2023: "N/A",
+        avgAccidents01_05: 1112.6,
+        avgDeaths01_05: 7.6
+      },
+      {
+        city: "Sakarya",
+        coords: [40.7569, 30.3783],
+        constructionAccidents2023: 930,
+        constructionDeaths2023: "N/A",
+        avgAccidents01_05: 625.0,
+        avgDeaths01_05: 13.2
+      },
+      {
+        city: "Çanakkale",
+        coords: [40.1553, 26.4142],
+        constructionAccidents2023: 432,
+        constructionDeaths2023: "N/A",
+        avgAccidents01_05: 398.6,
+        avgDeaths01_05: 6.0
+      },
+      {
+        city: "Yalova",
+        coords: [40.6500, 29.2667],
+        constructionAccidents2023: 323,
+        constructionDeaths2023: "N/A",
+        avgAccidents01_05: 201.6,
+        avgDeaths01_05: 3.0
+      },
+      {
+        city: "Edirne",
+        coords: [41.6772, 26.5557],
+        constructionAccidents2023: 128,
+        constructionDeaths2023: "N/A",
+        avgAccidents01_05: 223.0,
+        avgDeaths01_05: 6.0
+      }
+    ];
+
+    // Render Red City Markers for Accidents
+    cityAccidentData.forEach(function(item) {
+      var popupContent = "<strong>" + item.city + " (City Center)</strong><br><hr style='margin:5px 0;'>" +
+        "<b>2023 Construction Accidents:</b> " + item.constructionAccidents2023 + "<br>" +
+        "<b>2023 Construction Deaths:</b> " + item.constructionDeaths2023 + "<br>" +
+        "<b>2001-2005 Avg. Accidents/Yr:</b> " + item.avgAccidents01_05 + "<br>" +
+        "<b>2001-2005 Avg. Deaths/Yr:</b> " + item.avgDeaths01_05;
+
+      L.circleMarker(item.coords, {
+        radius: 12,
+        fillColor: "#e74c3c",
+        color: "#ffffff",
+        weight: 2,
+        fillOpacity: 0.9
+      }).bindPopup(popupContent).addTo(map);
+    });
+
+    // 2. Load OIZ Points from GeoJSON
     var geojsonUrl = 'https://raw.githubusercontent.com/zeynepkalaca/zeynepkalaca.github.io/refs/heads/main/marmara.geojson';
 
     fetch(geojsonUrl)
@@ -186,7 +292,7 @@
                 },
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng, {
-                        radius: 8,
+                        radius: 6,
                         fillColor: "#2980b9",
                         color: "#fff",
                         weight: 1.5,
@@ -194,8 +300,6 @@
                     });
                 }
             }).addTo(map);
-            
-            map.fitBounds(oizLayer.getBounds());
         })
         .catch(error => console.error('Error loading GeoJSON:', error));
   </script>
