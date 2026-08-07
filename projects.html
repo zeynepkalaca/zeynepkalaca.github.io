@@ -134,6 +134,13 @@
 
     /* Responsive adjustment for small screens */
     @media (max-width: 900px) {
+      body {
+        margin: 30px; /* Prevents overflow and reduces margins on mobile */
+      }
+      .theme-toggle-container {
+        top: 25px;
+        right: 30px;
+      }
       .layout-container {
         flex-direction: column;
       }
