@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="google-site-verification" content="QNdHd9z1oMZtt3kwfjeHp4e47Wl2cVuIF27NUzEi4w8" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Zeynep Kalaça - welcome">
+  <meta name="description" content="Zeynep Kalaça's personal website - Student at METU and Research Assistant at Koç University.">
   <meta name="author" content="Zeynep Kalaça">
-  <title>Zeynep Kalaça / welcome</title>
+  <title>Zeynep Kalaça / home</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
   <style>
     /* CSS Variables for Light and Dark Modes */
@@ -14,11 +15,10 @@
       --text-color: #000000;
       --link-color: blue;
       --contact-link-color: #333333;
-      --border-color: #ccc;
+      --border-color: #f0f0f0;
       --button-bg: #efefef;
       --button-border: #767676;
-      --accent-color: #cc0000;
-      --text-muted: #666666;
+      --img-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
     [data-theme="dark"] {
@@ -29,19 +29,18 @@
       --border-color: #333333;
       --button-bg: #2b2b2b;
       --button-border: #555555;
-      --accent-color: #ff6666;
-      --text-muted: #aaaaaa;
+      --img-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
     body { 
       font-family: "Helvetica", "Arial", sans-serif; 
       background-color: var(--bg-color); 
       color: var(--text-color);
-      margin: 80px 100px; 
-      font-size: 20px;
+      margin: 100px; 
+      font-size: 20px; 
       transition: background-color 0.3s ease, color 0.3s ease;
     }
-
+    
     h1 {
       font-size: 40px; 
       margin-top: 0;
@@ -50,13 +49,12 @@
     p { 
       margin: 20px 0; 
       font-size: 20px; 
-      line-height: 1.5;
     }
 
     a { 
       color: var(--link-color); 
       text-decoration: underline; 
-      font-size: 20px; 
+      font-size: 20px;
     }
 
     /* Theme Toggle Positioned Top-Right */
@@ -66,70 +64,63 @@
       right: 100px;
     }
 
-    /* Layout Container */
-    .layout-container {
+    /* Main two-column layout for desktop */
+    .container {
       display: flex;
-      gap: 60px;
+      justify-content: space-between;
       align-items: flex-start;
-      margin-top: 40px;
+      gap: 60px;
     }
 
-    /* Left Column (Picture, Subtitle, Quote) */
-    .left-column {
-      width: 380px;
-      flex-shrink: 0;
-      border-right: 1px solid var(--border-color);
-      padding-right: 60px;
-    }
-
-    .profile-img {
-      width: 100%;
-      max-width: 320px;
-      height: auto;
-      border-radius: 8px;
-      display: block;
-    }
-
-    .image-subtitle {
-      font-size: 15px;
-      color: var(--text-muted);
-      margin-top: 12px;
-      margin-bottom: 40px;
-    }
-
-    .quote-section {
-      margin-top: 30px;
-    }
-
-    .quote-text {
-      font-size: 18px;
-      font-weight: 500;
-      margin-bottom: 15px;
-      line-height: 1.4;
-    }
-
-    /* Right Column (Welcome & Intro) */
-    .right-column {
+    .main-content {
       flex: 1;
     }
 
-    .social-links, .nav-links {
-      margin-top: 30px;
+    /* Right column holding both picture and quotes stacked vertically */
+    .right-column {
+      flex: 1;
+      border-left: 2px solid var(--border-color);
+      padding-left: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
     }
 
-    .social-links p, .nav-links p {
-      margin: 12px 0;
+    /* Profile picture styling */
+    .profile-pic {
+      width: 100%;
+      max-width: 180px; 
+      border-radius: 12px; 
+      box-shadow: var(--img-shadow); 
+      object-fit: cover; 
     }
 
-    .social-link {
-      font-family: "Consolas", "Courier New", monospace;
-      text-decoration: none;
+    /* Style for the profile picture caption */
+    .pic-caption {
+      font-size: 16px;
       color: var(--text-color);
+      opacity: 0.8;
+      margin-top: 10px;
+      margin-bottom: 0;
     }
 
-    .social-link:hover {
+    /* Custom styles for social links */
+    .contact-link {
+      font-family: "Consolas", "Courier New", monospace; 
+      text-decoration: none;
+      color: var(--contact-link-color);
+      font-weight: 500;
+    }
+
+    .contact-link:hover {
       text-decoration: underline;
       color: var(--link-color);
+    }
+
+    #quote-box {
+      font-size: 22px; 
+      font-weight: bold;
+      margin-top: 0;
     }
 
     button {
@@ -142,75 +133,84 @@
       border-radius: 4px;
     }
 
-    button:hover {
-      opacity: 0.9;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 900px) {
+    /* --- MOBILE RESPONSIVENESS (Screens smaller than 768px) --- */
+    @media (max-width: 768px) {
       body {
-        margin: 30px;
+        margin: 30px; /* Reduces massive margins on phones */
       }
+      
       .theme-toggle-container {
         top: 25px;
         right: 30px;
       }
-      .layout-container {
-        flex-direction: column;
-        gap: 30px;
+
+      .container {
+        flex-direction: column; /* Stacks left content and right column vertically */
+        gap: 40px;
       }
-      .left-column {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        padding-right: 0;
-        padding-bottom: 30px;
+
+      .right-column {
+        border-left: none; /* Removes side border on mobile */
+        border-top: 2px solid var(--border-color); /* Adds a top border to separate sections nicely */
+        padding-left: 0;
+        padding-top: 40px;
       }
     }
   </style>
 </head>
 <body>
-
-  <!-- Theme Toggle -->
   <div class="theme-toggle-container">
     <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
   </div>
 
-  <div class="layout-container">
+  <!-- Two-column container -->
+  <div class="container">
     
-    <!-- Left Column: Picture, Subtitle & Quote -->
-    <div class="left-column">
-      <img src="profile.jpg" alt="Zeynep Kalaça" class="profile-img">
-      <div class="image-subtitle">that's me with my previous glasses.</div>
-
-      <div class="quote-section">
-        <div id="quote-display" class="quote-text">Roads? Where we're going we don't need roads. - Back to the Future, 1985</div>
-        <button onclick="getNewQuote()">new quote</button>
-      </div>
-    </div>
-
-    <!-- Right Column: Welcome & Intro -->
-    <div class="right-column">
+    <!-- LEFT COLUMN: Welcome, Bio, and Links -->
+    <div class="main-content">
       <h1>welcome</h1>
-      
       <p>I am Zeynep Kalaça, this is my website.</p>
       <p>Student, Middle East Technical University (2023-2028)</p>
       <p>Research Assistant, Koç University (2026)</p>
+      
+      <br><br>
 
-      <div class="social-links">
-        <p><a href="https://github.com/zeynepkalaca" class="social-link" target="_blank">💻 github</a></p>
-        <p><a href="mailto:kalaca.zeynep@metu.edu.tr" class="social-link">✉️ e-mail</a></p>
-        <p><a href="https://unsplash.com" class="social-link" target="_blank">📷 unsplash</a></p>
-        <p><a href="https://soundcloud.com" class="social-link" target="_blank">🎧 soundcloud</a></p>
-      </div>
-
-      <div class="nav-links">
-        <p><a href="projects.html">projects</a></p>
-        <p><a href="questions.html">questions</a></p>
-        <p><a href="blog.html">blog</a></p>
-      </div>
+      <p>
+        <a href="https://github.com/zeynepkalaca" class="contact-link" target="_blank">💻 github</a>
+      </p>
+      <p>
+        <a href="mailto:kalaca.zeynep@metu.edu.tr" class="contact-link">✉️ e-mail</a>
+      </p>
+      <p>
+        <a href="https://unsplash.com/@zeynepkalaca" class="contact-link" target="_blank">📷 unsplash</a>
+      </p>
+      <p>
+        <a href="https://soundcloud.com/zklca" class="contact-link" target="_blank">🎧 soundcloud</a>
+      </p>
+      
+      <br>
+      
+      <p><a href="projects.html">projects</a></p>
+      <p><a href="questions.html">questions</a></p>
+      <p><a href="blog.html">blog</a></p>
     </div>
 
+    <!-- RIGHT COLUMN: Picture at top, Quotes below -->
+    <div class="right-column">
+      
+      <!-- Picture Section with Caption -->
+      <div class="picture-section">
+        <img src="zeynep.jpeg" alt="Zeynep Kalaça" class="profile-pic">
+        <p class="pic-caption">that's me with my previous glasses.</p>
+      </div>
+
+      <!-- Quote Section -->
+      <div class="quote-section">
+        <p id="quote-box"></p>
+        <button onclick="newQuote()">new quote</button>
+      </div>
+
+    </div>
   </div>
 
   <script>
@@ -238,9 +238,30 @@
       }
     }
 
-    function getNewQuote() {
-      // Add quote rotation logic here if applicable
+    // Quote Logic
+    const quotes = [
+      "Nobody's perfect. - Some Like It Hot, 1959",
+      "The greatest trick the devil ever pulled was convincing the world he didn't exist. - The Usual Suspects, 1995",
+      "You can't handle the truth! - A Few Good Men, 1992",
+      "What we've got here is a failure to communicate. - Cool Hand Luke, 1967",
+      "I drink your milkshake! - There Will Be Blood, 2007",
+      "Roads? Where we're going we don't need roads. - Back to the Future, 1985",
+      "I don't want to survive. I want to live. - 12 Years a Slave, 2013",
+      "I have always depended on the kindness of strangers. - A Streetcar Named Desire, 1951",
+      "You have meddled with the primal forces of nature, Mr. Hamlin, and I won't have it. - Network, 1976",
+      "Pay no attention to that man behind the curtain! - The Wizard of Oz, 1939",
+    ];
+
+    function newQuote() {
+      const box = document.getElementById('quote-box');
+      let next;
+      do {
+        next = quotes[Math.floor(Math.random() * quotes.length)];
+      } while (next === box.textContent && quotes.length > 1);
+      box.textContent = next;
     }
+
+    newQuote();
   </script>
 </body>
 </html>
