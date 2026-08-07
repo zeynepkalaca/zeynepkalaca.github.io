@@ -119,7 +119,80 @@
         "mebusan_members": "Ali Fethi Okyar, Panche Dorev, Trajan Nali",
         "source_citation": "Brailsford (1906), p. 85"
       }
-    },
+    }
+[
+  {
+    "type": "Feature",
+    "geometry": { "type": "Point", "coordinates": [41.2679, 39.9043] },
+    "properties": {
+      "location_name": "Erzurum",
+      "primary_language": "Ottoman Turkish",
+      "secondary_languages": "Armenian, Kurdish",
+      "language_family": "Turkic",
+      "mebusan_members": "Vartkes Serengülyan, Pastırmacıyan Karekin Efendi (Armen Karo), Hoca Raif Efendi",
+      "source_citation": "Cuinet (1891), Vol 1, p. 130"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": { "type": "Point", "coordinates": [39.2528, 38.7039] },
+    "properties": {
+      "location_name": "Harput / Mamuretülaziz",
+      "primary_language": "Ottoman Turkish",
+      "secondary_languages": "Armenian, Kurdish",
+      "language_family": "Turkic",
+      "mebusan_members": "Çötelizade Asim Bey, Mehmed Nuri Efendi, Arşag Şirinyan",
+      "source_citation": "Cuinet (1891), Vol 2, p. 320"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": { "type": "Point", "coordinates": [32.4844, 37.8714] },
+    "properties": {
+      "location_name": "Konya",
+      "primary_language": "Ottoman Turkish",
+      "secondary_languages": "Greek (Karamanli Turkish)",
+      "language_family": "Turkic",
+      "mebusan_members": "Mehmet Vehbi Efendi (Çelik), Zeynelabidin Efendi, Mustafa Lütfi Efendi",
+      "source_citation": "Cuinet (1891), Vol 1, p. 800"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": { "type": "Point", "coordinates": [43.0975, 40.6013] },
+    "properties": {
+      "location_name": "Kars",
+      "primary_language": "Ottoman Turkish",
+      "secondary_languages": "Armenian, Georgian, Russian",
+      "language_family": "Turkic",
+      "mebusan_members": "N/A (Ceded to Russia in 1878 Treaty of Berlin; rejoined Ottoman realm 1918)",
+      "source_citation": "Allen & Muratoff (1953), p. 210"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": { "type": "Point", "coordinates": [40.2306, 37.9144] },
+    "properties": {
+      "location_name": "Diyarbakır / Diyarbekir",
+      "primary_language": "Ottoman Turkish",
+      "secondary_languages": "Kurdish, Armenian, Syriac",
+      "language_family": "Turkic",
+      "mebusan_members": "Ziya Gökalp, Pirinççizade Arif Bey, Siret Bey",
+      "source_citation": "Cuinet (1891), Vol 2, p. 450"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": { "type": "Point", "coordinates": [35.2137, 31.7683] },
+    "properties": {
+      "location_name": "Jerusalem / Kudüs-i Şerif",
+      "primary_language": "Arabic",
+      "secondary_languages": "Ottoman Turkish, Ladino, Yiddish, Armenian",
+      "language_family": "Semitic",
+      "mebusan_members": "Ruhi al-Khalidi, Said al-Husseini, Raghib al-Nashashibi",
+      "source_citation": "Cuinet (1896), Vol 4, p. 180"
+    }
+  },
     {
       "type": "Feature",
       "geometry": { "type": "Point", "coordinates": [19.5121, 42.0693] },
