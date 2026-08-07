@@ -64,7 +64,7 @@
       right: 100px;
     }
 
-    /* Main two-column layout */
+    /* Main two-column layout for desktop */
     .container {
       display: flex;
       justify-content: space-between;
@@ -132,6 +132,30 @@
       border: 1px solid var(--button-border);
       border-radius: 4px;
     }
+
+    /* --- MOBILE RESPONSIVENESS (Screens smaller than 768px) --- */
+    @media (max-width: 768px) {
+      body {
+        margin: 30px; /* Reduces massive margins on phones */
+      }
+      
+      .theme-toggle-container {
+        top: 25px;
+        right: 30px;
+      }
+
+      .container {
+        flex-direction: column; /* Stacks left content and right column vertically */
+        gap: 40px;
+      }
+
+      .right-column {
+        border-left: none; /* Removes side border on mobile */
+        border-top: 2px solid var(--border-color); /* Adds a top border to separate sections nicely */
+        padding-left: 0;
+        padding-top: 40px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -177,10 +201,8 @@
       <!-- Picture Section with Caption -->
       <div class="picture-section">
         <img src="zeynep.jpeg" alt="Zeynep Kalaça" class="profile-pic">
-        <p class="pic-caption">that's me with my previous glasses.</p>
+        <p class="pic-caption">That's me with my previous glasses.</p>
       </div>
-      <br><br>
-      <br><br>
 
       <!-- Quote Section -->
       <div class="quote-section">
