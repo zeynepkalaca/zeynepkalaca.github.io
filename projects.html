@@ -36,29 +36,16 @@
       background-color: var(--bg-color); 
       color: var(--text-color);
       margin: 60px 100px; 
-      font-size: 20px; /* Base font size */
+      font-size: 20px; 
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     h2 {
-      font-size: 32px; /* Section header size */
+      font-size: 32px; 
     }
 
     p { 
-      margin: 30px 0; /* Adjusted spacing */
-      font-size: 20px; 
-    }
-
-    .q { 
-      font-weight: bold; 
-      color: var(--accent-color); 
-      margin-top: 20px; 
-      font-size: 20px; 
-    }
-
-    .a { 
-      color: var(--accent-color); 
-      margin-bottom: 5px; 
+      margin: 20px 0; 
       font-size: 20px; 
     }
 
@@ -90,6 +77,11 @@
 
     .accent-link {
       color: var(--accent-color) !important;
+      text-decoration: none;
+    }
+
+    .accent-link:hover {
+      text-decoration: underline;
     }
 
     hr {
@@ -122,7 +114,67 @@
       border-radius: 8px;
     }
 
-    button {
+    /* Filter Buttons */
+    .filter-container {
+      margin: 25px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: inherit;
+      font-size: 15px;
+      padding: 6px 14px;
+      cursor: pointer;
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      border: 1px solid var(--button-border);
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background-color: var(--accent-color);
+      color: #ffffff;
+      border-color: var(--accent-color);
+    }
+
+    /* Project Boxes */
+    .projects-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .project-box {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      background-color: var(--bg-color);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .project-box:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+
+    .project-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--accent-color);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .project-meta {
+      font-size: 15px;
+      color: var(--contact-link-color);
+      margin-top: 5px;
+    }
+
+    button#theme-toggle {
       font-size: 16px; 
       padding: 8px 16px;
       cursor: pointer;
@@ -135,7 +187,7 @@
     /* Responsive adjustment for small screens */
     @media (max-width: 900px) {
       body {
-        margin: 30px; /* Prevents overflow and reduces margins on mobile */
+        margin: 30px; 
       }
       .theme-toggle-container {
         top: 25px;
@@ -168,21 +220,40 @@
       <p><strong>my interest areas:</strong> computational social science, digital behavioral data and data visualization.</p>
 
       <p>current projects i'm contributing:</p>
-     
-      <p class="accent-link" style="text-decoration: underline;">
-        1) Collective Grief Stages in Pro-AKP Economic Discourse on Twitter 2018–2023, Koç University - KUSRP
-      </p>
 
-      <p>
-        <a href="https://ma-cssl.com/home" class="accent-link">2) IMF Decides, Machine Learns: An AI Approach to International Organizations, Koç University - MA-CSSL </a>
-      </p>
-      <p>what is visualisation/mapping (basicly)? there are two examples i did:
-       <p>
-        <a href="https://zeynepkalaca.github.io/marmara.html" class="accent-link"><span class="accent-link">ex:</span> marmara region: organized industrial zones & work accidents</a>
-      </p>
-      <p>
-        <a href="https://zeynepkalaca.github.io/ottoman-languages.html" class="accent-link"><span class="accent-link">ex:</span> ottoman empire: spoken languages & mebusan deputies (1908)</a>
-      </p>
+      <!-- Category Filter Buttons -->
+      <div class="filter-container">
+        <button class="filter-btn active" onclick="filterProjects('all', event)">[all]</button>
+        <button class="filter-btn" onclick="filterProjects('social-science', event)">[social science & ai]</button>
+        <button class="filter-btn" onclick="filterProjects('mapping', event)">[mapping & visualization]</button>
+      </div>
+
+      <!-- Project Boxes Container -->
+      <div class="projects-grid">
+        <!-- Box 1 -->
+        <div class="project-box" data-category="social-science">
+          <span class="project-title">Collective Grief Stages in Pro-AKP Economic Discourse on Twitter 2018–2023</span>
+          <p class="project-meta">Koç University - KUSRP</p>
+        </div>
+
+        <!-- Box 2 -->
+        <div class="project-box" data-category="social-science">
+          <a href="https://ma-cssl.com/home" class="project-title accent-link">IMF Decides, Machine Learns: An AI Approach to International Organizations</a>
+          <p class="project-meta">Koç University - MA-CSSL</p>
+        </div>
+
+        <!-- Box 3 -->
+        <div class="project-box" data-category="mapping">
+          <a href="https://zeynepkalaca.github.io/marmara.html" class="project-title accent-link">Marmara Region: Organized Industrial Zones & Work Accidents</a>
+          <p class="project-meta">Data Visualization & Mapping Example</p>
+        </div>
+
+        <!-- Box 4 -->
+        <div class="project-box" data-category="mapping">
+          <a href="https://zeynepkalaca.github.io/ottoman-languages.html" class="project-title accent-link">Ottoman Empire: Spoken Languages & Mebusan Deputies (1908)</a>
+          <p class="project-meta">Historical Mapping Example</p>
+        </div>
+      </div>
     </div>
 
     <!-- Right Column: GIF -->
@@ -216,6 +287,24 @@
         localStorage.setItem('theme', 'dark');
         toggleBtn.textContent = '☀️ light';
       }
+    }
+
+    // Project Filtering Logic
+    function filterProjects(category, event) {
+      // Update active button states
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Filter project boxes
+      const boxes = document.querySelectorAll('.project-box');
+      boxes.forEach(box => {
+        if (category === 'all' || box.getAttribute('data-category') === category) {
+          box.style.display = 'block';
+        } else {
+          box.style.display = 'none';
+        }
+      });
     }
   </script>
 </body>
