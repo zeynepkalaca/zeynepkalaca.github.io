@@ -155,6 +155,10 @@
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
+    .project-box.hidden {
+      display: none !important;
+    }
+
     .project-box:hover {
       border-color: var(--accent-color);
       transform: translateY(-2px);
@@ -296,13 +300,13 @@
       buttons.forEach(btn => btn.classList.remove('active'));
       event.target.classList.add('active');
 
-      // Filter project boxes
+      // Filter project boxes safely using class toggling
       const boxes = document.querySelectorAll('.project-box');
       boxes.forEach(box => {
         if (category === 'all' || box.getAttribute('data-category') === category) {
-          box.style.display = 'block';
+          box.classList.remove('hidden');
         } else {
-          box.style.display = 'none';
+          box.classList.add('hidden');
         }
       });
     }
