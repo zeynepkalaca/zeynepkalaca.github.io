@@ -1,248 +1,590 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-site-verification" content="QNdHd9z1oMZtt3kwfjeHp4e47Wl2cVuIF27NUzEi4w8" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Zeynep Kalaça's personal website - Student at METU and Research Assistant at Koç University.">
+  <meta name="description" content="Documentation of child and youth casualties in Turkey (2000-2015)">
   <meta name="author" content="Zeynep Kalaça">
-  <title>Zeynep Kalaça / home</title>
+  <title>Zeynep Kalaça / "adalet iyileştirir"</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
+  
+  <!-- Leaflet CSS & MarkerCluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     :root {
-      --bg-color: #ffffff;
-      --text-color: #000000;
-      --link-color: blue;
-      --contact-link-color: #333333;
-      --border-color: #f0f0f0;
-      --button-bg: #efefef;
-      --button-border: #767676;
-      --img-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-color: #1a1a1a;
+      --secondary-text: #555555;
+      --border-color: #d1d5db;
+      --accent-red: #a81c1c;
+      --font-serif: "Georgia", "Times New Roman", serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "Consolas", "Courier New", monospace;
     }
 
     [data-theme="dark"] {
       --bg-color: #121212;
+      --card-bg: #1e1e1e;
       --text-color: #e0e0e0;
-      --link-color: #64b5f6;
-      --contact-link-color: #cccccc;
+      --secondary-text: #a0a0a0;
       --border-color: #333333;
-      --button-bg: #2b2b2b;
-      --button-border: #555555;
-      --img-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      --accent-red: #e63946;
     }
 
-    body { 
-      font-family: "Helvetica", "Arial", sans-serif; 
-      background-color: var(--bg-color); 
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-color);
       color: var(--text-color);
-      margin: 100px; 
-      font-size: 20px; 
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    
-    h1 {
-      font-size: 40px; 
-      margin-top: 0;
+      margin: 0;
+      padding: 0 60px 40px 60px;
     }
 
-    p { 
-      margin: 20px 0; 
-      font-size: 20px; 
+    /* Top Horizontal Scrolling Photo Strip */
+    .top-photo-strip {
+      width: calc(100% + 120px);
+      margin-left: -60px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 15px 60px;
+      margin-bottom: 30px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: thin;
     }
 
-    a { 
-      color: var(--link-color); 
-      text-decoration: underline; 
-      font-size: 20px;
+    .top-photo-strip::-webkit-scrollbar {
+      height: 6px;
     }
 
-    .theme-toggle-container {
-      position: absolute;
-      top: 40px;
-      right: 100px;
+    .top-photo-strip::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
     }
 
-    .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 60px;
+    .strip-track {
+      display: inline-flex;
+      gap: 12px;
     }
 
-    .main-content {
-      flex: 1;
-    }
-
-    .right-column {
-      flex: 1;
-      border-left: 2px solid var(--border-color);
-      padding-left: 40px;
+    .strip-item {
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--card-bg);
+      cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 50px;
+      align-items: center;
     }
 
-    .profile-pic {
+    .strip-item img {
       width: 100%;
-      max-width: 180px; 
-      border-radius: 12px; 
-      box-shadow: var(--img-shadow); 
-      object-fit: cover; 
+      height: 70px;
+      object-fit: cover;
+      filter: brightness(0.95);
+      transition: filter 0.2s ease, transform 0.2s ease;
     }
 
-    .pic-caption {
-      font-size: 16px;
+    .strip-item:hover img {
+      filter: brightness(1);
+      transform: scale(1.05);
+    }
+
+    .strip-label {
+      font-size: 11px;
+      font-family: var(--font-sans);
       color: var(--text-color);
-      opacity: 0.8;
-      margin-top: 10px;
-      margin-bottom: 0;
+      text-align: center;
+      width: 100%;
+      padding: 4px 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: var(--card-bg);
     }
 
-    .contact-link {
-      font-family: "Consolas", "Courier New", monospace; 
+    header {
+      border-bottom: 2px solid var(--text-color);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+    }
+
+    .meta-subtitle {
+      font-size: 15px;
+      color: var(--secondary-text);
+      margin: 0;
+    }
+
+    .back-link {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--secondary-text);
       text-decoration: none;
-      color: var(--contact-link-color);
-      font-weight: 500;
+      display: inline-block;
+      margin-bottom: 15px;
     }
 
-    .contact-link:hover {
-      text-decoration: underline;
-      color: var(--link-color);
+    .ucdp-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 30px;
+      align-items: start;
     }
 
-    #quote-box {
-      font-size: 22px; 
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+    }
+
+    .panel-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
       font-weight: bold;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
       margin-top: 0;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
     }
 
-    button {
-      font-size: 16px; 
-      padding: 8px 16px;
-      cursor: pointer;
-      background-color: var(--button-bg);
+    .case-count-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--accent-red);
+      color: #fff;
+      padding: 2px 8px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"], select {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      padding: 8px 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-color);
       color: var(--text-color);
-      border: 1px solid var(--button-border);
-      border-radius: 4px;
+      outline: none;
     }
 
-    @media (max-width: 768px) {
-      body {
-        margin: 30px;
-      }
-      
-      .theme-toggle-container {
-        top: 25px;
-        right: 30px;
-      }
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 15px;
+    }
 
-      .container {
-        flex-direction: column;
-        gap: 40px;
-      }
+    .tab-btn {
+      flex: 1;
+      padding: 8px 0;
+      background: none;
+      border: none;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--secondary-text);
+      cursor: pointer;
+    }
 
-      .right-column {
-        border-left: none;
-        border-top: 2px solid var(--border-color);
-        padding-left: 0;
-        padding-top: 40px;
-      }
+    .tab-btn.active {
+      color: var(--accent-red);
+      font-weight: bold;
+      border-bottom: 2px solid var(--accent-red);
+    }
+
+    .incident-scroll-list {
+      max-height: 480px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .incident-card {
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      background: var(--card-bg);
+      cursor: pointer;
+    }
+
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--accent-red);
+      margin-bottom: 4px;
+    }
+
+    .card-meta {
+      font-size: 13px;
+      color: var(--secondary-text);
+    }
+
+    .map-box {
+      border: 1px solid var(--border-color);
+      height: 720px;
+      position: relative;
+      background: #e5e7eb;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      min-height: 720px;
+    }
+
+    .theme-toggle-btn {
+      position: absolute;
+      top: 40px;
+      right: 60px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 6px 12px;
+      background: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+
+    @media (max-width: 960px) {
+      body { padding: 0 20px 20px 20px; }
+      .top-photo-strip { width: calc(100% + 40px); margin-left: -20px; padding: 15px 20px; }
+      .ucdp-grid { grid-template-columns: 1fr; }
+      .map-box, #map { height: 450px; min-height: 450px; }
     }
   </style>
 </head>
 <body>
-  <div class="theme-toggle-container">
-    <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
-  </div>
 
-  <div class="container">
-    
-    <div class="main-content">
-      <h1 id="myH1"></h1>
-      <p>I am Zeynep, this is my website.</p>
-      <p>Student, Middle East Technical University (2023-2028)</p>
-      <br><br>
-
-      <p>
-        <a href="https://github.com/zeynepkalaca" class="contact-link" target="_blank">💻 github</a>
-      </p>
-      <p>
-        <a href="mailto:kalaca.zeynep@metu.edu.tr" class="contact-link">✉️ e-mail</a>
-      </p>
-      <p>
-        <a href="https://unsplash.com/@zeynepkalaca" class="contact-link" target="_blank">📷 unsplash</a>
-      </p>
-      <p>
-        <a href="https://soundcloud.com/zklca" class="contact-link" target="_blank">🎧 soundcloud</a>
-      </p>
-      
-      <br>
-      
-      <p><a href="projects.html">projects</a></p>
-      <p><a href="questions.html">questions</a></p>
-      <p><a href="blog.html">blog</a></p>
-      <p><a href="adalet-iyilestirir.html">"adalet iyileştirir"</a></p>
-    </div>
-
-    <div class="right-column">
-      
-      <div class="picture-section">
-        <img src="zeynep.jpeg" alt="Zeynep Kalaça" class="profile-pic">
-        <p class="pic-caption">that's me with my previous glasses.</p>
+  <!-- Top Horizontal Scrolling Photo Strip -->
+  <div class="top-photo-strip">
+    <div class="strip-track">
+      <div class="strip-item" onclick="searchByName('Andıç')">
+        <img src="andac.jpeg" alt="Andıç" loading="lazy">
+        <div class="strip-label">Andıç</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Abdulkadir Çakmak')">
+        <img src="abdulkadir.jpeg" alt="Abdulkadir" loading="lazy">
+        <div class="strip-label">Abdulkadir</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Baran Özyolcu')">
+        <img src="baran.jpeg" alt="Baran" loading="lazy">
+        <div class="strip-label">Baran</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Ceylan Önkol')">
+        <img src="ceylan.jpeg" alt="Ceylan" loading="lazy">
+        <div class="strip-label">Ceylan</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Diren Basan')">
+        <img src="diren.jpeg" alt="Diren" loading="lazy">
+        <div class="strip-label">Diren</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Hasan Bakdur')">
+        <img src="hasan.jpeg" alt="Hasan" loading="lazy">
+        <div class="strip-label">Hasan</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Maziye Aslan')">
+        <img src="maziye.jpeg" alt="Maziye" loading="lazy">
+        <div class="strip-label">Maziye</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Maşuk Uca')">
+        <img src="masuk.jpeg" alt="Maşuk" loading="lazy">
+        <div class="strip-label">Maşuk</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Şahin Öner')">
+        <img src="sahin.jpeg" alt="Şahin" loading="lazy">
+        <div class="strip-label">Şahin</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Ömer Soysal')">
+        <img src="omer.jpeg" alt="Ömer" loading="lazy">
+        <div class="strip-label">Ömer</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Sevim')">
+        <img src="sevim.jpeg" alt="Sevim" loading="lazy">
+        <div class="strip-label">Sevim</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('Ahmet')">
+        <img src="ahmet.jpeg" alt="Ahmet" loading="lazy">
+        <div class="strip-label">Ahmet</div>
+      </div>
+      <div class="strip-item" onclick="searchByName('İsmail')">
+        <img src="ismail.jpeg" alt="İsmail" loading="lazy">
+        <div class="strip-label">İsmail</div>
       </div>
     </div>
   </div>
 
-  <script>
-    const toggleBtn = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('theme');
+  <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">🌙 dark</button>
 
-    if (currentTheme) {
-      document.documentElement.setAttribute('data-theme', currentTheme);
-      if (currentTheme === 'dark') {
-        toggleBtn.textContent = '☀️ light';
-      }
+  <a href="projects.html" class="back-link">← PROJECTS</a>
+
+  <header>
+    <h1>Turkey: Child & Youth Casualties (2000–2015)</h1>
+    <p class="meta-subtitle">Spatial distribution of fatal violations stemming from Landmines, UXO, and Armored Vehicle Collisions. Database source: <em>Hafıza Merkezi ("Adalet İyileştirir")</em>.</p>
+  </header>
+
+  <div class="ucdp-grid">
+    
+    <div class="panel">
+      <div class="panel-title">
+        <span>INCIDENT SEARCH</span>
+        <span class="case-count-badge" id="caseCount">51 CASES</span>
+      </div>
+
+      <div class="filter-group">
+        <input type="text" id="searchInput" placeholder="Search by name, district, or province...">
+        
+        <select id="categoryFilter">
+          <option value="">All Violation Types</option>
+          <option value="Landmines & UXO Explosions">Landmines & UXO Explosions (28)</option>
+          <option value="Armored Vehicle Collisions">Armored Vehicle Collisions (23)</option>
+        </select>
+
+        <select id="provinceFilter">
+          <option value="">All Affected Provinces</option>
+        </select>
+      </div>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('list')" id="tabBtnList">Case Records</button>
+        <button class="tab-btn" onclick="switchTab('analytics')" id="tabBtnAnalytics">Analytics</button>
+      </div>
+
+      <div id="tabList" class="incident-scroll-list"></div>
+
+      <div id="tabAnalytics" class="incident-scroll-list" style="display: none;">
+        <div style="margin-bottom: 20px;">
+          <div style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 8px;">CATEGORY DISTRIBUTION</div>
+          <div style="height: 160px;"><canvas id="categoryChart"></canvas></div>
+        </div>
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 8px;">TIMELINE TREND (2000-2015)</div>
+          <div style="height: 160px;"><canvas id="yearChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-box">
+      <div id="map"></div>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <script>
+    const provinceCoords = {
+      "Hakkari": [37.5833, 43.7333], "Diyarbakır": [37.9144, 40.2306], "Mardin": [37.3211, 40.7245],
+      "Şırnak": [37.5164, 42.4611], "Van": [38.4891, 43.4089], "Ağrı": [39.7191, 43.0503],
+      "Batman": [37.8812, 41.1351], "Tunceli": [39.3074, 39.5463], "Muş": [38.7438, 41.4906],
+      "Siirt": [37.9333, 41.9500], "Şanlıurfa": [37.1591, 38.7969], "Bitlis": [38.4006, 42.1095],
+      "Iğdır": [39.9167, 44.0333], "Erzurum": [39.9043, 41.2679], "Gaziantep": [37.0662, 37.3833]
+    };
+
+    const incidents = [
+      { name: "Ceylan Önkol", age: "12", province: "Diyarbakır", district: "Lice", date: "28.09.2009", type: "Landmines & UXO Explosions", desc: "Killed by unexploded ordnance while grazing sheep." },
+      { name: "Ahmet (Welat) Ölmez", age: "6", province: "Şırnak", district: "Uludere", date: "02.11.2003", type: "Landmines & UXO Explosions", desc: "Killed by an unexploded shell in rural land." },
+      { name: "Sevim Ölmez", age: "10", province: "Şırnak", district: "Uludere", date: "02.11.2003", type: "Landmines & UXO Explosions", desc: "Killed alongside her siblings by unexploded military ordnance." },
+      { name: "Songül Ölmez", age: "6", province: "Şırnak", district: "Uludere", date: "02.11.2003", type: "Landmines & UXO Explosions", desc: "Sibling killed in the same ordnance explosion." },
+      { name: "Zahir Ölmez", age: "11", province: "Şırnak", district: "Uludere", date: "02.11.2003", type: "Landmines & UXO Explosions", desc: "Sibling killed in the same ordnance explosion." },
+      { name: "İsmail Şedal", age: "5", province: "Hakkari", district: "Yüksekova", date: "26.04.2000", type: "Landmines & UXO Explosions", desc: "Killed by an explosive remnant detonation." },
+      { name: "Sibel Şedal", age: "4", province: "Hakkari", district: "Yüksekova", date: "26.04.2000", type: "Landmines & UXO Explosions", desc: "Child casualty from explosive remnants." },
+      { name: "Velat (Welat) Şedal", age: "3", province: "Hakkari", district: "Yüksekova", date: "26.04.2000", type: "Landmines & UXO Explosions", desc: "Young child killed in the explosive blast." },
+      { name: "Mizgin Özbek", age: "9", province: "Batman", district: "Kozluk", date: "05.09.2006", type: "Landmines & UXO Explosions", desc: "Fatal injuries from unexploded ordnance." },
+      { name: "Ömer Soysal", age: "9", province: "Batman", district: "Sason", date: "20.09.2008", type: "Landmines & UXO Explosions", desc: "Killed by military explosive remnants." },
+      { name: "Mahsum Teğin", age: "12", province: "Diyarbakır", district: "Kulp", date: "10.09.2009", type: "Landmines & UXO Explosions", desc: "Killed by abandoned military ammunition." },
+      { name: "Mahsun Bayram", age: "17", province: "Diyarbakır", district: "Kulp", date: "05.09.2009", type: "Landmines & UXO Explosions", desc: "Casualty of landmine / unexploded ordnance." },
+      { name: "Sami İştenyılmaz", age: "12", province: "Van", district: "Çaldıran", date: "31.07.2011", type: "Landmines & UXO Explosions", desc: "Killed by military explosive remnants." },
+      { name: "Murat Polat", age: "16", province: "Van", district: "Erciş", date: "05.05.2011", type: "Landmines & UXO Explosions", desc: "Killed by unexploded military ammunition." },
+      { name: "Agit Bayar", age: "13", province: "Şırnak", district: "Uludere", date: "16.08.2002", type: "Landmines & UXO Explosions", desc: "Killed by explosive ordnance in pastures." },
+      { name: "Muhammet Encu", age: "13", province: "Şırnak", district: "Uludere", date: "28.12.2011", type: "Landmines & UXO Explosions", desc: "Casualty caused by explosive materials." },
+      { name: "Zahir Yılmaz", age: "14", province: "Van", district: "Çaldıran", date: "01.10.2003", type: "Landmines & UXO Explosions", desc: "Killed by unexploded ammunition." },
+      { name: "Attila Tamuçu", age: "8", province: "Van", district: "Çatak", date: "03.07.2008", type: "Landmines & UXO Explosions", desc: "Child casualty of unexploded explosive remnant." },
+      { name: "Ergün Aslan", age: "14", province: "Tunceli", district: "Hozat", date: "26.10.2002", type: "Landmines & UXO Explosions", desc: "Killed by unexploded ordnance detonation." },
+      { name: "Uğur Günel", age: "14", province: "Tunceli", district: "Hozat", date: "26.10.2002", type: "Landmines & UXO Explosions", desc: "Casualty of unexploded explosive remnants." },
+      { name: "Gürkan Günel", age: "14", province: "Tunceli", district: "Hozat", date: "26.10.2002", type: "Landmines & UXO Explosions", desc: "Casualty of unexploded explosive remnants." },
+      { name: "Nergiz Özer", age: "15", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Fatal explosive remnant accident." },
+      { name: "Zerga Esen", age: "13", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Killed by military explosive remnants." },
+      { name: "Zuhal Esen", age: "16", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Fatal injuries caused by explosive materials." },
+      { name: "Sibel Sartık", age: "24", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Casualty of unexploded ammunition." },
+      { name: "Hamdullah Çınar", age: "22", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Casualty of unexploded ordnance." },
+      { name: "Hadi Yıldız", age: "10", province: "Hakkari", district: "Şemdinli", date: "05.10.2004", type: "Landmines & UXO Explosions", desc: "Child casualty of landmine explosion." },
+      { name: "Selam Derer", age: "12", province: "Hakkari", district: "Şemdinli", date: "05.10.2004", type: "Landmines & UXO Explosions", desc: "Killed by unexploded military remnants." },
+      { name: "Mehmet Uytun", age: "1", province: "Şırnak", district: "Cizre", date: "09.10.2009", type: "Armored Vehicle Collisions", desc: "Infant struck by an armored police vehicle." },
+      { name: "Fatih Tekin", age: "3", province: "Batman", district: "Merkez", date: "31.03.2006", type: "Armored Vehicle Collisions", desc: "Fatal collision involving a military armored vehicle." },
+      { name: "Hasan Bakdur", age: "16", province: "Şanlıurfa", district: "Akçakale", date: "12.11.2013", type: "Armored Vehicle Collisions", desc: "Killed by a military armored vehicle collision." },
+      { name: "Yahya Menekşe", age: "15", province: "Şırnak", district: "Cizre", date: "15.02.2008", type: "Armored Vehicle Collisions", desc: "Run over during an armored vehicle maneuver." },
+      { name: "Diren Basan", age: "14", province: "Şırnak", district: "Merkez", date: "03.06.2010", type: "Armored Vehicle Collisions", desc: "Struck fatally by a police armored vehicle." },
+      { name: "Maziye Aslan", age: "7", province: "Van", district: "Merkez", date: "27.04.2009", type: "Armored Vehicle Collisions", desc: "Fatal vehicle collision involving an armored car." },
+      { name: "Süleyman Şengül", age: "9", province: "Şırnak", district: "Merkez", date: "21.04.2007", type: "Armored Vehicle Collisions", desc: "Struck and killed by an armored military vehicle." },
+      { name: "Harun Kaygu", age: "13", province: "Gaziantep", district: "Şahinbey", date: "28.03.2005", type: "Armored Vehicle Collisions", desc: "Casualty caused by an armored vehicle." },
+      { name: "İbrahim Halil Çoban", age: "17", province: "Şanlıurfa", district: "Merkez", date: "25.01.2009", type: "Armored Vehicle Collisions", desc: "Fatal crash involving security forces' vehicle." },
+      { name: "Ahmet Polat", age: "13", province: "Erzurum", district: "Pasinler", date: "13.04.2008", type: "Armored Vehicle Collisions", desc: "Child casualty of armored vehicle crash." },
+      { name: "Cevdet Karabay", age: "32", province: "Bitlis", district: "Hizan", date: "30.04.2001", type: "Armored Vehicle Collisions", desc: "Fatal armored vehicle collision." },
+      { name: "Bedirhan Aydınlık", age: "25", province: "Şırnak", district: "Silopi", date: "11.06.2001", type: "Armored Vehicle Collisions", desc: "Killed in an armored vehicle incident." },
+      { name: "Fethullah Çiğdem", age: "22", province: "Şırnak", district: "Silopi", date: "11.06.2001", type: "Armored Vehicle Collisions", desc: "Killed in an armored vehicle incident." },
+      { name: "Remzi Eren", age: "26", province: "Şırnak", district: "Silopi", date: "11.06.2001", type: "Armored Vehicle Collisions", desc: "Casualty of armored security vehicle crash." },
+      { name: "Mesut Biliç", age: "22", province: "Şırnak", district: "Cizre", date: "05.11.2007", type: "Armored Vehicle Collisions", desc: "Struck by an armored tactical vehicle." },
+      { name: "Turgut Gezer", age: "12", province: "Hakkari", district: "Yüksekova", date: "15.05.2010", type: "Armored Vehicle Collisions", desc: "Fatal collision with security vehicle." },
+      { name: "Şahin Öner", age: "19", province: "Diyarbakır", district: "Merkez", date: "10.02.2013", type: "Armored Vehicle Collisions", desc: "Run over by an armored vehicle during protest." },
+      { name: "Zeki Erinç", age: "33", province: "Van", district: "Merkez", date: "22.03.2008", type: "Armored Vehicle Collisions", desc: "Fatal collision with an armored police vehicle." },
+      { name: "Ramazan Dağ", age: "25", province: "Van", district: "Merkez", date: "22.03.2008", type: "Armored Vehicle Collisions", desc: "Killed in an armored vehicle collision." },
+      { name: "Aynur Kudin", age: "28", province: "Şanlıurfa", district: "Viranşehir", date: "08.10.2014", type: "Armored Vehicle Collisions", desc: "Casualty caused by an armored tactical vehicle." },
+      { name: "Salih Yiğit", age: "25", province: "Şırnak", district: "Silopi", date: "29.10.2014", type: "Armored Vehicle Collisions", desc: "Fatal armored vehicle collision." },
+      { name: "Furkan Çavuş", age: "16", province: "Erzurum", district: "Palandöken", date: "16.07.2014", type: "Armored Vehicle Collisions", desc: "Youth casualty of an armored vehicle collision." },
+      { name: "İbrahim Kılıç", age: "26", province: "Mardin", district: "Kızıltepe", date: "20.02.2012", type: "Armored Vehicle Collisions", desc: "Collision involving an armored vehicle." }
+    ];
+
+    const map = L.map('map', { center: [38.2, 41.2], zoom: 7 });
+    
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri',
+      maxZoom: 16
+    }).addTo(map);
+
+    const markersCluster = L.markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 35 });
+    map.addLayer(markersCluster);
+
+    let catChart = null, yrChart = null;
+
+    const provSelect = document.getElementById('provinceFilter');
+    Object.keys(provinceCoords).sort().forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p; opt.textContent = p;
+      provSelect.appendChild(opt);
+    });
+
+    function render(data) {
+      markersCluster.clearLayers();
+      const list = document.getElementById('tabList');
+      list.innerHTML = '';
+      document.getElementById('caseCount').textContent = `${data.length} CASES`;
+
+      data.forEach(inc => {
+        const baseCoord = provinceCoords[inc.province] || [38.5, 41.5];
+        const lat = baseCoord[0] + (Math.random() - 0.5) * 0.12;
+        const lng = baseCoord[1] + (Math.random() - 0.5) * 0.12;
+        const isMine = inc.type.includes("Landmines");
+        const color = isMine ? "#a81c1c" : "#b45309";
+
+        const marker = L.circleMarker([lat, lng], {
+          radius: 6, fillColor: color, color: "#ffffff", weight: 1.5, fillOpacity: 0.95
+        });
+
+        marker.bindPopup(`
+          <div style="font-family: Georgia, serif; font-size: 14px;">
+            <strong style="color: #a81c1c;">${inc.name} (${inc.age})</strong><br>
+            <span style="font-size: 12px; color: #555;">${inc.province}, ${inc.district} &bull; ${inc.date}</span>
+            <p style="font-size: 12px; margin-top: 4px;">${inc.desc}</p>
+          </div>
+        `);
+        markersCluster.addLayer(marker);
+
+        const card = document.createElement('div');
+        card.className = "incident-card";
+        card.innerHTML = `
+          <div class="card-title">${inc.name} (${inc.age})</div>
+          <div class="card-meta">📍 ${inc.province}, ${inc.district} &bull; ${inc.date}</div>
+          <div style="font-size: 11px; margin-top: 4px; color: ${color}; font-family: monospace;">${inc.type}</div>
+        `;
+        card.onclick = () => { map.setView([lat, lng], 10); marker.openPopup(); };
+        list.appendChild(card);
+      });
+
+      updateCharts(data);
+    }
+
+    function updateCharts(data) {
+      const catCounts = { "Landmines & UXO Explosions": 0, "Armored Vehicle Collisions": 0 };
+      const yrCounts = {}; for(let y=2000; y<=2015; y++) yrCounts[y] = 0;
+
+      data.forEach(inc => {
+        if(catCounts[inc.type] !== undefined) catCounts[inc.type]++;
+        const yr = inc.date.split('.')[2];
+        if(yrCounts[yr] !== undefined) yrCounts[yr]++;
+      });
+
+      if(catChart) catChart.destroy();
+      catChart = new Chart(document.getElementById('categoryChart'), {
+        type: 'doughnut',
+        data: { labels: Object.keys(catCounts), datasets: [{ data: Object.values(catCounts), backgroundColor: ['#a81c1c', '#b45309'] }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
+      });
+
+      if(yrChart) yrChart.destroy();
+      yrChart = new Chart(document.getElementById('yearChart'), {
+        type: 'bar',
+        data: { labels: Object.keys(yrCounts), datasets: [{ data: Object.values(yrCounts), backgroundColor: '#a81c1c' }] },
+        options: { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 9 } } } }, plugins: { legend: { display: false } } }
+      });
+    }
+
+    function filterData() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const c = document.getElementById('categoryFilter').value;
+      const p = document.getElementById('provinceFilter').value;
+
+      const filtered = incidents.filter(i => 
+        (i.name.toLowerCase().includes(q) || i.province.toLowerCase().includes(q) || i.district.toLowerCase().includes(q) || i.date.includes(q)) &&
+        (!c || i.type === c) && (!p || i.province === p)
+      );
+      render(filtered);
+    }
+
+    function searchByName(nameQuery) {
+      const searchInput = document.getElementById('searchInput');
+      searchInput.value = nameQuery;
+      filterData();
+      switchTab('list');
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterData);
+    document.getElementById('categoryFilter').addEventListener('change', filterData);
+    document.getElementById('provinceFilter').addEventListener('change', filterData);
+
+    function switchTab(t) {
+      const isList = t === 'list';
+      document.getElementById('tabList').style.display = isList ? 'flex' : 'none';
+      document.getElementById('tabAnalytics').style.display = isList ? 'none' : 'flex';
+      document.getElementById('tabBtnList').className = isList ? 'tab-btn active' : 'tab-btn';
+      document.getElementById('tabBtnAnalytics').className = isList ? 'tab-btn' : 'tab-btn active';
     }
 
     function toggleTheme() {
-      let theme = document.documentElement.getAttribute('data-theme');
-      if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-        toggleBtn.textContent = '🌙 dark';
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        toggleBtn.textContent = '☀️ light';
-      }
+      const cur = document.documentElement.getAttribute('data-theme');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️ light' : '🌙 dark';
     }
 
-    const quotes = [
-      "Nobody's perfect. - Some Like It Hot, 1959",
-      "The greatest trick the devil ever pulled was convincing the world he didn't exist. - The Usual Suspects, 1995",
-      "You can't handle the truth! - A Few Good Men, 1992",
-      "What we've got here is a failure to communicate. - Cool Hand Luke, 1967",
-      "I drink your milkshake! - There Will Be Blood, 2007",
-      "Roads? Where we're going we don't need roads. - Back to the Future, 1985",
-      "I don't want to survive. I want to live. - 12 Years a Slave, 2013",
-      "I have always depended on the kindness of strangers. - A Streetcar Named Desire, 1951",
-      "You have meddled with the primal forces of nature, Mr. Hamlin, and I won't have it. - Network, 1976",
-      "Pay no attention to that man behind the curtain! - The Wizard of Oz, 1939",
-    ];
-
-    function newQuote() {
-      const box = document.getElementById('quote-box');
-      let next;
-      do {
-        next = quotes[Math.floor(Math.random() * quotes.length)];
-      } while (next === box.textContent && quotes.length > 1);
-      box.textContent = next;
-    }
-
-    newQuote();
+    window.addEventListener('load', () => {
+      render(incidents);
+      setTimeout(() => map.invalidateSize(), 200);
+    });
   </script>
-
-  <!-- External script placed last, so myH1 already exists when it runs -->
-  <script src="index.js"></script>
 </body>
 </html>
