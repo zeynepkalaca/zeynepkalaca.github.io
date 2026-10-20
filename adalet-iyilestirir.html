@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Zeynep Kalaça's Adalet İyileştirir mapping project">
+  <meta name="description" content="Documentation of child and youth casualties in Turkey (2000-2015)">
   <meta name="author" content="Zeynep Kalaça">
-  <title>Zeynep Kalaça / adalet iyileştirir</title>
+  <title>Zeynep Kalaça / "adalet iyileştirir"</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
   
   <!-- Leaflet CSS & MarkerCluster CSS -->
@@ -17,161 +17,138 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* CSS Variables matching projects.html */
+    /* UCDP-Inspired Academic Design System */
     :root {
-      --bg-color: #ffffff;
-      --text-color: #000000;
-      --link-color: blue;
-      --contact-link-color: #333333;
-      --border-color: #ccc;
-      --button-bg: #efefef;
-      --button-border: #767676;
-      --accent-color: #cc0000;
-      --panel-bg: #f9f9f9;
-      --input-bg: #ffffff;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-color: #1a1a1a;
+      --secondary-text: #555555;
+      --border-color: #d1d5db;
+      --accent-red: #a81c1c;
+      --accent-amber: #b45309;
+      --link-color: #1a1a1a;
+      --font-serif: "Georgia", "Times New Roman", serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "Consolas", "Courier New", monospace;
     }
 
     [data-theme="dark"] {
       --bg-color: #121212;
+      --card-bg: #1e1e1e;
       --text-color: #e0e0e0;
-      --link-color: #64b5f6;
-      --contact-link-color: #cccccc;
+      --secondary-text: #a0a0a0;
       --border-color: #333333;
-      --button-bg: #2b2b2b;
-      --button-border: #555555;
-      --accent-color: #ff6666;
-      --panel-bg: #1a1a1a;
-      --input-bg: #1e1e1e;
+      --accent-red: #e63946;
+      --accent-amber: #f59e0b;
+      --link-color: #ffffff;
     }
 
-    body { 
-      font-family: "Helvetica", "Arial", sans-serif; 
-      background-color: var(--bg-color); 
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-color);
       color: var(--text-color);
-      margin: 60px 100px; 
-      font-size: 20px; 
-      transition: background-color 0.3s ease, color 0.3s ease;
+      margin: 0;
+      padding: 40px 60px;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    h2 {
-      font-size: 32px; 
-      margin-top: 0;
+    header {
+      border-bottom: 2px solid var(--text-color);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
     }
 
-    p { 
-      margin: 20px 0; 
-      font-size: 20px; 
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin: 0 0 10px 0;
     }
 
-    a { 
-      color: var(--link-color); 
-      text-decoration: underline; 
-      font-size: 20px; 
-    }
-
-    .theme-toggle-container {
-      position: absolute;
-      top: 40px;
-      right: 100px;
+    .meta-subtitle {
+      font-size: 15px;
+      color: var(--secondary-text);
+      margin: 0;
     }
 
     .back-link {
-      font-family: "Consolas", "Courier New", monospace; 
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--secondary-text);
       text-decoration: none;
-      color: var(--contact-link-color);
-      font-weight: 500;
       display: inline-block;
+      margin-bottom: 15px;
     }
 
     .back-link:hover {
       text-decoration: underline;
-      color: var(--link-color);
+      color: var(--accent-red);
     }
 
-    .accent-link {
-      color: var(--accent-color) !important;
-      text-decoration: none;
+    /* Layout Structure */
+    .ucdp-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 30px;
+      align-items: start;
     }
 
-    .accent-link:hover {
-      text-decoration: underline;
+    /* Left Sidebar Panel */
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
-    hr {
-      border: 0;
-      border-top: 1px solid var(--border-color);
-      margin: 30px 0;
-    }
-
-    button#theme-toggle {
-      font-size: 16px; 
-      padding: 8px 16px;
-      cursor: pointer;
-      background-color: var(--button-bg);
-      color: var(--text-color);
-      border: 1px solid var(--button-border);
-      border-radius: 4px;
-    }
-
-    /* Layout Containers */
-    .dashboard-layout {
+    .panel-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: bold;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-top: 0;
+      margin-bottom: 15px;
       display: flex;
-      gap: 40px;
-      align-items: flex-start;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .sidebar-column {
-      width: 450px;
+    .case-count-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--accent-red);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    /* Filter Controls */
+    .filter-group {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-    }
-
-    .map-column {
-      flex: 1;
-      height: 700px;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    #map {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Controls & Inputs */
-    .control-box {
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 20px;
-      background-color: var(--panel-bg);
+      gap: 10px;
+      margin-bottom: 20px;
     }
 
     input[type="text"], select {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      background-color: var(--input-bg);
-      color: var(--text-color);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      padding: 8px 10px;
       border: 1px solid var(--border-color);
-      border-radius: 4px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
+      background: var(--bg-color);
+      color: var(--text-color);
+      border-radius: 0;
+      outline: none;
     }
 
-    .filter-row {
-      display: flex;
-      gap: 10px;
+    input[type="text"]:focus, select:focus {
+      border-color: var(--accent-red);
     }
 
-    .filter-row select {
-      flex: 1;
-    }
-
-    /* Tabs */
-    .tabs-nav {
+    /* Tab Controls */
+    .tab-bar {
       display: flex;
       border-bottom: 1px solid var(--border-color);
       margin-bottom: 15px;
@@ -179,180 +156,198 @@
 
     .tab-btn {
       flex: 1;
-      padding: 10px;
+      padding: 8px 0;
       background: none;
       border: none;
-      font-size: 16px;
-      color: var(--text-color);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--secondary-text);
       cursor: pointer;
-      opacity: 0.7;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .tab-btn.active {
-      opacity: 1;
+      color: var(--accent-red);
       font-weight: bold;
-      border-bottom: 2px solid var(--accent-color);
-      color: var(--accent-color);
+      border-bottom: 2px solid var(--accent-red);
     }
 
-    /* Incident List Container */
-    .incident-list {
-      max-height: 450px;
+    /* Incident Cards List */
+    .incident-scroll-list {
+      max-height: 480px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       padding-right: 5px;
     }
 
     .incident-card {
       border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 15px;
-      background-color: var(--bg-color);
+      padding: 12px;
+      background: var(--card-bg);
       cursor: pointer;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-      font-size: 16px;
+      transition: all 0.15s ease;
     }
 
     .incident-card:hover {
-      border-color: var(--accent-color);
-      transform: translateY(-2px);
+      border-color: var(--accent-red);
+      background: var(--bg-color);
     }
 
-    .export-btns {
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--accent-red);
+      margin-bottom: 4px;
+    }
+
+    .card-meta {
+      font-size: 13px;
+      color: var(--secondary-text);
+    }
+
+    .card-type {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Map Box */
+    .map-box {
+      border: 1px solid var(--border-color);
+      height: 720px;
+      position: relative;
+      background: #e5e7eb;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Export Buttons */
+    .action-bar {
       display: flex;
       gap: 10px;
       margin-top: 15px;
     }
 
-    .export-btn {
+    .action-btn {
       flex: 1;
-      padding: 8px 12px;
-      font-size: 15px;
-      background-color: var(--button-bg);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 8px;
+      background: var(--bg-color);
       color: var(--text-color);
-      border: 1px solid var(--button-border);
-      border-radius: 4px;
+      border: 1px solid var(--border-color);
       cursor: pointer;
-      text-align: center;
+      text-transform: uppercase;
     }
 
-    .export-btn:hover {
-      background-color: var(--accent-color);
-      color: #fff;
-      border-color: var(--accent-color);
+    .action-btn:hover {
+      background: var(--text-color);
+      color: var(--bg-color);
     }
 
-    /* Responsive */
-    @media (max-width: 1024px) {
-      body { margin: 30px; }
-      .theme-toggle-container { top: 25px; right: 30px; }
-      .dashboard-layout { flex-direction: column; }
-      .sidebar-column { width: 100%; }
-      .map-column { height: 500px; width: 100%; }
+    /* Theme Toggle */
+    .theme-toggle-btn {
+      position: absolute;
+      top: 40px;
+      right: 60px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 6px 12px;
+      background: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+
+    @media (max-width: 960px) {
+      body { padding: 20px; }
+      .theme-toggle-btn { top: 20px; right: 20px; }
+      .ucdp-grid { grid-template-columns: 1fr; }
+      .map-box { height: 450px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Theme Toggle -->
-  <div class="theme-toggle-container">
-    <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
-  </div>
+  <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">🌙 dark</button>
 
-  <h2>"adalet iyileştirir"</h2>
-  <p><a href="projects.html" class="back-link">← projects</a></p>
-  <hr>
+  <a href="projects.html" class="back-link">← PROJECTS</a>
 
-  <div class="dashboard-layout">
+  <header>
+    <h1>Turkey: Child & Youth Casualties (2000–2015)</h1>
+    <p class="meta-subtitle">Spatial distribution of fatal violations stemming from Landmines, UXO, and Armored Vehicle Collisions. Database source: <em>Hafıza Merkezi ("Adalet İyileştirir")</em>.</p>
+  </header>
+
+  <div class="ucdp-grid">
     
-    <!-- Left Column: Controls & List / Charts -->
-    <div class="sidebar-column">
-      <div class="control-box">
-        <p style="margin-top: 0; font-size: 18px; font-weight: bold;">Filters & Search</p>
+    <!-- Sidebar -->
+    <div class="panel">
+      <div class="panel-title">
+        <span>INCIDENT SEARCH</span>
+        <span class="case-count-badge" id="caseCount">51 CASES</span>
+      </div>
+
+      <div class="filter-group">
+        <input type="text" id="searchInput" placeholder="Search by name, district, or province...">
         
-        <input type="text" id="searchInput" placeholder="Search by victim name, district, province...">
+        <select id="categoryFilter">
+          <option value="">All Violation Types</option>
+          <option value="Landmines & UXO Explosions">Landmines & UXO Explosions (28)</option>
+          <option value="Armored Vehicle Collisions">Armored Vehicle Collisions (23)</option>
+        </select>
 
-        <div class="filter-row">
-          <select id="categoryFilter">
-            <option value="">All Categories (51 Cases)</option>
-            <option value="Landmines & UXO Explosions">Landmines & UXO (28)</option>
-            <option value="Armored Vehicle Collisions">Armored Vehicles (23)</option>
-          </select>
+        <select id="provinceFilter">
+          <option value="">All Affected Provinces</option>
+        </select>
+      </div>
 
-          <select id="provinceFilter">
-            <option value="">All Provinces</option>
-          </select>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('list')" id="tabBtnList">Case Records</button>
+        <button class="tab-btn" onclick="switchTab('analytics')" id="tabBtnAnalytics">Analytics</button>
+      </div>
+
+      <!-- Case List -->
+      <div id="tabList" class="incident-scroll-list"></div>
+
+      <!-- Analytics -->
+      <div id="tabAnalytics" class="incident-scroll-list" style="display: none;">
+        <div style="margin-bottom: 20px;">
+          <div style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 8px;">CATEGORY DISTRIBUTION</div>
+          <div style="height: 160px;"><canvas id="categoryChart"></canvas></div>
         </div>
-
-        <div class="tabs-nav">
-          <button onclick="switchTab('table')" id="tabBtnTable" class="tab-btn active">Incidents List (<span id="recordCount">51</span>)</button>
-          <button onclick="switchTab('charts')" id="tabBtnCharts" class="tab-btn">Analytics</button>
+        <div>
+          <div style="font-family: var(--font-mono); font-size: 12px; margin-bottom: 8px;">TIMELINE TREND (2000-2015)</div>
+          <div style="height: 160px;"><canvas id="yearChart"></canvas></div>
         </div>
+      </div>
 
-        <!-- Incidents List View -->
-        <div id="tabContentTable" class="incident-list">
-          <!-- Populated via JavaScript -->
-        </div>
-
-        <!-- Analytics Charts View -->
-        <div id="tabContentCharts" style="display: none;" class="incident-list">
-          <div style="margin-bottom: 20px;">
-            <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">Category Breakdown</p>
-            <div style="height: 180px;"><canvas id="categoryChart"></canvas></div>
-          </div>
-          <div>
-            <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">Timeline Trend (2000–2015)</p>
-            <div style="height: 180px;"><canvas id="yearChart"></canvas></div>
-          </div>
-        </div>
-
-        <!-- Export Buttons -->
-        <div class="export-btns">
-          <button onclick="exportGeoJSON()" class="export-btn">📥 GeoJSON</button>
-          <button onclick="exportCSV()" class="export-btn">📊 CSV</button>
-        </div>
+      <div class="action-bar">
+        <button class="action-btn" onclick="exportGeoJSON()">Export GeoJSON</button>
+        <button class="action-btn" onclick="exportCSV()">Export CSV</button>
       </div>
     </div>
 
-    <!-- Right Column: Interactive Map -->
-    <div class="map-column">
+    <!-- Map View -->
+    <div class="map-box">
       <div id="map"></div>
     </div>
 
   </div>
 
-  <!-- Leaflet & Clustering Scripts -->
+  <!-- Leaflet & Cluster Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
-    // Theme Switcher Logic matching projects.html
-    const toggleBtn = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('theme');
-
-    if (currentTheme) {
-      document.documentElement.setAttribute('data-theme', currentTheme);
-      if (currentTheme === 'dark') {
-        toggleBtn.textContent = '☀️ light';
-      }
-    }
-
-    function toggleTheme() {
-      let theme = document.documentElement.getAttribute('data-theme');
-      if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-        toggleBtn.textContent = '🌙 dark';
-      } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        toggleBtn.textContent = '☀️ light';
-      }
-    }
-
-    // Dataset & Map Script
     const provinceCoords = {
       "Hakkari": [37.5833, 43.7333], "Diyarbakır": [37.9144, 40.2306], "Mardin": [37.3211, 40.7245],
       "Şırnak": [37.5164, 42.4611], "Van": [38.4891, 43.4089], "Ağrı": [39.7191, 43.0503],
@@ -418,19 +413,23 @@
       { name: "İbrahim Kılıç", age: "26", province: "Mardin", district: "Kızıltepe", date: "20.02.2012", type: "Armored Vehicle Collisions", desc: "Collision involving an armored vehicle." }
     ];
 
-    // Initialize Map
+    // Initialize Map with UCDP Positron Tile Cartography
     const map = L.map('map', { center: [38.2, 41.2], zoom: 7 });
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri',
+    
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
       maxZoom: 16
     }).addTo(map);
 
-    const markersCluster = L.markerClusterGroup();
+    const markersCluster = L.markerClusterGroup({
+      showCoverageOnHover: false,
+      maxClusterRadius: 35
+    });
     map.addLayer(markersCluster);
 
     let catChart = null, yrChart = null;
 
-    // Populate Province Options
+    // Populate Province Selector
     const provSelect = document.getElementById('provinceFilter');
     Object.keys(provinceCoords).sort().forEach(p => {
       const opt = document.createElement('option');
@@ -440,27 +439,30 @@
 
     function render(data) {
       markersCluster.clearLayers();
-      const list = document.getElementById('tabContentTable');
+      const list = document.getElementById('tabList');
       list.innerHTML = '';
-      document.getElementById('recordCount').textContent = data.length;
+      document.getElementById('caseCount').textContent = `${data.length} CASES`;
 
       data.forEach(inc => {
         const baseCoord = provinceCoords[inc.province] || [38.5, 41.5];
         const lat = baseCoord[0] + (Math.random() - 0.5) * 0.12;
         const lng = baseCoord[1] + (Math.random() - 0.5) * 0.12;
-        const color = inc.type.includes("Landmines") ? "#cc0000" : "#d97706";
+        const isMine = inc.type.includes("Landmines");
+        const color = isMine ? "#a81c1c" : "#b45309";
 
         const marker = L.circleMarker([lat, lng], {
-          radius: 7, fillColor: color, color: "#fff", weight: 1, fillOpacity: 0.9
+          radius: 6,
+          fillColor: color,
+          color: "#ffffff",
+          weight: 1.5,
+          fillOpacity: 0.95
         });
 
         marker.bindPopup(`
-          <div style="font-size: 14px; color: #111;">
-            <strong style="color: #cc0000; font-size: 15px;">${inc.name} (${inc.age} y/o)</strong><br>
-            <strong>Location:</strong> ${inc.province} / ${inc.district}<br>
-            <strong>Date:</strong> ${inc.date}<br>
-            <strong>Type:</strong> ${inc.type}<br>
-            <p style="margin: 5px 0 0 0;">${inc.desc}</p>
+          <div style="font-family: Georgia, serif; font-size: 14px; padding: 2px;">
+            <strong style="color: #a81c1c; font-size: 15px;">${inc.name} (${inc.age})</strong><br>
+            <span style="font-family: sans-serif; font-size: 12px; color: #555;">${inc.province}, ${inc.district} &bull; ${inc.date}</span>
+            <p style="font-family: sans-serif; font-size: 12px; margin: 6px 0 0 0; border-top: 1px solid #ddd; padding-top: 4px;">${inc.desc}</p>
           </div>
         `);
         markersCluster.addLayer(marker);
@@ -468,9 +470,9 @@
         const card = document.createElement('div');
         card.className = "incident-card";
         card.innerHTML = `
-          <span class="accent-link" style="font-weight: bold; display: block; margin-bottom: 4px;">${inc.name} (${inc.age} y/o)</span>
-          <div style="font-size: 14px; opacity: 0.8;">📍 ${inc.province}, ${inc.district} &bull; ${inc.date}</div>
-          <div style="font-size: 13px; font-style: italic; margin-top: 4px; opacity: 0.7;">${inc.type}</div>
+          <div class="card-title">${inc.name} (${inc.age})</div>
+          <div class="card-meta">📍 ${inc.province}, ${inc.district} &bull; ${inc.date}</div>
+          <div class="card-type" style="color: ${color};">${inc.type}</div>
         `;
         card.onclick = () => { map.setView([lat, lng], 10); marker.openPopup(); };
         list.appendChild(card);
@@ -492,15 +494,15 @@
       if(catChart) catChart.destroy();
       catChart = new Chart(document.getElementById('categoryChart'), {
         type: 'doughnut',
-        data: { labels: Object.keys(catCounts), datasets: [{ data: Object.values(catCounts), backgroundColor: ['#cc0000', '#d97706'] }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } } }
+        data: { labels: Object.keys(catCounts), datasets: [{ data: Object.values(catCounts), backgroundColor: ['#a81c1c', '#b45309'] }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
       });
 
       if(yrChart) yrChart.destroy();
       yrChart = new Chart(document.getElementById('yearChart'), {
         type: 'bar',
-        data: { labels: Object.keys(yrCounts), datasets: [{ data: Object.values(yrCounts), backgroundColor: '#cc0000', borderRadius: 2 }] },
-        options: { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { font: { size: 10 } } }, y: { ticks: { font: { size: 10 } } } }, plugins: { legend: { display: false } } }
+        data: { labels: Object.keys(yrCounts), datasets: [{ data: Object.values(yrCounts), backgroundColor: '#a81c1c' }] },
+        options: { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 9 } } } }, plugins: { legend: { display: false } } }
       });
     }
 
@@ -520,46 +522,29 @@
     document.getElementById('categoryFilter').addEventListener('change', filterData);
     document.getElementById('provinceFilter').addEventListener('change', filterData);
 
-    function switchTab(tab) {
-      const isTable = tab === 'table';
-      document.getElementById('tabContentTable').style.display = isTable ? 'flex' : 'none';
-      document.getElementById('tabContentCharts').style.display = isTable ? 'none' : 'flex';
-      document.getElementById('tabBtnTable').className = isTable ? 'tab-btn active' : 'tab-btn';
-      document.getElementById('tabBtnCharts').className = isTable ? 'tab-btn' : 'tab-btn active';
+    function switchTab(t) {
+      const isList = t === 'list';
+      document.getElementById('tabList').style.display = isList ? 'flex' : 'none';
+      document.getElementById('tabAnalytics').style.display = isList ? 'none' : 'flex';
+      document.getElementById('tabBtnList').className = isList ? 'tab-btn active' : 'tab-btn';
+      document.getElementById('tabBtnAnalytics').className = isList ? 'tab-btn' : 'tab-btn active';
     }
 
-    function exportGeoJSON() {
-      const geojson = {
-        type: "FeatureCollection",
-        features: incidents.map(inc => ({
-          type: "Feature",
-          geometry: { type: "Point", coordinates: [(provinceCoords[inc.province]||[38.5,41.5])[1], (provinceCoords[inc.province]||[38.5,41.5])[0]] },
-          properties: inc
-        }))
-      };
-      const blob = new Blob([JSON.stringify(geojson, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'adalet_iyilestirir_51_cases.geojson';
-      a.click();
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️ light' : '🌙 dark';
     }
 
-    function exportCSV() {
-      let csv = 'Name,Age,Province,District,Date,Type,Description\n';
-      incidents.forEach(inc => {
-        csv += `"${inc.name}","${inc.age}","${inc.province}","${inc.district}","${inc.date}","${inc.type}","${inc.desc}"\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'adalet_iyilestirir_51_cases.csv';
-      a.click();
-    }
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '☀️ light' : '🌙 dark';
 
-    // Initial load and sizing fix
     window.addEventListener('load', () => {
       render(incidents);
-      setTimeout(() => { map.invalidateSize(); }, 200);
+      setTimeout(() => map.invalidateSize(), 200);
     });
   </script>
 </body>
