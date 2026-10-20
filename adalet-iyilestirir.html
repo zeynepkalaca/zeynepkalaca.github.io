@@ -36,17 +36,29 @@
       --button-border: #555555;
     }
 
-    body {
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
       background-color: var(--bg-color);
       color: var(--text-color);
       font-family: "Helvetica", "Arial", sans-serif;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      overflow: hidden;
+    }
+
+    #map-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
     }
 
     #map {
-      height: calc(100vh - 4.5rem);
       width: 100%;
-      border-radius: 0.5rem;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #111827;
     }
 
     .custom-scrollbar::-webkit-scrollbar { width: 6px; }
@@ -57,7 +69,7 @@
 <body class="flex flex-col h-screen overflow-hidden">
 
   <!-- Header Navigation -->
-  <header class="bg-slate-900 border-b border-slate-800 px-6 py-3 flex items-center justify-between text-white z-20">
+  <header class="bg-slate-900 border-b border-slate-800 px-6 py-3 flex items-center justify-between text-white z-20 shrink-0">
     <div class="flex items-center space-x-4">
       <a href="index.html" class="text-slate-400 hover:text-white transition font-mono text-sm">&larr; home</a>
       <div class="h-4 w-px bg-slate-700"></div>
@@ -81,10 +93,10 @@
   </header>
 
   <!-- Main Grid Layout -->
-  <div class="flex flex-1 overflow-hidden">
+  <div class="flex flex-col lg:flex-row flex-1 overflow-hidden relative">
     
     <!-- Sidebar -->
-    <aside class="w-full lg:w-4/12 bg-slate-900 text-slate-200 border-r border-slate-800 flex flex-col z-10">
+    <aside class="w-full lg:w-4/12 bg-slate-900 text-slate-200 border-r border-slate-800 flex flex-col z-10 shrink-0 h-1/2 lg:h-full">
       
       <!-- Filter Inputs -->
       <div class="p-4 border-b border-slate-800 space-y-3">
@@ -137,9 +149,11 @@
       </div>
     </aside>
 
-    <!-- Interactive Map Display -->
-    <main class="flex-1 relative p-2 bg-slate-950">
-      <div id="map"></div>
+    <!-- Interactive Map Display Container -->
+    <main class="flex-1 bg-slate-950 relative h-1/2 lg:h-full">
+      <div id="map-container">
+        <div id="map"></div>
+      </div>
     </main>
   </div>
 
@@ -215,10 +229,15 @@
     ];
 
     // Initialize Map
-    const map = L.map('map').setView([38.5, 41.5], 7);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap &copy; CARTO'
+    const map = L.map('map', {
+      center: [38.2, 41.2],
+      zoom: 7
+    });
+
+    // Keyless Esri World Dark Gray Canvas Tile Layer
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+      maxZoom: 16
     }).addTo(map);
 
     const markersCluster = L.markerClusterGroup();
@@ -251,12 +270,12 @@
         });
 
         marker.bindPopup(`
-          <div class="p-1 space-y-1 text-xs">
-            <div class="font-bold text-rose-400 text-sm">${inc.name} (${inc.age} y/o)</div>
+          <div class="p-1 space-y-1 text-xs text-slate-800">
+            <div class="font-bold text-rose-600 text-sm">${inc.name} (${inc.age} y/o)</div>
             <div><strong>Location:</strong> ${inc.province} (${inc.district})</div>
             <div><strong>Date:</strong> ${inc.date}</div>
             <div><strong>Category:</strong> ${inc.type}</div>
-            <p class="pt-1 text-slate-300 border-t border-slate-700">${inc.desc}</p>
+            <p class="pt-1 text-slate-600 border-t border-slate-200">${inc.desc}</p>
           </div>
         `);
         markersCluster.addLayer(marker);
@@ -274,7 +293,7 @@
           </div>
           <div class="text-[11px] text-slate-300 italic">${inc.type}</div>
         `;
-        card.onclick = () => { map.setView([lat, lng], 11); marker.openPopup(); };
+        card.onclick = () => { map.setView([lat, lng], 10); marker.openPopup(); };
         list.appendChild(card);
       });
 
@@ -371,7 +390,12 @@
     document.documentElement.setAttribute('data-theme', savedTheme);
     document.getElementById('theme-toggle').textContent = savedTheme === 'dark' ? '☀️ light' : '🌙 dark';
 
-    render(incidents);
+    // Force Leaflet recalculation after DOM layout settles
+    window.addEventListener('load', () => {
+      render(incidents);
+      setTimeout(() => { map.invalidateSize(); }, 250);
+    });
+    window.addEventListener('resize', () => { map.invalidateSize(); });
   </script>
 </body>
 </html>
