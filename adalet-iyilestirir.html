@@ -1,1 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeynep Kalaça / "adalet iyileştirir"</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
+  
+  <!-- Leaflet CSS & MarkerCluster CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  
+  <!-- Tailwind CSS & Chart.js -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --panel-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-color: #000000;
+      --border-color: #e2e8f0;
+      --button-bg: #efefef;
+      --button-border: #767676;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #0f172a;
+      --panel-bg: #1e293b;
+      --card-bg: #334155;
+      --text-color: #e0e0e0;
+      --border-color: #334155;
+      --button-bg: #2b2b2b;
+      --button-border: #555555;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: "Helvetica", "Arial", sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    #map {
+      height: calc(100vh - 4.5rem);
+      width: 100%;
+      border-radius: 0.5rem;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #64748b; border-radius: 3px; }
+  </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden">
+
+  <!-- Header Navigation -->
+  <header class="bg-slate-900 border-b border-slate-800 px-6 py-3 flex items-center justify-between text-white z-20">
+    <div class="flex items-center space-x-4">
+      <a href="index.html" class="text-slate-400 hover:text-white transition font-mono text-sm">&larr; home</a>
+      <div class="h-4 w-px bg-slate-700"></div>
+      <div>
+        <h1 class="text-base font-bold">Child & Youth Deaths: Landmines, UXO & Armored Vehicles (2000–2015)</h1>
+        <p class="text-xs text-slate-400">Source: Hafıza Merkezi ("Adalet İyileştirir") Database</p>
+      </div>
+    </div>
+    
+    <div class="flex items-center space-x-3">
+      <button onclick="exportGeoJSON()" class="bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition">
+        📥 Export GeoJSON
+      </button>
+      <button onclick="exportCSV()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition">
+        📊 Export CSV
+      </button>
+      <button id="theme-toggle" onclick="toggleTheme()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition">
+        🌙 dark
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <div class="flex flex-1 overflow-hidden">
+    
+    <!-- Sidebar -->
+    <aside class="w-full lg:w-4/12 bg-slate-900 text-slate-200 border-r border-slate-800 flex flex-col z-10">
+      
+      <!-- Filter Inputs -->
+      <div class="p-4 border-b border-slate-800 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Filters & Search</span>
+          <span id="recordCount" class="text-xs font-bold bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded-full">51 Cases</span>
+        </div>
+        
+        <input type="text" id="searchInput" placeholder="Search by victim name, district, province..." 
+          class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-xs text-slate-100 placeholder-slate-400 focus:outline-none focus:border-rose-500">
+
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <select id="categoryFilter" class="bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-slate-200">
+            <option value="">All Categories (51)</option>
+            <option value="Landmines & UXO Explosions">Landmines & UXO (28)</option>
+            <option value="Armored Vehicle Collisions">Armored Vehicles (23)</option>
+          </select>
+
+          <select id="provinceFilter" class="bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-slate-200">
+            <option value="">All Provinces</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex border-b border-slate-800 bg-slate-950/50">
+        <button onclick="switchTab('table')" id="tabBtnTable" class="flex-1 py-2 text-xs font-bold text-rose-400 border-b-2 border-rose-500 transition">Incidents List</button>
+        <button onclick="switchTab('charts')" id="tabBtnCharts" class="flex-1 py-2 text-xs font-medium text-slate-400 transition">Analytics</button>
+      </div>
+
+      <!-- Incident List -->
+      <div id="tabContentTable" class="flex-1 overflow-y-auto custom-scrollbar p-3">
+        <div id="incidentList" class="space-y-2"></div>
+      </div>
+
+      <!-- Charts Area -->
+      <div id="tabContentCharts" class="flex-1 overflow-y-auto custom-scrollbar p-4 hidden space-y-6">
+        <div>
+          <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Category Breakdown</h3>
+          <div class="bg-slate-950 p-3 rounded border border-slate-800 h-44">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Timeline Trend (2000–2015)</h3>
+          <div class="bg-slate-950 p-3 rounded border border-slate-800 h-44">
+            <canvas id="yearChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Interactive Map Display -->
+    <main class="flex-1 relative p-2 bg-slate-950">
+      <div id="map"></div>
+    </main>
+  </div>
+
+  <!-- Leaflet & Clustering Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <script>
+    const provinceCoords = {
+      "Hakkari": [37.5833, 43.7333], "Diyarbakır": [37.9144, 40.2306], "Mardin": [37.3211, 40.7245],
+      "Şırnak": [37.5164, 42.4611], "Van": [38.4891, 43.4089], "Ağrı": [39.7191, 43.0503],
+      "Batman": [37.8812, 41.1351], "Tunceli": [39.3074, 39.5463], "Muş": [38.7438, 41.4906],
+      "Siirt": [37.9333, 41.9500], "Şanlıurfa": [37.1591, 38.7969], "Bitlis": [38.4006, 42.1095],
+      "Iğdır": [39.9167, 44.0333], "Erzurum": [39.9043, 41.2679], "Gaziantep": [37.0662, 37.3833]
+    };
+
+    // 51 Cases (28 Landmines/UXO + 23 Armored Vehicles)
+    const incidents = [
+      // Landmines & UXO Explosions (28)
+      { name: "Ceylan Önkol", age: "12", province: "Diyarbakır", district: "Lice", date: "28.09.2009", type: "Landmines & UXO Explosions", desc: "Killed by unexploded ordnance while grazing sheep." },
+      { name: "Ahmet (Welat) Ölmez", age: "6", province: "Şırnak", district: "Uludere", date: "02.11.2003", type: "Landmines & UXO Explosions", desc: "Killed by an unexploded shell in rural land." },
+      { name: "Sevim Ölmez", age: "10", province: "Şırnak", district: "Uludere", date: "02.11.2003", type: "Landmines & UXO Explosions", desc: "Killed alongside her siblings by unexploded military ordnance." },
+      { name: "Songül Ölmez", age: "6", province: "Şırnak", district: "Uludere", date: "02.11.2003", type: "Landmines & UXO Explosions", desc: "Sibling killed in the same ordnance explosion." },
+      { name: "Zahir Ölmez", age: "11", province: "Şırnak", district: "Uludere", date: "02.11.2003", type: "Landmines & UXO Explosions", desc: "Sibling killed in the same ordnance explosion." },
+      { name: "İsmail Şedal", age: "5", province: "Hakkari", district: "Yüksekova", date: "26.04.2000", type: "Landmines & UXO Explosions", desc: "Killed by an explosive remnant detonation." },
+      { name: "Sibel Şedal", age: "4", province: "Hakkari", district: "Yüksekova", date: "26.04.2000", type: "Landmines & UXO Explosions", desc: "Child casualty from explosive remnants." },
+      { name: "Velat (Welat) Şedal", age: "3", province: "Hakkari", district: "Yüksekova", date: "26.04.2000", type: "Landmines & UXO Explosions", desc: "Young child killed in the explosive blast." },
+      { name: "Mizgin Özbek", age: "9", province: "Batman", district: "Kozluk", date: "05.09.2006", type: "Landmines & UXO Explosions", desc: "Fatal injuries from unexploded ordnance." },
+      { name: "Ömer Soysal", age: "9", province: "Batman", district: "Sason", date: "20.09.2008", type: "Landmines & UXO Explosions", desc: "Killed by military explosive remnants." },
+      { name: "Mahsum Teğin", age: "12", province: "Diyarbakır", district: "Kulp", date: "10.09.2009", type: "Landmines & UXO Explosions", desc: "Killed by abandoned military ammunition." },
+      { name: "Mahsun Bayram", age: "17", province: "Diyarbakır", district: "Kulp", date: "05.09.2009", type: "Landmines & UXO Explosions", desc: "Casualty of landmine / unexploded ordnance." },
+      { name: "Sami İştenyılmaz", age: "12", province: "Van", district: "Çaldıran", date: "31.07.2011", type: "Landmines & UXO Explosions", desc: "Killed by military explosive remnants." },
+      { name: "Murat Polat", age: "16", province: "Van", district: "Erciş", date: "05.05.2011", type: "Landmines & UXO Explosions", desc: "Killed by unexploded military ammunition." },
+      { name: "Agit Bayar", age: "13", province: "Şırnak", district: "Uludere", date: "16.08.2002", type: "Landmines & UXO Explosions", desc: "Killed by explosive ordnance in pastures." },
+      { name: "Muhammet Encu", age: "13", province: "Şırnak", district: "Uludere", date: "28.12.2011", type: "Landmines & UXO Explosions", desc: "Casualty caused by explosive materials." },
+      { name: "Zahir Yılmaz", age: "14", province: "Van", district: "Çaldıran", date: "01.10.2003", type: "Landmines & UXO Explosions", desc: "Killed by unexploded ammunition." },
+      { name: "Attila Tamuçu", age: "8", province: "Van", district: "Çatak", date: "03.07.2008", type: "Landmines & UXO Explosions", desc: "Child casualty of unexploded explosive remnant." },
+      { name: "Ergün Aslan", age: "14", province: "Tunceli", district: "Hozat", date: "26.10.2002", type: "Landmines & UXO Explosions", desc: "Killed by unexploded ordnance detonation." },
+      { name: "Uğur Günel", age: "14", province: "Tunceli", district: "Hozat", date: "26.10.2002", type: "Landmines & UXO Explosions", desc: "Casualty of unexploded explosive remnants." },
+      { name: "Gürkan Günel", age: "14", province: "Tunceli", district: "Hozat", date: "26.10.2002", type: "Landmines & UXO Explosions", desc: "Casualty of unexploded explosive remnants." },
+      { name: "Nergiz Özer", age: "15", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Fatal explosive remnant accident." },
+      { name: "Zerga Esen", age: "13", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Killed by military explosive remnants." },
+      { name: "Zuhal Esen", age: "16", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Fatal injuries caused by explosive materials." },
+      { name: "Sibel Sartık", age: "24", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Casualty of unexploded ammunition." },
+      { name: "Hamdullah Çınar", age: "22", province: "Şırnak", district: "Merkez", date: "19.01.2005", type: "Landmines & UXO Explosions", desc: "Casualty of unexploded ordnance." },
+      { name: "Hadi Yıldız", age: "10", province: "Hakkari", district: "Şemdinli", date: "05.10.2004", type: "Landmines & UXO Explosions", desc: "Child casualty of landmine explosion." },
+      { name: "Selam Derer", age: "12", province: "Hakkari", district: "Şemdinli", date: "05.10.2004", type: "Landmines & UXO Explosions", desc: "Killed by unexploded military remnants." },
+
+      // Armored Vehicle Collisions (23)
+      { name: "Mehmet Uytun", age: "1", province: "Şırnak", district: "Cizre", date: "09.10.2009", type: "Armored Vehicle Collisions", desc: "Infant struck by an armored police vehicle." },
+      { name: "Fatih Tekin", age: "3", province: "Batman", district: "Merkez", date: "31.03.2006", type: "Armored Vehicle Collisions", desc: "Fatal collision involving a military armored vehicle." },
+      { name: "Hasan Bakdur", age: "16", province: "Şanlıurfa", district: "Akçakale", date: "12.11.2013", type: "Armored Vehicle Collisions", desc: "Killed by a military armored vehicle collision." },
+      { name: "Yahya Menekşe", age: "15", province: "Şırnak", district: "Cizre", date: "15.02.2008", type: "Armored Vehicle Collisions", desc: "Run over during an armored vehicle maneuver." },
+      { name: "Diren Basan", age: "14", province: "Şırnak", district: "Merkez", date: "03.06.2010", type: "Armored Vehicle Collisions", desc: "Struck fatally by a police armored vehicle." },
+      { name: "Maziye Aslan", age: "7", province: "Van", district: "Merkez", date: "27.04.2009", type: "Armored Vehicle Collisions", desc: "Fatal vehicle collision involving an armored car." },
+      { name: "Süleyman Şengül", age: "9", province: "Şırnak", district: "Merkez", date: "21.04.2007", type: "Armored Vehicle Collisions", desc: "Struck and killed by an armored military vehicle." },
+      { name: "Harun Kaygu", age: "13", province: "Gaziantep", district: "Şahinbey", date: "28.03.2005", type: "Armored Vehicle Collisions", desc: "Casualty caused by an armored vehicle." },
+      { name: "İbrahim Halil Çoban", age: "17", province: "Şanlıurfa", district: "Merkez", date: "25.01.2009", type: "Armored Vehicle Collisions", desc: "Fatal crash involving security forces' vehicle." },
+      { name: "Ahmet Polat", age: "13", province: "Erzurum", district: "Pasinler", date: "13.04.2008", type: "Armored Vehicle Collisions", desc: "Child casualty of armored vehicle crash." },
+      { name: "Cevdet Karabay", age: "32", province: "Bitlis", district: "Hizan", date: "30.04.2001", type: "Armored Vehicle Collisions", desc: "Fatal armored vehicle collision." },
+      { name: "Bedirhan Aydınlık", age: "25", province: "Şırnak", district: "Silopi", date: "11.06.2001", type: "Armored Vehicle Collisions", desc: "Killed in an armored vehicle incident." },
+      { name: "Fethullah Çiğdem", age: "22", province: "Şırnak", district: "Silopi", date: "11.06.2001", type: "Armored Vehicle Collisions", desc: "Killed in an armored vehicle incident." },
+      { name: "Remzi Eren", age: "26", province: "Şırnak", district: "Silopi", date: "11.06.2001", type: "Armored Vehicle Collisions", desc: "Casualty of armored security vehicle crash." },
+      { name: "Mesut Biliç", age: "22", province: "Şırnak", district: "Cizre", date: "05.11.2007", type: "Armored Vehicle Collisions", desc: "Struck by an armored tactical vehicle." },
+      { name: "Turgut Gezer", age: "12", province: "Hakkari", district: "Yüksekova", date: "15.05.2010", type: "Armored Vehicle Collisions", desc: "Fatal collision with security vehicle." },
+      { name: "Şahin Öner", age: "19", province: "Diyarbakır", district: "Merkez", date: "10.02.2013", type: "Armored Vehicle Collisions", desc: "Run over by an armored vehicle during protest." },
+      { name: "Zeki Erinç", age: "33", province: "Van", district: "Merkez", date: "22.03.2008", type: "Armored Vehicle Collisions", desc: "Fatal collision with an armored police vehicle." },
+      { name: "Ramazan Dağ", age: "25", province: "Van", district: "Merkez", date: "22.03.2008", type: "Armored Vehicle Collisions", desc: "Killed in an armored vehicle collision." },
+      { name: "Aynur Kudin", age: "28", province: "Şanlıurfa", district: "Viranşehir", date: "08.10.2014", type: "Armored Vehicle Collisions", desc: "Casualty caused by an armored tactical vehicle." },
+      { name: "Salih Yiğit", age: "25", province: "Şırnak", district: "Silopi", date: "29.10.2014", type: "Armored Vehicle Collisions", desc: "Fatal armored vehicle collision." },
+      { name: "Furkan Çavuş", age: "16", province: "Erzurum", district: "Palandöken", date: "16.07.2014", type: "Armored Vehicle Collisions", desc: "Youth casualty of an armored vehicle collision." },
+      { name: "İbrahim Kılıç", age: "26", province: "Mardin", district: "Kızıltepe", date: "20.02.2012", type: "Armored Vehicle Collisions", desc: "Collision involving an armored vehicle." }
+    ];
+
+    // Initialize Map
+    const map = L.map('map').setView([38.5, 41.5], 7);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap &copy; CARTO'
+    }).addTo(map);
+
+    const markersCluster = L.markerClusterGroup();
+    map.addLayer(markersCluster);
+
+    let catChart = null, yrChart = null;
+
+    // Populate Province Select Options
+    const provSelect = document.getElementById('provinceFilter');
+    Object.keys(provinceCoords).sort().forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p; opt.textContent = p;
+      provSelect.appendChild(opt);
+    });
+
+    function render(data) {
+      markersCluster.clearLayers();
+      const list = document.getElementById('incidentList');
+      list.innerHTML = '';
+      document.getElementById('recordCount').textContent = `${data.length} Cases`;
+
+      data.forEach(inc => {
+        const baseCoord = provinceCoords[inc.province] || [38.5, 41.5];
+        const lat = baseCoord[0] + (Math.random() - 0.5) * 0.12;
+        const lng = baseCoord[1] + (Math.random() - 0.5) * 0.12;
+        const color = inc.type.includes("Landmines") ? "#f43f5e" : "#f59e0b";
+
+        const marker = L.circleMarker([lat, lng], {
+          radius: 7, fillColor: color, color: "#fff", weight: 1, fillOpacity: 0.85
+        });
+
+        marker.bindPopup(`
+          <div class="p-1 space-y-1 text-xs">
+            <div class="font-bold text-rose-400 text-sm">${inc.name} (${inc.age} y/o)</div>
+            <div><strong>Location:</strong> ${inc.province} (${inc.district})</div>
+            <div><strong>Date:</strong> ${inc.date}</div>
+            <div><strong>Category:</strong> ${inc.type}</div>
+            <p class="pt-1 text-slate-300 border-t border-slate-700">${inc.desc}</p>
+          </div>
+        `);
+        markersCluster.addLayer(marker);
+
+        const card = document.createElement('div');
+        card.className = "bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 rounded p-2.5 cursor-pointer text-xs space-y-1";
+        card.innerHTML = `
+          <div class="flex justify-between font-bold text-slate-200">
+            <span>${inc.name}</span>
+            <span class="text-[10px] bg-slate-900 px-1.5 py-0.5 rounded text-slate-400">${inc.date}</span>
+          </div>
+          <div class="flex justify-between text-slate-400">
+            <span>📍 ${inc.province} (${inc.district})</span>
+            <span class="text-rose-400 font-semibold">${inc.age} y/o</span>
+          </div>
+          <div class="text-[11px] text-slate-300 italic">${inc.type}</div>
+        `;
+        card.onclick = () => { map.setView([lat, lng], 11); marker.openPopup(); };
+        list.appendChild(card);
+      });
+
+      updateCharts(data);
+    }
+
+    function updateCharts(data) {
+      const catCounts = { "Landmines & UXO Explosions": 0, "Armored Vehicle Collisions": 0 };
+      const yrCounts = {}; for(let y=2000; y<=2015; y++) yrCounts[y] = 0;
+
+      data.forEach(inc => {
+        if(catCounts[inc.type] !== undefined) catCounts[inc.type]++;
+        const yr = inc.date.split('.')[2];
+        if(yrCounts[yr] !== undefined) yrCounts[yr]++;
+      });
+
+      if(catChart) catChart.destroy();
+      catChart = new Chart(document.getElementById('categoryChart'), {
+        type: 'doughnut',
+        data: { labels: Object.keys(catCounts), datasets: [{ data: Object.values(catCounts), backgroundColor: ['#f43f5e', '#f59e0b'] }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 9 } } } } }
+      });
+
+      if(yrChart) yrChart.destroy();
+      yrChart = new Chart(document.getElementById('yearChart'), {
+        type: 'bar',
+        data: { labels: Object.keys(yrCounts), datasets: [{ data: Object.values(yrCounts), backgroundColor: '#f43f5e', borderRadius: 2 }] },
+        options: { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { color: '#94a3b8', font: { size: 9 } } }, y: { ticks: { color: '#94a3b8', font: { size: 9 } } } }, plugins: { legend: { display: false } } }
+      });
+    }
+
+    function filterData() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const c = document.getElementById('categoryFilter').value;
+      const p = document.getElementById('provinceFilter').value;
+
+      const filtered = incidents.filter(i => 
+        (i.name.toLowerCase().includes(q) || i.province.toLowerCase().includes(q) || i.district.toLowerCase().includes(q) || i.date.includes(q)) &&
+        (!c || i.type === c) && (!p || i.province === p)
+      );
+      render(filtered);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterData);
+    document.getElementById('categoryFilter').addEventListener('change', filterData);
+    document.getElementById('provinceFilter').addEventListener('change', filterData);
+
+    function switchTab(t) {
+      document.getElementById('tabContentTable').classList.toggle('hidden', t !== 'table');
+      document.getElementById('tabContentCharts').classList.toggle('hidden', t !== 'charts');
+    }
+
+    // Export GeoJSON
+    function exportGeoJSON() {
+      const geojson = {
+        type: "FeatureCollection",
+        features: incidents.map(inc => ({
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [(provinceCoords[inc.province]||[38.5,41.5])[1], (provinceCoords[inc.province]||[38.5,41.5])[0]] },
+          properties: inc
+        }))
+      };
+      const blob = new Blob([JSON.stringify(geojson, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'adalet_iyilestirir_51_cases.geojson';
+      a.click();
+    }
+
+    // Export CSV
+    function exportCSV() {
+      let csv = 'Name,Age,Province,District,Date,Type,Description\n';
+      incidents.forEach(inc => {
+        csv += `"${inc.name}","${inc.age}","${inc.province}","${inc.district}","${inc.date}","${inc.type}","${inc.desc}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'adalet_iyilestirir_51_cases.csv';
+      a.click();
+    }
+
+    // Dark/Light Theme Switching
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('theme-toggle').textContent = next === 'dark' ? '☀️ light' : '🌙 dark';
+    }
+
+    // Load initial theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.getElementById('theme-toggle').textContent = savedTheme === 'dark' ? '☀️ light' : '🌙 dark';
+
+    render(incidents);
+  </script>
+</body>
+</html>
