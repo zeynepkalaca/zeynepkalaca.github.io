@@ -130,7 +130,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      max-height: 200px;
+      max-height: 220px;
       overflow-y: auto;
       padding-right: 2px;
     }
@@ -149,7 +149,7 @@
       height: 100%;
       object-fit: cover;
       transition: transform 0.2s ease, filter 0.2s ease;
-      filter: grayscale(20%);
+      filter: grayscale(15%);
     }
 
     .gallery-item:hover img {
@@ -295,53 +295,65 @@
   <div class="ucdp-grid">
     
     <div class="panel">
-      <!-- Memorial Photo Gallery placed right above INCIDENT SEARCH -->
+      
+      <!-- Memorial Photo Gallery Grid -->
       <div class="memorial-gallery">
         <div class="gallery-header">
           <span>MEMORIAL ARCHIVE</span>
-          <span style="font-size: 10px; color: var(--secondary-text);">Click to filter/locate</span>
+          <span style="font-size: 10px; color: var(--secondary-text);">click to filter/locate</span>
         </div>
         <div class="gallery-grid">
+          
           <div class="gallery-item" onclick="searchByName('Andıç')">
-            <img src="Andac_Welat-Olmez-e1772451304558-150x150.jpeg" alt="Andıç Welat Ölmez" loading="lazy">
-            <div class="tooltip">Andıç Welat Ölmez</div>
+            <img src="Andac_Welat-Olmez-e1772451304558-150x150.jpeg" alt="Andıç Welat Ölmez"[cite: 1] loading="lazy">
+            <div class="tooltip">Andıç Welat Ölmez[cite: 1]</div>
           </div>
+
           <div class="gallery-item" onclick="searchByName('Abdulkadir Çakmak')">
-            <img src="Abdulkadir-Cakmak.jpg-e1772450543895-150x150.webp" alt="Abdulkadir Çakmak" loading="lazy">
-            <div class="tooltip">Abdulkadir Çakmak</div>
+            <img src="Abdulkadir-Cakmak.jpg-e1772450543895-150x150.webp" alt="Abdulkadir Çakmak"[cite: 2] loading="lazy">
+            <div class="tooltip">Abdulkadir Çakmak[cite: 2]</div>
           </div>
+
           <div class="gallery-item" onclick="searchByName('Baran Özyolcu')">
-            <img src="Baran-Ozyolcu.jpg-150x150.webp" alt="Baran Özyolcu" loading="lazy">
-            <div class="tooltip">Baran Özyolcu</div>
+            <img src="Baran-Ozyolcu.jpg-150x150.webp" alt="Baran Özyolcu"[cite: 3] loading="lazy">
+            <div class="tooltip">Baran Özyolcu[cite: 3]</div>
           </div>
+
           <div class="gallery-item" onclick="searchByName('Ceylan Önkol')">
-            <img src="Ceylan-Onkol-150x150.jpeg" alt="Ceylan Önkol" loading="lazy">
-            <div class="tooltip">Ceylan Önkol</div>
+            <img src="Ceylan-Onkol-150x150.jpeg" alt="Ceylan Önkol"[cite: 4] loading="lazy">
+            <div class="tooltip">Ceylan Önkol[cite: 4]</div>
           </div>
+
           <div class="gallery-item" onclick="searchByName('Diren Basan')">
-            <img src="Diren-Basan-150x150.webp" alt="Diren Basan" loading="lazy">
-            <div class="tooltip">Diren Basan</div>
+            <img src="Diren-Basan-150x150.webp" alt="Diren Basan"[cite: 5] loading="lazy">
+            <div class="tooltip">Diren Basan[cite: 5]</div>
           </div>
+
           <div class="gallery-item" onclick="searchByName('Hasan Bakdur')">
-            <img src="Hasan-Bakdur.jpg-e1772461488478-150x150.webp" alt="Hasan Bakdur" loading="lazy">
-            <div class="tooltip">Hasan Bakdur</div>
+            <img src="Hasan-Bakdur.jpg-e1772461488478-150x150.webp" alt="Hasan Bakdur"[cite: 6] loading="lazy">
+            <div class="tooltip">Hasan Bakdur[cite: 6]</div>
           </div>
+
           <div class="gallery-item" onclick="searchByName('Maziye Aslan')">
-            <img src="Maziye-Aslan-e1772617410175-150x150.jpg" alt="Maziye Aslan" loading="lazy">
-            <div class="tooltip">Maziye Aslan</div>
+            <img src="Maziye-Aslan-e1772617410175-150x150.jpg" alt="Maziye Aslan"[cite: 7] loading="lazy">
+            <div class="tooltip">Maziye Aslan[cite: 7]</div>
           </div>
+
           <div class="gallery-item" onclick="searchByName('Maşuk Uca')">
-            <img src="Masuk-Uca-150x150.jpeg" alt="Maşuk Uca" loading="lazy">
-            <div class="tooltip">Maşuk Uca</div>
+            <img src="Masuk-Uca-150x150.jpeg" alt="Maşuk Uca"[cite: 8] loading="lazy">
+            <div class="tooltip">Maşuk Uca[cite: 8]</div>
           </div>
+
           <div class="gallery-item" onclick="searchByName('Şahin Öner')">
-            <img src="Sahin-Oner-150x150.jpeg" alt="Şahin Öner" loading="lazy">
-            <div class="tooltip">Şahin Öner</div>
+            <img src="Sahin-Oner-150x150.jpeg" alt="Şahin Öner"[cite: 9] loading="lazy">
+            <div class="tooltip">Şahin Öner[cite: 9]</div>
           </div>
+
           <div class="gallery-item" onclick="searchByName('Ömer Soysal')">
-            <img src="Omer-Soysal.jpg-e1772627581782-150x150.webp" alt="Ömer Soysal" loading="lazy">
-            <div class="tooltip">Ömer Soysal</div>
+            <img src="Omer-Soysal.jpg-e1772627581782-150x150.webp" alt="Ömer Soysal"[cite: 10] loading="lazy">
+            <div class="tooltip">Ömer Soysal[cite: 10]</div>
           </div>
+
         </div>
       </div>
 
@@ -555,7 +567,6 @@
       const searchInput = document.getElementById('searchInput');
       searchInput.value = nameQuery;
       filterData();
-      // Ensure tab is set to case records when clicking a photo
       switchTab('list');
     }
 
