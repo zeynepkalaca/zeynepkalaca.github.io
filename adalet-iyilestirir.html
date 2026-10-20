@@ -107,6 +107,78 @@
       padding: 2px 8px;
     }
 
+    /* Memorial Photo Gallery Styles */
+    .memorial-gallery {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .gallery-header {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--secondary-text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .gallery-item {
+      position: relative;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: var(--bg-color);
+      aspect-ratio: 1;
+      overflow: hidden;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s ease, filter 0.2s ease;
+      filter: grayscale(20%);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      filter: grayscale(0%);
+    }
+
+    .gallery-item .tooltip {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      font-size: 10px;
+      font-family: var(--font-sans);
+      padding: 3px 4px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .gallery-item:hover .tooltip {
+      opacity: 1;
+    }
+
     .filter-group {
       display: flex;
       flex-direction: column;
@@ -205,6 +277,7 @@
       body { padding: 20px; }
       .ucdp-grid { grid-template-columns: 1fr; }
       .map-box, #map { height: 450px; min-height: 450px; }
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
@@ -222,6 +295,56 @@
   <div class="ucdp-grid">
     
     <div class="panel">
+      <!-- Memorial Photo Gallery placed right above INCIDENT SEARCH -->
+      <div class="memorial-gallery">
+        <div class="gallery-header">
+          <span>MEMORIAL ARCHIVE</span>
+          <span style="font-size: 10px; color: var(--secondary-text);">Click to filter/locate</span>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-item" onclick="searchByName('Andıç')">
+            <img src="Andac_Welat-Olmez-e1772451304558-150x150.jpeg" alt="Andıç Welat Ölmez" loading="lazy">
+            <div class="tooltip">Andıç Welat Ölmez</div>
+          </div>
+          <div class="gallery-item" onclick="searchByName('Abdulkadir Çakmak')">
+            <img src="Abdulkadir-Cakmak.jpg-e1772450543895-150x150.webp" alt="Abdulkadir Çakmak" loading="lazy">
+            <div class="tooltip">Abdulkadir Çakmak</div>
+          </div>
+          <div class="gallery-item" onclick="searchByName('Baran Özyolcu')">
+            <img src="Baran-Ozyolcu.jpg-150x150.webp" alt="Baran Özyolcu" loading="lazy">
+            <div class="tooltip">Baran Özyolcu</div>
+          </div>
+          <div class="gallery-item" onclick="searchByName('Ceylan Önkol')">
+            <img src="Ceylan-Onkol-150x150.jpeg" alt="Ceylan Önkol" loading="lazy">
+            <div class="tooltip">Ceylan Önkol</div>
+          </div>
+          <div class="gallery-item" onclick="searchByName('Diren Basan')">
+            <img src="Diren-Basan-150x150.webp" alt="Diren Basan" loading="lazy">
+            <div class="tooltip">Diren Basan</div>
+          </div>
+          <div class="gallery-item" onclick="searchByName('Hasan Bakdur')">
+            <img src="Hasan-Bakdur.jpg-e1772461488478-150x150.webp" alt="Hasan Bakdur" loading="lazy">
+            <div class="tooltip">Hasan Bakdur</div>
+          </div>
+          <div class="gallery-item" onclick="searchByName('Maziye Aslan')">
+            <img src="Maziye-Aslan-e1772617410175-150x150.jpg" alt="Maziye Aslan" loading="lazy">
+            <div class="tooltip">Maziye Aslan</div>
+          </div>
+          <div class="gallery-item" onclick="searchByName('Maşuk Uca')">
+            <img src="Masuk-Uca-150x150.jpeg" alt="Maşuk Uca" loading="lazy">
+            <div class="tooltip">Maşuk Uca</div>
+          </div>
+          <div class="gallery-item" onclick="searchByName('Şahin Öner')">
+            <img src="Sahin-Oner-150x150.jpeg" alt="Şahin Öner" loading="lazy">
+            <div class="tooltip">Şahin Öner</div>
+          </div>
+          <div class="gallery-item" onclick="searchByName('Ömer Soysal')">
+            <img src="Omer-Soysal.jpg-e1772627581782-150x150.webp" alt="Ömer Soysal" loading="lazy">
+            <div class="tooltip">Ömer Soysal</div>
+          </div>
+        </div>
+      </div>
+
       <div class="panel-title">
         <span>INCIDENT SEARCH</span>
         <span class="case-count-badge" id="caseCount">51 CASES</span>
@@ -426,6 +549,14 @@
         (!c || i.type === c) && (!p || i.province === p)
       );
       render(filtered);
+    }
+
+    function searchByName(nameQuery) {
+      const searchInput = document.getElementById('searchInput');
+      searchInput.value = nameQuery;
+      filterData();
+      // Ensure tab is set to case records when clicking a photo
+      switchTab('list');
     }
 
     document.getElementById('searchInput').addEventListener('input', filterData);
