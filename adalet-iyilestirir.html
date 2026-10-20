@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zeynep Kalaça / "adalet iyileştirir"</title>
+  <meta name="description" content="Zeynep Kalaça's Adalet İyileştirir mapping project">
+  <meta name="author" content="Zeynep Kalaça">
+  <title>Zeynep Kalaça / adalet iyileştirir</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧿</text></svg>">
   
   <!-- Leaflet CSS & MarkerCluster CSS -->
@@ -11,150 +13,314 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   
-  <!-- Tailwind CSS & Chart.js -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
+    /* CSS Variables matching projects.html */
     :root {
       --bg-color: #ffffff;
-      --panel-bg: #f8fafc;
-      --card-bg: #ffffff;
       --text-color: #000000;
-      --border-color: #e2e8f0;
+      --link-color: blue;
+      --contact-link-color: #333333;
+      --border-color: #ccc;
       --button-bg: #efefef;
       --button-border: #767676;
+      --accent-color: #cc0000;
+      --panel-bg: #f9f9f9;
+      --input-bg: #ffffff;
     }
 
     [data-theme="dark"] {
-      --bg-color: #0f172a;
-      --panel-bg: #1e293b;
-      --card-bg: #334155;
+      --bg-color: #121212;
       --text-color: #e0e0e0;
-      --border-color: #334155;
+      --link-color: #64b5f6;
+      --contact-link-color: #cccccc;
+      --border-color: #333333;
       --button-bg: #2b2b2b;
       --button-border: #555555;
+      --accent-color: #ff6666;
+      --panel-bg: #1a1a1a;
+      --input-bg: #1e1e1e;
     }
 
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-color);
+    body { 
+      font-family: "Helvetica", "Arial", sans-serif; 
+      background-color: var(--bg-color); 
       color: var(--text-color);
-      font-family: "Helvetica", "Arial", sans-serif;
-      overflow: hidden;
+      margin: 60px 100px; 
+      font-size: 20px; 
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    #map-container {
-      width: 100%;
-      height: 100%;
+    h2 {
+      font-size: 32px; 
+      margin-top: 0;
+    }
+
+    p { 
+      margin: 20px 0; 
+      font-size: 20px; 
+    }
+
+    a { 
+      color: var(--link-color); 
+      text-decoration: underline; 
+      font-size: 20px; 
+    }
+
+    .theme-toggle-container {
+      position: absolute;
+      top: 40px;
+      right: 100px;
+    }
+
+    .back-link {
+      font-family: "Consolas", "Courier New", monospace; 
+      text-decoration: none;
+      color: var(--contact-link-color);
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+      color: var(--link-color);
+    }
+
+    .accent-link {
+      color: var(--accent-color) !important;
+      text-decoration: none;
+    }
+
+    .accent-link:hover {
+      text-decoration: underline;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border-color);
+      margin: 30px 0;
+    }
+
+    button#theme-toggle {
+      font-size: 16px; 
+      padding: 8px 16px;
+      cursor: pointer;
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      border: 1px solid var(--button-border);
+      border-radius: 4px;
+    }
+
+    /* Layout Containers */
+    .dashboard-layout {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .sidebar-column {
+      width: 450px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .map-column {
+      flex: 1;
+      height: 700px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
       position: relative;
     }
 
     #map {
       width: 100%;
       height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: #111827;
     }
 
-    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #64748b; border-radius: 3px; }
+    /* Controls & Inputs */
+    .control-box {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      background-color: var(--panel-bg);
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .filter-row select {
+      flex: 1;
+    }
+
+    /* Tabs */
+    .tabs-nav {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 15px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: none;
+      border: none;
+      font-size: 16px;
+      color: var(--text-color);
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .tab-btn.active {
+      opacity: 1;
+      font-weight: bold;
+      border-bottom: 2px solid var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    /* Incident List Container */
+    .incident-list {
+      max-height: 450px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-right: 5px;
+    }
+
+    .incident-card {
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 15px;
+      background-color: var(--bg-color);
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+      font-size: 16px;
+    }
+
+    .incident-card:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+
+    .export-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .export-btn {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 15px;
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      border: 1px solid var(--button-border);
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .export-btn:hover {
+      background-color: var(--accent-color);
+      color: #fff;
+      border-color: var(--accent-color);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      body { margin: 30px; }
+      .theme-toggle-container { top: 25px; right: 30px; }
+      .dashboard-layout { flex-direction: column; }
+      .sidebar-column { width: 100%; }
+      .map-column { height: 500px; width: 100%; }
+    }
   </style>
 </head>
-<body class="flex flex-col h-screen overflow-hidden">
+<body>
 
-  <!-- Header Navigation -->
-  <header class="bg-slate-900 border-b border-slate-800 px-6 py-3 flex items-center justify-between text-white z-20 shrink-0">
-    <div class="flex items-center space-x-4">
-      <a href="index.html" class="text-slate-400 hover:text-white transition font-mono text-sm">&larr; home</a>
-      <div class="h-4 w-px bg-slate-700"></div>
-      <div>
-        <h1 class="text-base font-bold">Child & Youth Deaths: Landmines, UXO & Armored Vehicles (2000–2015)</h1>
-        <p class="text-xs text-slate-400">Source: Hafıza Merkezi ("Adalet İyileştirir") Database</p>
-      </div>
-    </div>
-    
-    <div class="flex items-center space-x-3">
-      <button onclick="exportGeoJSON()" class="bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition">
-        📥 Export GeoJSON
-      </button>
-      <button onclick="exportCSV()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition">
-        📊 Export CSV
-      </button>
-      <button id="theme-toggle" onclick="toggleTheme()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white px-3 py-1.5 rounded text-xs font-semibold transition">
-        🌙 dark
-      </button>
-    </div>
-  </header>
+  <!-- Theme Toggle -->
+  <div class="theme-toggle-container">
+    <button id="theme-toggle" onclick="toggleTheme()">🌙 dark</button>
+  </div>
 
-  <!-- Main Grid Layout -->
-  <div class="flex flex-col lg:flex-row flex-1 overflow-hidden relative">
+  <h2>"adalet iyileştirir"</h2>
+  <p><a href="projects.html" class="back-link">← projects</a></p>
+  <hr>
+
+  <div class="dashboard-layout">
     
-    <!-- Sidebar -->
-    <aside class="w-full lg:w-4/12 bg-slate-900 text-slate-200 border-r border-slate-800 flex flex-col z-10 shrink-0 h-1/2 lg:h-full">
-      
-      <!-- Filter Inputs -->
-      <div class="p-4 border-b border-slate-800 space-y-3">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Filters & Search</span>
-          <span id="recordCount" class="text-xs font-bold bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded-full">51 Cases</span>
-        </div>
+    <!-- Left Column: Controls & List / Charts -->
+    <div class="sidebar-column">
+      <div class="control-box">
+        <p style="margin-top: 0; font-size: 18px; font-weight: bold;">Filters & Search</p>
         
-        <input type="text" id="searchInput" placeholder="Search by victim name, district, province..." 
-          class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-xs text-slate-100 placeholder-slate-400 focus:outline-none focus:border-rose-500">
+        <input type="text" id="searchInput" placeholder="Search by victim name, district, province...">
 
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <select id="categoryFilter" class="bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-slate-200">
-            <option value="">All Categories (51)</option>
+        <div class="filter-row">
+          <select id="categoryFilter">
+            <option value="">All Categories (51 Cases)</option>
             <option value="Landmines & UXO Explosions">Landmines & UXO (28)</option>
             <option value="Armored Vehicle Collisions">Armored Vehicles (23)</option>
           </select>
 
-          <select id="provinceFilter" class="bg-slate-800 border border-slate-700 rounded px-2 py-1.5 text-slate-200">
+          <select id="provinceFilter">
             <option value="">All Provinces</option>
           </select>
         </div>
-      </div>
 
-      <!-- Navigation Tabs -->
-      <div class="flex border-b border-slate-800 bg-slate-950/50">
-        <button onclick="switchTab('table')" id="tabBtnTable" class="flex-1 py-2 text-xs font-bold text-rose-400 border-b-2 border-rose-500 transition">Incidents List</button>
-        <button onclick="switchTab('charts')" id="tabBtnCharts" class="flex-1 py-2 text-xs font-medium text-slate-400 transition">Analytics</button>
-      </div>
+        <div class="tabs-nav">
+          <button onclick="switchTab('table')" id="tabBtnTable" class="tab-btn active">Incidents List (<span id="recordCount">51</span>)</button>
+          <button onclick="switchTab('charts')" id="tabBtnCharts" class="tab-btn">Analytics</button>
+        </div>
 
-      <!-- Incident List -->
-      <div id="tabContentTable" class="flex-1 overflow-y-auto custom-scrollbar p-3">
-        <div id="incidentList" class="space-y-2"></div>
-      </div>
+        <!-- Incidents List View -->
+        <div id="tabContentTable" class="incident-list">
+          <!-- Populated via JavaScript -->
+        </div>
 
-      <!-- Charts Area -->
-      <div id="tabContentCharts" class="flex-1 overflow-y-auto custom-scrollbar p-4 hidden space-y-6">
-        <div>
-          <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Category Breakdown</h3>
-          <div class="bg-slate-950 p-3 rounded border border-slate-800 h-44">
-            <canvas id="categoryChart"></canvas>
+        <!-- Analytics Charts View -->
+        <div id="tabContentCharts" style="display: none;" class="incident-list">
+          <div style="margin-bottom: 20px;">
+            <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">Category Breakdown</p>
+            <div style="height: 180px;"><canvas id="categoryChart"></canvas></div>
+          </div>
+          <div>
+            <p style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">Timeline Trend (2000–2015)</p>
+            <div style="height: 180px;"><canvas id="yearChart"></canvas></div>
           </div>
         </div>
-        <div>
-          <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Timeline Trend (2000–2015)</h3>
-          <div class="bg-slate-950 p-3 rounded border border-slate-800 h-44">
-            <canvas id="yearChart"></canvas>
-          </div>
+
+        <!-- Export Buttons -->
+        <div class="export-btns">
+          <button onclick="exportGeoJSON()" class="export-btn">📥 GeoJSON</button>
+          <button onclick="exportCSV()" class="export-btn">📊 CSV</button>
         </div>
       </div>
-    </aside>
+    </div>
 
-    <!-- Interactive Map Display Container -->
-    <main class="flex-1 bg-slate-950 relative h-1/2 lg:h-full">
-      <div id="map-container">
-        <div id="map"></div>
-      </div>
-    </main>
+    <!-- Right Column: Interactive Map -->
+    <div class="map-column">
+      <div id="map"></div>
+    </div>
+
   </div>
 
   <!-- Leaflet & Clustering Scripts -->
@@ -162,6 +328,31 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
   <script>
+    // Theme Switcher Logic matching projects.html
+    const toggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      if (currentTheme === 'dark') {
+        toggleBtn.textContent = '☀️ light';
+      }
+    }
+
+    function toggleTheme() {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.textContent = '🌙 dark';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.textContent = '☀️ light';
+      }
+    }
+
+    // Dataset & Map Script
     const provinceCoords = {
       "Hakkari": [37.5833, 43.7333], "Diyarbakır": [37.9144, 40.2306], "Mardin": [37.3211, 40.7245],
       "Şırnak": [37.5164, 42.4611], "Van": [38.4891, 43.4089], "Ağrı": [39.7191, 43.0503],
@@ -170,7 +361,6 @@
       "Iğdır": [39.9167, 44.0333], "Erzurum": [39.9043, 41.2679], "Gaziantep": [37.0662, 37.3833]
     };
 
-    // 51 Cases (28 Landmines/UXO + 23 Armored Vehicles)
     const incidents = [
       // Landmines & UXO Explosions (28)
       { name: "Ceylan Önkol", age: "12", province: "Diyarbakır", district: "Lice", date: "28.09.2009", type: "Landmines & UXO Explosions", desc: "Killed by unexploded ordnance while grazing sheep." },
@@ -229,14 +419,9 @@
     ];
 
     // Initialize Map
-    const map = L.map('map', {
-      center: [38.2, 41.2],
-      zoom: 7
-    });
-
-    // Keyless Esri World Dark Gray Canvas Tile Layer
+    const map = L.map('map', { center: [38.2, 41.2], zoom: 7 });
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+      attribution: 'Tiles &copy; Esri',
       maxZoom: 16
     }).addTo(map);
 
@@ -245,7 +430,7 @@
 
     let catChart = null, yrChart = null;
 
-    // Populate Province Select Options
+    // Populate Province Options
     const provSelect = document.getElementById('provinceFilter');
     Object.keys(provinceCoords).sort().forEach(p => {
       const opt = document.createElement('option');
@@ -255,43 +440,37 @@
 
     function render(data) {
       markersCluster.clearLayers();
-      const list = document.getElementById('incidentList');
+      const list = document.getElementById('tabContentTable');
       list.innerHTML = '';
-      document.getElementById('recordCount').textContent = `${data.length} Cases`;
+      document.getElementById('recordCount').textContent = data.length;
 
       data.forEach(inc => {
         const baseCoord = provinceCoords[inc.province] || [38.5, 41.5];
         const lat = baseCoord[0] + (Math.random() - 0.5) * 0.12;
         const lng = baseCoord[1] + (Math.random() - 0.5) * 0.12;
-        const color = inc.type.includes("Landmines") ? "#f43f5e" : "#f59e0b";
+        const color = inc.type.includes("Landmines") ? "#cc0000" : "#d97706";
 
         const marker = L.circleMarker([lat, lng], {
-          radius: 7, fillColor: color, color: "#fff", weight: 1, fillOpacity: 0.85
+          radius: 7, fillColor: color, color: "#fff", weight: 1, fillOpacity: 0.9
         });
 
         marker.bindPopup(`
-          <div class="p-1 space-y-1 text-xs text-slate-800">
-            <div class="font-bold text-rose-600 text-sm">${inc.name} (${inc.age} y/o)</div>
-            <div><strong>Location:</strong> ${inc.province} (${inc.district})</div>
-            <div><strong>Date:</strong> ${inc.date}</div>
-            <div><strong>Category:</strong> ${inc.type}</div>
-            <p class="pt-1 text-slate-600 border-t border-slate-200">${inc.desc}</p>
+          <div style="font-size: 14px; color: #111;">
+            <strong style="color: #cc0000; font-size: 15px;">${inc.name} (${inc.age} y/o)</strong><br>
+            <strong>Location:</strong> ${inc.province} / ${inc.district}<br>
+            <strong>Date:</strong> ${inc.date}<br>
+            <strong>Type:</strong> ${inc.type}<br>
+            <p style="margin: 5px 0 0 0;">${inc.desc}</p>
           </div>
         `);
         markersCluster.addLayer(marker);
 
         const card = document.createElement('div');
-        card.className = "bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 rounded p-2.5 cursor-pointer text-xs space-y-1";
+        card.className = "incident-card";
         card.innerHTML = `
-          <div class="flex justify-between font-bold text-slate-200">
-            <span>${inc.name}</span>
-            <span class="text-[10px] bg-slate-900 px-1.5 py-0.5 rounded text-slate-400">${inc.date}</span>
-          </div>
-          <div class="flex justify-between text-slate-400">
-            <span>📍 ${inc.province} (${inc.district})</span>
-            <span class="text-rose-400 font-semibold">${inc.age} y/o</span>
-          </div>
-          <div class="text-[11px] text-slate-300 italic">${inc.type}</div>
+          <span class="accent-link" style="font-weight: bold; display: block; margin-bottom: 4px;">${inc.name} (${inc.age} y/o)</span>
+          <div style="font-size: 14px; opacity: 0.8;">📍 ${inc.province}, ${inc.district} &bull; ${inc.date}</div>
+          <div style="font-size: 13px; font-style: italic; margin-top: 4px; opacity: 0.7;">${inc.type}</div>
         `;
         card.onclick = () => { map.setView([lat, lng], 10); marker.openPopup(); };
         list.appendChild(card);
@@ -313,15 +492,15 @@
       if(catChart) catChart.destroy();
       catChart = new Chart(document.getElementById('categoryChart'), {
         type: 'doughnut',
-        data: { labels: Object.keys(catCounts), datasets: [{ data: Object.values(catCounts), backgroundColor: ['#f43f5e', '#f59e0b'] }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 9 } } } } }
+        data: { labels: Object.keys(catCounts), datasets: [{ data: Object.values(catCounts), backgroundColor: ['#cc0000', '#d97706'] }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } } }
       });
 
       if(yrChart) yrChart.destroy();
       yrChart = new Chart(document.getElementById('yearChart'), {
         type: 'bar',
-        data: { labels: Object.keys(yrCounts), datasets: [{ data: Object.values(yrCounts), backgroundColor: '#f43f5e', borderRadius: 2 }] },
-        options: { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { color: '#94a3b8', font: { size: 9 } } }, y: { ticks: { color: '#94a3b8', font: { size: 9 } } } }, plugins: { legend: { display: false } } }
+        data: { labels: Object.keys(yrCounts), datasets: [{ data: Object.values(yrCounts), backgroundColor: '#cc0000', borderRadius: 2 }] },
+        options: { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { font: { size: 10 } } }, y: { ticks: { font: { size: 10 } } } }, plugins: { legend: { display: false } } }
       });
     }
 
@@ -341,12 +520,14 @@
     document.getElementById('categoryFilter').addEventListener('change', filterData);
     document.getElementById('provinceFilter').addEventListener('change', filterData);
 
-    function switchTab(t) {
-      document.getElementById('tabContentTable').classList.toggle('hidden', t !== 'table');
-      document.getElementById('tabContentCharts').classList.toggle('hidden', t !== 'charts');
+    function switchTab(tab) {
+      const isTable = tab === 'table';
+      document.getElementById('tabContentTable').style.display = isTable ? 'flex' : 'none';
+      document.getElementById('tabContentCharts').style.display = isTable ? 'none' : 'flex';
+      document.getElementById('tabBtnTable').className = isTable ? 'tab-btn active' : 'tab-btn';
+      document.getElementById('tabBtnCharts').className = isTable ? 'tab-btn' : 'tab-btn active';
     }
 
-    // Export GeoJSON
     function exportGeoJSON() {
       const geojson = {
         type: "FeatureCollection",
@@ -363,7 +544,6 @@
       a.click();
     }
 
-    // Export CSV
     function exportCSV() {
       let csv = 'Name,Age,Province,District,Date,Type,Description\n';
       incidents.forEach(inc => {
@@ -376,26 +556,11 @@
       a.click();
     }
 
-    // Dark/Light Theme Switching
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      document.getElementById('theme-toggle').textContent = next === 'dark' ? '☀️ light' : '🌙 dark';
-    }
-
-    // Load initial theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    document.getElementById('theme-toggle').textContent = savedTheme === 'dark' ? '☀️ light' : '🌙 dark';
-
-    // Force Leaflet recalculation after DOM layout settles
+    // Initial load and sizing fix
     window.addEventListener('load', () => {
       render(incidents);
-      setTimeout(() => { map.invalidateSize(); }, 250);
+      setTimeout(() => { map.invalidateSize(); }, 200);
     });
-    window.addEventListener('resize', () => { map.invalidateSize(); });
   </script>
 </body>
 </html>
