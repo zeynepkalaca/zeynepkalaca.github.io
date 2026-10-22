@@ -1,0 +1,262 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;600&family=Spectral:ital,wght@0,400;0,500;1,400;1,500&display=swap");
+
+/* Spectral (names, headings) + Karla (interface text). Both cover Turkish ğ ş İ ı. */
+
+:root {
+  --paper: #e6e9e4;
+  --ink: #1d2629;
+  --ink-soft: #56615f;
+  --rule: #c3c9c3;
+  --accent: #1f4e8c;   /* landmines & UXO */
+  --ochre: #9a6a12;    /* armored vehicles */
+  --pad: clamp(20px, 5vw, 72px);
+  --serif: "Spectral", Georgia, "Times New Roman", serif;
+  --sans: "Karla", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+[data-theme="dark"] {
+  --paper: #151b1e;
+  --ink: #e4e7e2;
+  --ink-soft: #9aa5a2;
+  --rule: #33403f;
+  --accent: #8fb2e8;
+  --ochre: #d6a64e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 var(--pad) 72px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ---------- Portrait strip: arched frames, like niches in a memorial wall ---------- */
+.top-photo-strip {
+  margin: 0 calc(-1 * var(--pad)) 40px;
+  padding: 64px var(--pad) 28px;
+  border-bottom: 1px solid var(--rule);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+
+.strip-track { display: inline-flex; gap: 22px; align-items: flex-end; }
+
+.strip-item {
+  width: 112px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.strip-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 56px 56px 0 0;
+  filter: grayscale(0.6);
+  transition: filter 0.25s;
+}
+
+.strip-item:hover img { filter: grayscale(0); }
+
+/* optional caption, see note about the one-line JS addition */
+.strip-item span {
+  padding-top: 8px;
+  text-align: center;
+  font: italic 400 15px/1.3 var(--serif);
+  color: var(--ink-soft);
+}
+
+/* ---------- Header ---------- */
+.theme-toggle-btn {
+  position: absolute;
+  top: 20px;
+  right: var(--pad);
+  z-index: 5;
+  padding: 2px 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink-soft);
+  color: var(--ink-soft);
+  font: 400 14px var(--sans);
+  cursor: pointer;
+}
+.theme-toggle-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: var(--ink-soft);
+  font: 400 15px var(--sans);
+  text-transform: lowercase;
+  text-decoration: none;
+}
+.back-link:hover { color: var(--ink); text-decoration: underline; }
+
+header { margin-bottom: 48px; padding: 0; border: 0; }
+
+h1 {
+  max-width: 20ch;
+  margin: 0 0 20px;
+  font: 400 clamp(36px, 5.2vw, 64px)/1.04 var(--serif);
+  letter-spacing: -0.015em;
+}
+
+.meta-subtitle {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 17px;
+}
+.meta-subtitle em { font-family: var(--serif); font-size: 1.05em; color: var(--ink); }
+
+/* ---------- Layout ---------- */
+.ucdp-grid {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.panel { padding: 0; background: none; border: 0; }
+
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 22px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--ink);
+  font: 500 24px/1.2 var(--serif);
+}
+.panel-title span:first-child { text-transform: lowercase; }
+.panel-title span:first-child::first-letter { text-transform: uppercase; }
+
+.case-count-badge {
+  padding: 0;
+  background: none;
+  color: var(--ink-soft);
+  font: italic 400 17px var(--serif);
+  text-transform: lowercase;
+}
+
+/* ---------- Filters ---------- */
+.filter-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px; }
+
+input[type="text"], select {
+  padding: 10px 0;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid var(--ink-soft);
+  border-radius: 0;
+  font: 400 16px var(--sans);
+}
+input[type="text"]::placeholder { color: var(--ink-soft); }
+input[type="text"]:focus, select:focus { outline: none; border-bottom-color: var(--accent); box-shadow: 0 1px 0 var(--accent); }
+select option { background: var(--paper); color: var(--ink); }
+
+/* ---------- Tabs ---------- */
+.tab-bar { display: flex; gap: 28px; margin-bottom: 8px; border-bottom: 1px solid var(--rule); }
+
+.tab-btn {
+  flex: none;
+  padding: 8px 0;
+  margin-bottom: -1px;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--ink-soft);
+  font: 400 16px var(--sans);
+  cursor: pointer;
+}
+.tab-btn.active { color: var(--ink); font-weight: 600; border-bottom-color: var(--accent); }
+
+/* ---------- Case list: a register, not a stack of cards ---------- */
+.incident-scroll-list {
+  max-height: 520px;
+  overflow-y: auto;
+  gap: 0;
+  padding-right: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+
+.incident-card {
+  padding: 14px 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px dotted var(--ink-soft);
+}
+.incident-card:hover .card-title { text-decoration: underline; text-underline-offset: 3px; }
+
+.card-title {
+  margin-bottom: 2px;
+  color: var(--ink);
+  font: 500 20px/1.25 var(--serif);
+}
+.card-meta { color: var(--ink-soft); font-size: 15px; }
+
+/* the category line is styled inline by the script; override font only */
+.incident-card > div:last-child {
+  font-family: var(--sans) !important;
+  font-size: 14px !important;
+  margin-top: 2px !important;
+}
+
+/* analytics tab labels (inline-styled in the HTML) */
+#tabAnalytics > div > div:first-child {
+  font-family: var(--serif) !important;
+  font-size: 16px !important;
+  font-style: italic;
+  text-transform: lowercase;
+  color: var(--ink-soft);
+}
+#tabAnalytics > div > div:first-child::first-letter { text-transform: uppercase; }
+
+/* ---------- Map ---------- */
+.map-box { height: 720px; background: var(--rule); border: 1px solid var(--rule); }
+#map { width: 100%; height: 100%; min-height: 720px; font-family: var(--sans); }
+
+[data-theme="dark"] .leaflet-tile-pane { filter: invert(0.92) hue-rotate(180deg) brightness(0.85) contrast(0.9); }
+
+.leaflet-bar a { border-radius: 0 !important; }
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0;
+  background: #f3f4f0;
+  color: #1d2629;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+.leaflet-popup-tip { background: #f3f4f0; }
+.leaflet-popup-content strong { color: #1f4e8c !important; font-family: var(--serif); font-size: 17px; font-weight: 500; }
+
+/* cluster bubbles in the page palette instead of Leaflet's default green/yellow */
+.marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background-color: rgba(31, 78, 140, 0.25); }
+.marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
+  background-color: #1f4e8c;
+  color: #fff;
+  font: 500 14px var(--serif);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 960px) {
+  .ucdp-grid { grid-template-columns: 1fr; gap: 36px; }
+  .map-box, #map { height: 450px; min-height: 450px; }
+  .strip-item { width: 92px; }
+  .strip-item img { height: 124px; border-radius: 46px 46px 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
