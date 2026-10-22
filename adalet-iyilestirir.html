@@ -479,7 +479,7 @@
         card.className = "incident-card";
         card.innerHTML = `
           <div class="card-title">${inc.name} (${inc.age})</div>
-          <div class="card-meta">📍 ${inc.province}, ${inc.district} &bull; ${inc.date}</div>
+          <div class="card-meta">${inc.province}, ${inc.district} &bull; ${inc.date}</div>
           <div style="font-size: 11px; margin-top: 4px; color: ${color}; font-family: monospace;">${inc.type}</div>
         `;
         card.onclick = () => { map.setView([lat, lng], 10); marker.openPopup(); };
